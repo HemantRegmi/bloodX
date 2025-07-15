@@ -10,8 +10,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- Font Awesome for home icon -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../home.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         .login-box {
             max-width: 400px;
@@ -36,79 +36,71 @@
             top: 20px;
             left: 30px;
             z-index: 1000;
+            background: linear-gradient(90deg, #b1001a 0%, #ff1744 100%);
+            color: #fff !important;
+            font-weight: 700;
+            border: none;
+            border-radius: 50px;
+            padding: 0.5rem 1.5rem;
+            box-shadow: 0 2px 8px rgba(200,0,0,0.13);
+            transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+        }
+        .home-top-left:hover {
+            background: linear-gradient(90deg, #ff1744 0%, #b1001a 100%);
+            color: #fff !important;
+            box-shadow: 0 6px 18px rgba(200,0,0,0.22);
+            text-decoration: none;
         }
     </style>
 </head>
-<body background="admin_image\blood-cells.jpg">
+<body style="background: url('../image/bloodX_2.jpg') no-repeat center center fixed; background-size: cover; min-height: 100vh; position: relative;">
+  <div style="position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(255,255,255,0.4); z-index: 0;"></div>
 
   <!-- Home button top left -->
-  <a href="../home.php" class="btn btn-success home-top-left">
+  <a href="../home.php" class="home-top-left">
     <i class="fa fa-home"></i> Home
   </a>
 
-  <form class="" action="<?php $_SERVER['PHP_SELF']; ?>" method="post">
-
-    <div class="container" style="margin-top:200px;">
-      <div class="row justify-content-center">
-          <div class="col-lg-6">
-              <h1 class="mt-4 mb-3" style="color:#fff; text-shadow:2px 2px 8px #000;">
-                  BloodX
-                  <br>Login Portal
-                </h1>
-
-            </div>
+  <div class="container d-flex align-items-center justify-content-center" style="min-height: 100vh; position: relative; z-index: 1;">
+    <div class="col-md-6 col-lg-5 mx-auto">
+      <div class="card p-4 shadow-lg login-box">
+        <h2 class="section-title mb-4 text-center">Admin Login</h2>
+        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+          <?php
+            include 'conn.php';
+            if(isset($_POST["login"])){
+              $username=mysqli_real_escape_string($conn,$_POST["username"]);
+              $password=mysqli_real_escape_string($conn,$_POST["password"]);
+              $sql="SELECT * from admin_info where admin_username='$username' and admin_password='$password'";
+              $result=mysqli_query($conn,$sql) or die("query failed.");
+              if(mysqli_num_rows($result)>0)
+              {
+                while($row=mysqli_fetch_assoc($result)){
+                  session_start();
+                  $_SESSION['loggedin'] = true;
+                  $_SESSION["username"]=$username;
+                  header("Location: dashboard.php");
+                }
+              }
+              else {
+                echo '<div class="alert alert-danger text-center font-weight-bold">Username and Password are not matched!</div>';
+              }
+            }
+          ?>
+          <div class="form-group mb-3">
+            <label class="font-italic font-weight-bold">Username<span style="color:red">*</span></label>
+            <input type="text" name="username" placeholder="Enter your username" class="form-control" required>
+          </div>
+          <div class="form-group mb-4">
+            <label class="font-italic font-weight-bold">Password<span style="color:red">*</span></label>
+            <input type="password" name="password" placeholder="Enter your Password" class="form-control" required>
+          </div>
+          <div class="text-center">
+            <input type="submit" name="login" class="btn become-donor-btn w-100" value="LOGIN">
+          </div>
+        </form>
       </div>
-      <div class="card" style="height:250px; background-image:url('admin_image/glossy1.jpg');">
-          <div class="card-body">
-
-      <div class="row justify-content-lg-center justify-content-mb-center" >
-      <div class="col-lg-6 mb-6 ">
-      <div class="font-italic" style="font-weight:bold">Username<span style="color:red">*</span></div>
-      <div><input type="text" name="username" placeholder="Enter your username" class="form-control" value="" required></div>
-    </div>
-    </div>
-    <div class="row justify-content-lg-center justify-content-mb-center">
-    <div class="col-lg-6 mb-6 "><br>
-    <div class="font-italic"style="font-weight:bold">Password<span style="color:red">*</span></div>
-    <div><input type="password" name="password" placeholder="Enter your Password" class="form-control" value="" required></div>
     </div>
   </div>
-  <div class="row justify-content-lg-center justify-content-mb-center">
-    <div class="col-lg-4 mb-4 " style="text-align:center"><br>
-      <div>
-        <input type="submit" name="login" class="btn btn-primary" value="LOGIN" style="cursor:pointer">
-      </div>
-    </div>
-  </div>
-    </div>
-  </div></div>
-<br>
-  <?php
-    include 'conn.php';
-
-  if(isset($_POST["login"])){
-
-    $username=mysqli_real_escape_string($conn,$_POST["username"]);
-    $password=mysqli_real_escape_string($conn,$_POST["password"]);
-
-    $sql="SELECT * from admin_info where admin_username='$username' and admin_password='$password'";
-    $result=mysqli_query($conn,$sql) or die("query failed.");
-
-    if(mysqli_num_rows($result)>0)
-    {
-      while($row=mysqli_fetch_assoc($result)){
-        session_start();
-         $_SESSION['loggedin'] = true;
-        $_SESSION["username"]=$username;
-        header("Location: dashboard.php");
-      }
-    }
-    else {
-      echo '<div class="alert alert-danger" style="font-weight:bold"> Username and Password are not matched!</div>';
-    }
-
-  }
-   ?>
- </form>
 </body>
 </html>

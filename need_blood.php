@@ -6,6 +6,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="home.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -16,93 +17,77 @@
   $active ='need';
   include('head.php') ?>
 
-  <div id="page-container" style="margin-top:50px; position: relative;min-height: 84vh;">
+  <div id="page-container">
     <div class="container">
-    <div id="content-wrap" style="padding-bottom:50px;">
-
-  <div class="row">
-      <div class="col-lg-6">
-          <h1 class="mt-4 mb-3">Need Blood</h1>
-
-        </div>
-  </div>
-  <form name="needblood" action="" method="post">
-  <div class="row">
-  <div class="col-lg-4 mb-4">
-  <div class="font-italic">Blood Group<span style="color:red">*</span></div>
-  <div><select name="blood" class="form-control" required>
-    <option value=""selected disabled>Select</option>
-    <?php
-      include 'conn.php';
-      $sql= "select * from blood";
-      $result=mysqli_query($conn,$sql) or die("query unsuccessful.");
-    while($row=mysqli_fetch_assoc($result)){
-     ?>
-     <option value=" <?php echo $row['blood_id'] ?>"> <?php echo $row['blood_group'] ?> </option>
-    <?php } ?>
-</select>
-</div>
-</div>
-
-
-</div>
-<div class="row">
-<div class="col-lg-4 mb-4">
-<div><input type="submit" name="search" class="btn btn-primary" value="Search" style="cursor:pointer"></div>
-</div>
-
-</div><div class="row">
-<?php if(isset($_POST['search'])){
-
-  $bg = $_POST['blood'];
-  $conn = mysqli_connect("localhost", "root", "", "blood_donation") or die("Connection error");
-
-  // Get blood group name for display and search
-  $blood_group_name = "";
-  $bg_query = mysqli_query($conn, "SELECT blood_group FROM blood WHERE blood_id = '{$bg}' LIMIT 1");
-  if ($bg_row = mysqli_fetch_assoc($bg_query)) {
-      $blood_group_name = $bg_row['blood_group'];
-  }
-
-  // Now search by group name instead of id
-  $sql = "SELECT * FROM donor_details WHERE donor_blood='{$blood_group_name}' ORDER BY rand() LIMIT 5";
-  $result = mysqli_query($conn, $sql) or die("query unsuccessful.");
-    if(mysqli_num_rows($result)>0)   {
-    while($row = mysqli_fetch_assoc($result)) {
-      ?>
-
-      <div class="col-lg-4 col-sm-6 portfolio-item" ><br>
-      <div class="card" style="width:300px">
-          <img class="card-img-top" src="image\blood_drop_logo.jpg" alt="Card image" style="width:100%;height:300px">
-          <div class="card-body">
-            <h3 class="card-title"><?php echo $row['donor_name']; ?></h3>
-            <p class="card-text">
-              <b>Blood Group : </b> <b><?php echo $row['donor_blood']; ?></b><br>
-              <b>Mobile No. : </b> <?php echo $row['donor_number']; ?><br>
-              <b>Gender : </b><?php echo $row['donor_gender']; ?><br>
-              <b>Age : </b> <?php echo $row['donor_age']; ?><br>
-              <b>Address : </b> <?php echo $row['donor_address']; ?><br>
-            </p>
-
+      <div id="content-wrap">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <div class="card p-4 shadow-lg mb-4">
+              <h1 class="section-title mb-4">Need Blood</h1>
+              <form name="needblood" action="" method="post">
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label class="font-italic font-weight-bold">Blood Group<span style="color:red">*</span></label>
+                    <select name="blood" class="form-control" required>
+                      <option value="" selected disabled>Select</option>
+                      <?php
+                        include 'conn.php';
+                        $sql= "select * from blood";
+                        $result=mysqli_query($conn,$sql) or die("query unsuccessful.");
+                        while($row=mysqli_fetch_assoc($result)){
+                      ?>
+                      <option value="<?php echo $row['blood_id'] ?>"><?php echo $row['blood_group'] ?></option>
+                      <?php } ?>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-6 d-flex align-items-end">
+                    <input type="submit" name="search" class="btn become-donor-btn w-100" value="Search">
+                  </div>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
+        <div class="row">
+          <?php if(isset($_POST['search'])){
+            $bg = $_POST['blood'];
+            $conn = mysqli_connect("localhost", "root", "", "blood_donation") or die("Connection error");
+            $blood_group_name = "";
+            $bg_query = mysqli_query($conn, "SELECT blood_group FROM blood WHERE blood_id = '{$bg}' LIMIT 1");
+            if ($bg_row = mysqli_fetch_assoc($bg_query)) {
+                $blood_group_name = $bg_row['blood_group'];
+            }
+            $sql = "SELECT * FROM donor_details WHERE donor_blood='{$blood_group_name}' ORDER BY rand() LIMIT 5";
+            $result = mysqli_query($conn, $sql) or die("query unsuccessful.");
+            if(mysqli_num_rows($result)>0)   {
+              while($row = mysqli_fetch_assoc($result)) {
+          ?>
+          <div class="col-lg-4 col-md-6 mb-4 d-flex align-items-stretch">
+            <div class="card donor-card w-100">
+              <img class="card-img-top donor-img" src="image/bloodX_4.png" alt="Card image">
+              <div class="card-body">
+                <h3 class="card-title"><?php echo htmlspecialchars($row['donor_name']); ?></h3>
+                <p class="card-text">
+                  <b>Blood Group : </b> <b><?php echo htmlspecialchars($row['donor_blood']); ?></b><br>
+                  <b>Mobile No. : </b> <?php echo htmlspecialchars($row['donor_number']); ?><br>
+                  <b>Gender : </b><?php echo htmlspecialchars($row['donor_gender']); ?><br>
+                  <b>Age : </b> <?php echo htmlspecialchars($row['donor_age']); ?><br>
+                  <b>Address : </b> <?php echo htmlspecialchars($row['donor_address']); ?><br>
+                </p>
+              </div>
+            </div>
+          </div>
+          <?php
+              }
+            } else {
+              echo '<div class="col-12"><div class="alert alert-danger text-center">No Donor Found For your search Blood group</div></div>';
+            }
+          } ?>
+        </div>
+      </div>
+    </div>
+    <?php include 'footer.php' ?>
   </div>
-
-  <?php
-    }
-  }
-    else
-    {
-
-        echo '<div class="alert alert-danger">No Donor Found For your search Blood group </div>';
-
-    }
-} ?>
-</div>
-</div>
-</div>
-<?php include 'footer.php' ?>
-</div>
 </body>
 
 </html>

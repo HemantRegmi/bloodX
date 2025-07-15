@@ -8,11 +8,10 @@
     <meta name="description" content="">
     <meta name="author" content="">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="home.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<style>
-</style>
 </head>
 
 <body>
@@ -27,61 +26,36 @@ include('head.php'); ?>
   <div id="page-container" style="margin-top:50px; position: relative;min-height: 84vh;   ">
     <div class="container">
     <div id="content-wrap"style="padding-bottom:75px;">
-  <div id="demo" class="carousel slide" data-ride="carousel">
-
-    <!-- Indicators -->
-    <ul class="carousel-indicators">
-      <li data-target="#demo" data-slide-to="0" class="active"></li>
-      <li data-target="#demo" data-slide-to="1"></li>
-    </ul>
-
-    <!-- The slideshow -->
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img src="image\_107317099_blooddonor976.jpg" alt="image\_107317099_blooddonor976.jpg" width="100%" height="500">
-      </div>
-      <div class="carousel-item">
-        <img src="image\Blood-facts_10-illustration-graphics__canteen.png" alt="image\Blood-facts_10-illustration-graphics__canteen.png" width="100%" height="500">
-      </div>
-
-    </div>
-
-    <!-- Left and right controls -->
-    <a class="carousel-control-prev" href="#demo" data-slide="prev">
-      <span class="carousel-control-prev-icon"></span>
-    </a>
-    <a class="carousel-control-next" href="#demo" data-slide="next">
-      <span class="carousel-control-next-icon"></span>
-    </a>
+  <!-- Banner Image -->
+  <div class="banner-img-wrapper mb-4">
+    <img src="image/bloodX_1.jpg" alt="Donate Blood Save Life" class="img-fluid w-100 rounded banner-img">
   </div>
 <br>
-        <h1 style="text-align:center;font-size:45px;">Welcome to BloodX</h1>
+        <h1 class="main-title">Welcome to BloodX</h1>
 <br>
         <div class="row">
             <div class="col-lg-4 mb-4">
                 <div class="card">
-                    <h4 class="card-header card bg-info text-white" >The need for blood</h4>
+                    <h4 class="card-header card bg-info text-white">The need for blood</h4>
+                    <p class="card-body card-section-text">
+                      <?php
+                        include 'conn.php';
+                        $sql=$sql= "select * from pages where page_type='needforblood'";
+                        $result=mysqli_query($conn,$sql);
+                        if(mysqli_num_rows($result)>0)   {
+                            while($row = mysqli_fetch_assoc($result)) {
+                              echo $row['page_data'];
+                            }
+                          }
 
-                        <p class="card-body overflow-auto" style="padding-left:2%;height:120px;text-align:left;">
-                          <?php
-                            include 'conn.php';
-                            $sql=$sql= "select * from pages where page_type='needforblood'";
-                            $result=mysqli_query($conn,$sql);
-                            if(mysqli_num_rows($result)>0)   {
-                                while($row = mysqli_fetch_assoc($result)) {
-                                  echo $row['page_data'];
-                                }
-                              }
-
-                           ?>
-                         </p>
+                       ?>
+                     </p>
                 </div>
             </div>
             <div class="col-lg-4 mb-4">
                 <div class="card">
                     <h4 class="card-header card bg-info text-white">Blood Tips</h4>
-
-                    <p class="card-body overflow-auto" style="padding-left:2%;height:120px;text-align:left;">
+                    <p class="card-body card-section-text">
                       <?php
                         include 'conn.php';
                         $sql=$sql= "select * from pages where page_type='bloodtips'";
@@ -99,9 +73,8 @@ include('head.php'); ?>
             </div>
             <div class="col-lg-4 mb-4">
                 <div class="card">
-                    <h4 class="card-header card bg-info text-white" >Who you could Help</h4>
-
-                    <p class="card-body overflow-auto" style="padding-left:2%;height:120px;text-align:left;">
+                    <h4 class="card-header card bg-info text-white">Who you could Help</h4>
+                    <p class="card-body card-section-text">
                       <?php
                         include 'conn.php';
                         $sql=$sql= "select * from pages where page_type='whoyouhelp'";
@@ -131,8 +104,8 @@ include('head.php'); ?>
               while ($row = mysqli_fetch_assoc($result)) {
           ?>
             <div class="col-lg-4 col-sm-6 portfolio-item" ><br>
-            <div class="card" style="width:300px">
-                <img class="card-img-top" src="image\blood_drop_logo.jpg" alt="Card image" style="width:100%;height:300px">
+            <div class="card donor-card">
+                <img class="card-img-top donor-img" src="image/bloodX_4.png" alt="Card image">
                 <div class="card-body">
                   <h3 class="card-title"><?php echo htmlspecialchars($row['donor_name']); ?></h3>
                   <p class="card-text">
@@ -154,7 +127,7 @@ include('head.php'); ?>
         <!-- Features Section -->
         <div class="row">
             <div class="col-lg-6">
-                <h2>BLOOD GROUPS</h2>
+                <h2 class="section-title">BLOOD GROUPS</h2>
                 <p>
                   <?php
                     include 'conn.php';
@@ -170,7 +143,7 @@ include('head.php'); ?>
 
             </div>
             <div class="col-lg-6">
-                <img class="img-fluid rounded" src="image\blood_donationcover.jpeg" alt="" >
+                <img class="img-fluid rounded blood-cover-img" src="image\blood_donationcover.jpeg" alt="">
             </div>
         </div>
         <!-- /.row -->
@@ -195,7 +168,7 @@ include('head.php'); ?>
                ?></p>
               </div>
             <div class="col-md-4">
-                <a class="btn btn-lg btn-secondary btn-block" href="donate_blood.php" style="align:center; background-color:#7FB3D5;color:#273746 ">Become a Donor </a>
+                <a class="btn btn-lg btn-secondary btn-block become-donor-btn" href="donate_blood.php">Become a Donor </a>
             </div>
         </div>
 

@@ -1,90 +1,33 @@
-<html>
-
-<head>
-
-
-<style>
-
-.header {
-  overflow:hidden;
-  background-color: #333;
-  top: 0;
-  width:100%;
-  padding: 10px 5px;
-  color:#FF0404  ;
-}
-
-/* Style the header links */
-.header a {
-  float: left;
-  color: white;
-  text-align: center;
-  padding: 12px;
-  text-decoration: none;
-  font-size: 18px;
-  line-height: 25px;
-  border-radius: 4px;
-  font-weight:bold;
-}
-
-/* Style the logo link (notice that we set the same value of line-height and font-size to prevent the header to increase when the font gets bigger */
-.header a.logo {
-  font-size: 25px;
-  font-weight: bold;
-  color:#FF0404  ;
-}
-
-/* Change the background color on mouse-over */
-.header a:hover {
-  background-color: #ddd;
-  color: black;
-}
-
-
-
-
-/* Float the link section to the right */
-.header-right {
-  float: right;
-}
-
-/* Add media queries for responsiveness - when the screen is 500px wide or less, stack the links on top of each other */
-@media screen and (max-width: 500px) {
-  .header a {
-    float: none;
-    display: block;
-    text-align: left;
-  }
-  .header-right {
-    float: none;
-  }
-}
-/* Style the active/current link*/
-a.act{
-background: linear-gradient(to right, #fd746c 0%, #ff9068 100%);
-color: white;
-border-radius:30px;
-}
-a.logo2{
-  background-color: #333;
-}
-</style>
-</head>
-
-<body>
-  <div class="header">
-    <a href="home.php" class="logo"<?php if($active=='home') echo "class='logo2'"; ?>>BloodX </a>
-    <div class="header-right">
-    <a href="about_us.php"  <?php if($active=='about') echo "class='act'"; ?> >About Us</a>
-    <a href="why_donate_blood.php"  <?php if($active=='why') echo "class='act'"; ?>>Why Donate Blood</a>
-      <a href="donate_blood.php"  <?php if($active=='donate') echo "class='act'"; ?>>Become A Donor</a>
-      <a href="need_blood.php" <?php if($active=='need') echo "class='act'"; ?>>Need Blood</a>
-      
-      <a href="contact_us.php" <?php if($active=='contact') echo "class='act'"; ?>>Contact Us</a>
-      
-      <a href="http://localhost/Blood-Bank-And-Donation-Management-System-master/admin/login.php" <?php if($active=='login') echo "class='act'"; ?>>Login</a>
+<nav class="navbar navbar-expand-lg navbar-dark" style="background: linear-gradient(90deg, #b1001a 0%, #ff1744 100%); box-shadow: 0 2px 12px rgba(200,0,0,0.13);">
+  <div class="container">
+    <a class="navbar-brand font-weight-bold" href="home.php" style="font-size: 2rem; letter-spacing: 1px; color: #fff;">BloodX</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item <?php if($active=='home') echo 'active'; ?>">
+          <a class="nav-link" href="home.php" style="color: #fff; font-weight: 600;">Home</a>
+        </li>
+        <li class="nav-item <?php if($active=='about') echo 'active'; ?>">
+          <a class="nav-link" href="about_us.php" style="color: #fff; font-weight: 600;">About Us</a>
+        </li>
+        <li class="nav-item <?php if($active=='why') echo 'active'; ?>">
+          <a class="nav-link" href="why_donate_blood.php" style="color: #fff; font-weight: 600;">Why Donate Blood</a>
+        </li>
+        <li class="nav-item <?php if($active=='donate') echo 'active'; ?>">
+          <a class="nav-link" href="donate_blood.php" style="color: #fff; font-weight: 600;">Become A Donor</a>
+        </li>
+        <li class="nav-item <?php if($active=='need') echo 'active'; ?>">
+          <a class="nav-link" href="need_blood.php" style="color: #fff; font-weight: 600;">Need Blood</a>
+        </li>
+        <li class="nav-item <?php if($active=='contact') echo 'active'; ?>">
+          <a class="nav-link" href="contact_us.php" style="color: #fff; font-weight: 600;">Contact Us</a>
+        </li>
+        <li class="nav-item <?php if($active=='login') echo 'active'; ?>">
+          <a class="nav-link" href="http://localhost/Blood-Bank-And-Donation-Management-System-master/admin/login.php" style="color: #fff; font-weight: 600;">Login</a>
+        </li>
+      </ul>
     </div>
   </div>
-
-</body>
-</html>
+</nav>

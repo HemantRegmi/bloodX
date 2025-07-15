@@ -5,6 +5,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="home.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -29,71 +30,74 @@ if(isset($_POST["send"])){
 }
 ?>
 
-<div id="page-container" style="margin-top:50px; position: relative;min-height: 84vh;">
+<div id="page-container">
   <div class="container">
-  <div id="content-wrap" style="padding-bottom:50px;">
-    <h1 class="mt-4 mb-3">Contact</h1>
-    <div class="row">
-      <div class="col-lg-8 mb-4">
-        <h3>Send us a Message</h3>
-        <form name="sentMessage"  method="post">
-            <div class="control-group form-group">
-                <div class="controls">
-                    <label>Full Name:</label>
-                    <input type="text" class="form-control" id="name" name="fullname" required>
-                    <p class="help-block"></p>
+    <div id="content-wrap">
+      <h1 class="section-title mb-4">Contact</h1>
+      <div class="row">
+        <div class="col-lg-7 mb-4">
+          <div class="card p-4 shadow-lg">
+            <h3 class="mb-3 font-weight-bold">Send us a Message</h3>
+            <form name="sentMessage" method="post">
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label class="font-italic font-weight-bold">Full Name<span style="color:red">*</span></label>
+                  <input type="text" class="form-control" id="name" name="fullname" required>
                 </div>
-            </div>
-            <div class="control-group form-group">
-                <div class="controls">
-                    <label>Phone Number:</label>
-                    <input type="tel" class="form-control" id="phone" name="contactno"  required >
+                <div class="form-group col-md-6">
+                  <label class="font-italic font-weight-bold">Phone Number<span style="color:red">*</span></label>
+                  <input type="tel" class="form-control" id="phone" name="contactno" required>
                 </div>
-            </div>
-            <div class="control-group form-group">
-                <div class="controls">
-                    <label>Email Address:</label>
-                    <input type="email" class="form-control" id="email" name="email" required>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <label class="font-italic font-weight-bold">Email Address<span style="color:red">*</span></label>
+                  <input type="email" class="form-control" id="email" name="email" required>
                 </div>
-            </div>
-            <div class="control-group form-group">
-                <div class="controls">
-                    <label>Message:</label>
-                    <textarea rows="10" cols="100" class="form-control" id="message" name="message" required  maxlength="999" style="resize:none"></textarea>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <label class="font-italic font-weight-bold">Message<span style="color:red">*</span></label>
+                  <textarea rows="6" class="form-control" id="message" name="message" required maxlength="999" style="resize:none"></textarea>
                 </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-12 text-center">
+                  <button type="submit" name="send" class="btn become-donor-btn">Send Message</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="col-lg-5 mb-4">
+          <div class="card p-4 shadow-sm h-100">
+            <h3 class="mb-3 font-weight-bold">Contact Details</h3>
+            <?php
+              include 'conn.php';
+              $sql= "select * from contact_info";
+              $result=mysqli_query($conn,$sql);
+              if(mysqli_num_rows($result)>0)   {
+                  while($row = mysqli_fetch_assoc($result)) { ?>
+            <div class="mb-3">
+              <h5 class="mb-1 font-weight-bold">Address:</h5>
+              <div><?php echo htmlspecialchars($row['contact_address']); ?></div>
             </div>
-            <button type="submit" name="send"  class="btn btn-primary">Send Message</button>
-        </form>
+            <div class="mb-3">
+              <h5 class="mb-1 font-weight-bold">Contact Number:</h5>
+              <div class="text-danger font-weight-bold"><?php echo htmlspecialchars($row['contact_phone']); ?></div>
+            </div>
+            <div class="mb-3">
+              <h5 class="mb-1 font-weight-bold">Email:</h5>
+              <div><a href="mailto:<?php echo htmlspecialchars($row['contact_mail']); ?>" class="text-dark font-weight-bold"><?php echo htmlspecialchars($row['contact_mail']); ?></a></div>
+            </div>
+            <?php }
+            } ?>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="col-lg-4 mb-4">
-        <h2>Contact Details</h2>
-        <?php
-          include 'conn.php';
-          $sql= "select * from contact_info";
-          $result=mysqli_query($conn,$sql);
-          if(mysqli_num_rows($result)>0)   {
-              while($row = mysqli_fetch_assoc($result)) { ?>
-        <br>
-        <p>
-            <h4>Address :</h4><?php echo $row['contact_address']; ?>
-        </p>
-        <p>
-            <h4>Contact Number :</h4><?php echo $row['contact_phone']; ?>
-        </p>
-        <p>
-          <h4>  Email: </h4><a href=""><?php echo $row['contact_mail']; ?></a>
-          </a></b>
-        </p>
-        <?php }
-      } ?>
-    </div>
-</div>
-<!-- /.row -->
-
-
-</div>
-</div>
-<?php include 'footer.php' ?>
+  </div>
+  <?php include 'footer.php' ?>
 </div>
 <script>
   <?php if (isset($_GET['sent']) && $_GET['sent'] == 1): ?>
