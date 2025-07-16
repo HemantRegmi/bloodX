@@ -39,17 +39,11 @@ include('head.php'); ?>
                 <div class="card">
                     <h4 class="card-header card bg-info text-white">The need for blood</h4>
                     <p class="card-body card-section-text">
-                      <?php
-                        include 'conn.php';
-                        $sql=$sql= "select * from pages where page_type='needforblood'";
-                        $result=mysqli_query($conn,$sql);
-                        if(mysqli_num_rows($result)>0)   {
-                            while($row = mysqli_fetch_assoc($result)) {
-                              echo $row['page_data'];
-                            }
-                          }
-
-                       ?>
+                      There are many reasons patients need blood. A common misunderstanding about blood usage is that accident victims are the patients who use the most blood. Actually, people needing the most blood include those:<br><br>
+                      1) Being treated for cancer<br>
+                      2) Undergoing orthopedic surgeries<br>
+                      3) Undergoing cardiovascular surgeries<br>
+                      4) Being treated for inherited blood disorders
                      </p>
                 </div>
             </div>
@@ -57,17 +51,11 @@ include('head.php'); ?>
                 <div class="card">
                     <h4 class="card-header card bg-info text-white">Blood Tips</h4>
                     <p class="card-body card-section-text">
-                      <?php
-                        include 'conn.php';
-                        $sql=$sql= "select * from pages where page_type='bloodtips'";
-                        $result=mysqli_query($conn,$sql);
-                        if(mysqli_num_rows($result)>0)   {
-                            while($row = mysqli_fetch_assoc($result)) {
-                              echo $row['page_data'];
-                            }
-                          }
-
-                       ?>
+                      1) You must be in good health.<br>
+                      2) Hydrate and eat a healthy meal before your donation.<br>
+                      3) You're never too old to donate blood.<br>
+                      4) Rest and relaxed.<br>
+                      5) Don't forget your FREE post-donation snack.
                      </p>
 
                         </div>
@@ -76,17 +64,12 @@ include('head.php'); ?>
                 <div class="card">
                     <h4 class="card-header card bg-info text-white">Who you could Help</h4>
                     <p class="card-body card-section-text">
-                      <?php
-                        include 'conn.php';
-                        $sql=$sql= "select * from pages where page_type='whoyouhelp'";
-                        $result=mysqli_query($conn,$sql);
-                        if(mysqli_num_rows($result)>0)   {
-                            while($row = mysqli_fetch_assoc($result)) {
-                              echo $row['page_data'];
-                            }
-                          }
-
-                       ?>
+                      Every 2 seconds, someone in the World needs blood. Donating blood can help:<br><br>
+                      1) People who go through disasters or emergency situations.<br>
+                      2) People who lose blood during major surgeries.<br>
+                      3) People who have lost blood because of a gastrointestinal bleed.<br>
+                      4) Women who have serious complications during pregnancy or childbirth.<br>
+                      5) People with cancer or severe anemia sometimes caused by thalassemia or sickle cell disease.
                      </p>
 
 
@@ -124,19 +107,16 @@ include('head.php'); ?>
         <!-- Features Section -->
         <div class="row">
             <div class="col-lg-6">
-                <h2 class="section-title">BLOOD GROUPS</h2>
-                <p>
-                  <?php
-                    include 'conn.php';
-                    $sql=$sql= "select * from pages where page_type='bloodgroups'";
-                    $result=mysqli_query($conn,$sql);
-                    if(mysqli_num_rows($result)>0)   {
-                        while($row = mysqli_fetch_assoc($result)) {
-                          echo $row['page_data'];
-                        }
-                      }
-
-                   ?></p>
+                <h2 class="section-title" style="font-size:2.5rem;font-weight:900;color:#b1001a;letter-spacing:1px;">BLOOD GROUPS</h2>
+                <p class="lead" style="font-size:1.25rem;">Blood group of any human being will mainly fall in any one of the following groups.</p>
+                <ul style="font-size:1.15rem; margin-bottom:1.5rem;">
+                  <li>A positive or A negative</li>
+                  <li>B positive or B negative</li>
+                  <li>O positive or O negative</li>
+                  <li>AB positive or AB negative.</li>
+                </ul>
+                <p style="font-size:1.15rem;">Your blood group is determined by the genes you inherit from your parents.<br>
+                A healthy diet helps ensure a successful blood donation, and also makes you feel better!</p>
 
             </div>
             <div class="col-lg-6">
@@ -150,19 +130,13 @@ include('head.php'); ?>
         <!-- Call to Action Section -->
         <div class="row mb-4">
             <div class="col-md-8">
-            <h4>UNIVERSAL DONORS AND RECIPIENTS</h4>
-            <p>
-              <?php
-                include 'conn.php';
-                $sql=$sql= "select * from pages where page_type='universal'";
-                $result=mysqli_query($conn,$sql);
-                if(mysqli_num_rows($result)>0)   {
-                    while($row = mysqli_fetch_assoc($result)) {
-                      echo $row['page_data'];
-                    }
-                  }
-
-               ?></p>
+            <h4 style="font-size:2rem;font-weight:900;color:#b1001a;letter-spacing:1px;">UNIVERSAL DONORS AND RECIPIENTS</h4>
+            <p style="font-size:1.15rem;">
+              The most common blood type is O, followed by type A. Type O individuals are often called "universal donors" since their blood can be transfused into persons with any blood type. Those with type AB blood are called "universal recipients" because they can receive blood of any type.
+            </p>
+            <p style="font-size:1.15rem;">
+              For emergency transfusions, blood group type O negative blood is the variety of blood that has the lowest risk of causing serious reactions for most people who receive it. Because of this, it's sometimes called the universal blood donor type.
+            </p>
               </div>
             <div class="col-md-4">
                 <a class="btn btn-lg btn-secondary btn-block become-donor-btn" href="donate_blood.php">Become a Donor </a>

@@ -109,6 +109,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                                 <th style="font-size:0.95em;">Contact</th>
                                 <th style="font-size:0.95em;">Blood Group</th>
                                 <th style="font-size:0.95em;">Status</th>
+                                <th style="font-size:0.95em;">Action</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -125,6 +126,9 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                                         <?php echo ucfirst($res['status']); ?>
                                       </button>
                                     </form>
+                                  </td>
+                                  <td>
+                                    <button class="btn btn-xs btn-danger delete-reservation-btn" data-id="<?php echo $res['id']; ?>">Delete</button>
                                   </td>
                                 </tr>
                               <?php } ?>
@@ -165,6 +169,34 @@ $(document).ready(function(){
     }).then((result) => {
       if (result.isConfirmed) {
         window.location.href = 'hospital.php?delete=' + id;
+      }
+    });
+  });
+  $('.delete-reservation-btn').on('click', function(e){
+    e.preventDefault();
+    var id = $(this).data('id');
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "Do you really want to delete this reservation?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.get('delete_reservation.php', { id: id }, function(resp) {
+          if (resp === 'ok') {
+            Swal.fire({
+              icon: 'success',
+              title: 'Deleted successfully',
+              showConfirmButton: false,
+              timer: 1500
+            }).then(() => { location.reload(); });
+          } else {
+            Swal.fire('Error', 'Failed to delete reservation.', 'error');
+          }
+        });
       }
     });
   });
