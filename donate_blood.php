@@ -1,4 +1,38 @@
-<?php session_start(); if (!isset($_SESSION['user_id'])) { header('Location: user_login.php'); exit; } ?>
+<?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+  header('Location: user_login.php');
+  exit;
+}
+
+// Handle form submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
+    include 'conn.php';
+    $donor_name = mysqli_real_escape_string($conn, $_POST['fullname']);
+    $donor_number = mysqli_real_escape_string($conn, $_POST['mobileno']);
+    $donor_mail = mysqli_real_escape_string($conn, $_POST['emailid']);
+    $donor_age = mysqli_real_escape_string($conn, $_POST['age']);
+    $donor_gender = mysqli_real_escape_string($conn, $_POST['gender']);
+    $donor_blood_id = mysqli_real_escape_string($conn, $_POST['blood']);
+    $donor_address = mysqli_real_escape_string($conn, $_POST['address']);
+
+    // Get blood group name from blood table
+    $bg_query = mysqli_query($conn, "SELECT blood_group FROM blood WHERE blood_id = '{$donor_blood_id}' LIMIT 1");
+    $donor_blood = '';
+    if ($bg_row = mysqli_fetch_assoc($bg_query)) {
+        $donor_blood = $bg_row['blood_group'];
+    }
+
+    $sql = "INSERT INTO donor_details (donor_name, donor_number, donor_mail, donor_age, donor_gender, donor_blood, donor_address) 
+            VALUES ('$donor_name', '$donor_number', '$donor_mail', '$donor_age', '$donor_gender', '$donor_blood', '$donor_address')";
+    if (mysqli_query($conn, $sql)) {
+        header("Location: donate_blood.php?success=1");
+        exit;
+    } else {
+        echo '<div class="alert alert-danger text-center" style="margin-top:20px;">Error submitting form. Please try again.</div>';
+    }
+}
+?>
 
 <html>
 
@@ -34,34 +68,6 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
       });
     </script>
     ";
-}
-
-// Handle form submission
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
-    include 'conn.php';
-    $donor_name = mysqli_real_escape_string($conn, $_POST['fullname']);
-    $donor_number = mysqli_real_escape_string($conn, $_POST['mobileno']);
-    $donor_mail = mysqli_real_escape_string($conn, $_POST['emailid']);
-    $donor_age = mysqli_real_escape_string($conn, $_POST['age']);
-    $donor_gender = mysqli_real_escape_string($conn, $_POST['gender']);
-    $donor_blood_id = mysqli_real_escape_string($conn, $_POST['blood']);
-    $donor_address = mysqli_real_escape_string($conn, $_POST['address']);
-
-    // Get blood group name from blood table
-    $bg_query = mysqli_query($conn, "SELECT blood_group FROM blood WHERE blood_id = '{$donor_blood_id}' LIMIT 1");
-    $donor_blood = '';
-    if ($bg_row = mysqli_fetch_assoc($bg_query)) {
-        $donor_blood = $bg_row['blood_group'];
-    }
-
-    $sql = "INSERT INTO donor_details (donor_name, donor_number, donor_mail, donor_age, donor_gender, donor_blood, donor_address) 
-            VALUES ('$donor_name', '$donor_number', '$donor_mail', '$donor_age', '$donor_gender', '$donor_blood', '$donor_address')";
-    if (mysqli_query($conn, $sql)) {
-        header("Location: donate_blood.php?success=1");
-        exit;
-    } else {
-        echo '<div class="alert alert-danger text-center" style="margin-top:20px;">Error submitting form. Please try again.</div>';
-    }
 }
 ?>
 

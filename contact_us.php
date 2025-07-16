@@ -1,4 +1,23 @@
-<?php session_start(); if (!isset($_SESSION['user_id'])) { header('Location: user_login.php'); exit; } ?>
+<?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+  header('Location: user_login.php');
+  exit;
+}
+
+include 'conn.php';
+if(isset($_POST["send"])){
+  $name = mysqli_real_escape_string($conn, $_POST['fullname']);
+  $email = mysqli_real_escape_string($conn, $_POST['email']);
+  $number = mysqli_real_escape_string($conn, $_POST['contactno']);
+  $message = mysqli_real_escape_string($conn, $_POST['message']);
+
+  $sql = "INSERT INTO contact_query (query_name, query_mail, query_number, query_message) VALUES ('$name', '$email', '$number', '$message')";
+  $result=mysqli_query($conn,$sql) or die("query unsuccessful.");
+  header("Location: contact_us.php?sent=1");
+  exit;
+}
+?>
 <html>
 <head>
   <meta charset="utf-8">
@@ -16,20 +35,6 @@
 <body>
 <?php $active ='contact';
 include 'head.php'; ?>
-<?php
-include 'conn.php'; // Add this line at the very top
-if(isset($_POST["send"])){
-  $name = mysqli_real_escape_string($conn, $_POST['fullname']);
-  $email = mysqli_real_escape_string($conn, $_POST['email']);
-  $number = mysqli_real_escape_string($conn, $_POST['contactno']);
-  $message = mysqli_real_escape_string($conn, $_POST['message']);
-
-  $sql = "INSERT INTO contact_query (query_name, query_mail, query_number, query_message) VALUES ('$name', '$email', '$number', '$message')";
-  $result=mysqli_query($conn,$sql) or die("query unsuccessful.");
-  header("Location: contact_us.php?sent=1");
-  exit;
-}
-?>
 
 <div id="page-container">
   <div class="container">
@@ -74,7 +79,6 @@ if(isset($_POST["send"])){
           <div class="card p-4 shadow-sm h-100">
             <h3 class="mb-3 font-weight-bold">Contact Details</h3>
             <?php
-              include 'conn.php';
               $sql= "select * from contact_info";
               $result=mysqli_query($conn,$sql);
               if(mysqli_num_rows($result)>0)   {
