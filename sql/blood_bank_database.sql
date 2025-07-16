@@ -69,7 +69,7 @@ INSERT INTO pages (page_id, page_name, page_type, page_data) VALUES
 3)people with severe trauma following man-made and natural disasters.
 4)many complex medical and surgical procedures and cancer patients.
 It is also needed for regular transfusions for people with conditions such as thalassaemia and sickle cell disease and is used to make products such as clotting factors for people with haemophilia. There is a constant need for regular blood supply because blood can be stored for only a limited time before use. Regular blood donations by a sufficient number of healthy people are needed to ensure that safe blood will be available whenever and wherever it is needed.</span>'),
-(3, 'About Us ', 'aboutus', '<span style="color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; text-align: justify;">Blood bank is a place where blood bag that is collected from blood donation events is stored in one place. The term “blood bank” refers to a division of a hospital laboratory where the storage of blood product occurs and where proper testing is performed to reduce the risk of transfusion related events . The process of managing the blood bag that is received from the blood donation events needs a proper and systematic management. The blood bag must be handled with care and treated thoroughly as it is related to someone’s life. The development of Web-based Blood Bank And Donation Management System (BBDMS) is proposed to provide a management functional to the blood bank in order to handle the blood bag and to make entries of the individuals who want to donate blood and who are in need.</span>');
+(3, 'About Us ', 'aboutus', '<span style="color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; text-align: justify;">Blood bank is a place where blood bag that is collected from blood donation events is stored in one place. The term "blood bank" refers to a division of a hospital laboratory where the storage of blood product occurs and where proper testing is performed to reduce the risk of transfusion related events . The process of managing the blood bag that is received from the blood donation events needs a proper and systematic management. The blood bag must be handled with care and treated thoroughly as it is related to someone's life. The development of Web-based Blood Bank And Donation Management System (BBDMS) is proposed to provide a management functional to the blood bank in order to handle the blood bag and to make entries of the individuals who want to donate blood and who are in need.</span>');
 
 
 
@@ -84,9 +84,9 @@ INSERT INTO pages (page_id, page_name, page_type, page_data) VALUES
 (5, 'Blood Tips', 'bloodtips', '<span style="color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; text-align: justify;">
 1) You must be in good health. <br>
 2) Hydrate and eat a healthy meal before your donation.<br>
-3) You’re never too old to donate blood. <br>
+3) You're never too old to donate blood. <br>
 4) Rest and relaxed.<br>
-5) Don’t forget your FREE post-donation snack. 
+5) Don't forget your FREE post-donation snack. 
 </span>'),
 (6, 'Who you could Help', 'whoyouhelp', '<span style="color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; text-align: justify;">
 Every 2 seconds, someone in the World needs blood. Donating blood can help:
@@ -118,7 +118,7 @@ The most common blood type is O, followed by type A.
 
 Type O individuals are often called "universal donors" since their blood can be transfused into persons with any blood type. Those with type AB blood are called "universal recipients" because they can receive blood of any type.</p>
 
-            For emergency transfusions, blood group type O negative blood is the variety of blood that has the lowest risk of causing serious reactions for most people who receive it. Because of this, it\'s sometimes called the universal blood donor type.
+            For emergency transfusions, blood group type O negative blood is the variety of blood that has the lowest risk of causing serious reactions for most people who receive it. Because of this, it's sometimes called the universal blood donor type.
 
 </span>');
 
@@ -165,3 +165,13 @@ CREATE TABLE query_stat(
   values('1',"Read"),
   ('2',"Pending");
   
+
+/* Create table for admin notifications to users */
+CREATE TABLE IF NOT EXISTS admin_notifications (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NULL, -- NULL means broadcast to all users
+  title VARCHAR(255) NOT NULL,
+  message TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  seen TINYINT(1) NOT NULL DEFAULT 0
+);

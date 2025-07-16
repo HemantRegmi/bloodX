@@ -27,18 +27,7 @@ include('head.php');
       <div class="row align-items-center">
         <div class="col-lg-6 mb-4">
           <h1 class="section-title">About Us</h1>
-          <p>
-            <?php
-              include 'conn.php';
-              $sql=$sql= "select * from pages where page_type='aboutus'";
-              $result=mysqli_query($conn,$sql);
-              if(mysqli_num_rows($result)>0)   {
-                  while($row = mysqli_fetch_assoc($result)) {
-                    echo $row['page_data'];
-                  }
-                }
-            ?>
-          </p>
+          BloodX is dedicated to connecting blood donors with those in need, making the process of blood donation and transfusion easier, safer, and more efficient. Our mission is to save lives by ensuring a reliable and accessible blood supply for everyone. We work with partner hospitals, organize donation drives, and provide resources and support for both donors and recipients. Join us in making a difference—because every drop counts.
         </div>
         <div class="col-lg-6 mb-4">
           <img class="img-fluid rounded blood-cover-img" src="image/bloodX_3.jpg" alt="About BloodX">

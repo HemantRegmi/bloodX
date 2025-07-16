@@ -67,9 +67,20 @@ include 'sidebar.php'; ?>
                 </div>
               </div>
 
+              <div class="col-md-3 mb-4">
+                <div class="dashboard-stat-card">
+                  <?php
+                    $sql ="SELECT * FROM hospitals";
+                    $result=mysqli_query($conn,$sql) or die("query failed.");
+                    $row=mysqli_num_rows($result);
+                  ?>
+                  <div class="dashboard-stat-number"><?php echo $row; ?></div>
+                  <div class="dashboard-stat-title">Total Hospitals</div>
+                  <a href="hospital.php" class="btn become-donor-btn mt-3">Full Detail</a>
+                </div>
+              </div>
+
               <!-- Removed Pending Queries panel -->
-
-
 
         </div>
       </div>

@@ -16,6 +16,6 @@
   <a href="add_donor.php"   <?php if($active=='add') echo "class='act'"; ?>><span class="glyphicon glyphicon-pencil"></span>&nbsp&nbspAdd Donor</a>
   <a href="donor_list.php"   <?php if($active=='list') echo "class='act'"; ?>><span class="glyphicon glyphicon-list-alt"></span>&nbsp&nbsp Donor List</a>
   <a href="query.php"   <?php if($active=='query') echo "class='act'"; ?>><span class="glyphicon glyphicon-check"></span>&nbsp&nbspUser Query</a>
-
- 
+  <a href="hospital.php"   <?php if($active=='hospital') echo "class='act'"; ?>><span class="glyphicon glyphicon-plus-sign"></span>&nbsp&nbspManage Hospitals</a>
+  <a href="notification.php" <?php if(basename($_SERVER['PHP_SELF'])=='notification.php') echo "class='act'"; ?>><span class="glyphicon glyphicon-bell"></span>&nbsp&nbspSend Notification</a>
 </div>
