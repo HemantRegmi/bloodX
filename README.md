@@ -115,6 +115,8 @@ User Interface:
 <img width="1919" height="912" alt="Screenshot 2025-07-16 140002" src="https://github.com/user-attachments/assets/bee37b53-051b-4464-92cb-79a465e5e4bc" />
 <img width="1919" height="917" alt="Screenshot 2025-07-16 140016" src="https://github.com/user-attachments/assets/ae8a9074-8e65-4fa2-9149-58b22870afde" />
 <img width="1919" height="922" alt="Screenshot 2025-07-16 140058" src="https://github.com/user-attachments/assets/16112d46-49e4-4a27-a469-3946c2701247" />
+
+Admin Dashboard:
 <img width="1919" height="921" alt="Screenshot 2025-07-16 140119" src="https://github.com/user-attachments/assets/cb077b44-ef31-4e20-afbc-1f7e5f7db0e5" />
 <img width="1919" height="927" alt="Screenshot 2025-07-16 140130" src="https://github.com/user-attachments/assets/9417f541-314d-4792-9424-b267f9cafb8c" />
 <img width="1919" height="918" alt="Screenshot 2025-07-16 140143" src="https://github.com/user-attachments/assets/9eb152ce-5847-486f-b476-dd750a4f3d15" />
