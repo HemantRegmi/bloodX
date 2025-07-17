@@ -107,6 +107,8 @@ Blood-Bank-And-Donation-Management-System-master/
 - **Notification Issues:** Check that the notification tables exist and the AJAX endpoints are correct.
 
 ---
+## Screenshot
+<img width="1919" height="919" alt="Screenshot 2025-07-16 140333" src="https://github.com/user-attachments/assets/063ab6a8-c1e8-4f9b-8227-e140f0bc70d5" />
 
 ## License
 
