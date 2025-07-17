@@ -3,26 +3,37 @@ require_once 'conn.php';
 session_start();
 $message = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $email = trim($_POST['email'] ?? '');
+  $input = trim($_POST['user_or_email'] ?? '');
   $password = $_POST['password'] ?? '';
-  if (!$email || !$password) {
+  if (!$input || !$password) {
     $message = '<div class="alert alert-danger">All fields are required.</div>';
   } else {
-    $email = mysqli_real_escape_string($conn, $email);
-    $res = mysqli_query($conn, "SELECT id, name, password FROM users WHERE email='$email'");
-    if ($res && mysqli_num_rows($res) === 1) {
-      $row = mysqli_fetch_assoc($res);
-      if (password_verify($password, $row['password'])) {
-        $_SESSION['user_id'] = $row['id'];
-        $_SESSION['user_name'] = $row['name'];
+    // 1. Try admin login (username, plain password)
+    $admin_input = mysqli_real_escape_string($conn, $input);
+    $admin_pass = mysqli_real_escape_string($conn, $password);
+    $admin_sql = "SELECT * FROM admin_info WHERE admin_username='$admin_input' AND admin_password='$admin_pass'";
+    $admin_res = mysqli_query($conn, $admin_sql);
+    if ($admin_res && mysqli_num_rows($admin_res) === 1) {
+      $admin_row = mysqli_fetch_assoc($admin_res);
+      $_SESSION['loggedin'] = true;
+      $_SESSION['username'] = $admin_row['admin_username'];
+      header('Location: admin/dashboard.php');
+      exit;
+    }
+    // 2. Try user login (email, hashed password)
+    $user_input = mysqli_real_escape_string($conn, $input);
+    $user_sql = "SELECT id, name, password FROM users WHERE email='$user_input'";
+    $user_res = mysqli_query($conn, $user_sql);
+    if ($user_res && mysqli_num_rows($user_res) === 1) {
+      $user_row = mysqli_fetch_assoc($user_res);
+      if (password_verify($password, $user_row['password'])) {
+        $_SESSION['user_id'] = $user_row['id'];
+        $_SESSION['user_name'] = $user_row['name'];
         header('Location: home.php');
         exit;
-      } else {
-        $message = '<div class="alert alert-danger">Invalid credentials.</div>';
       }
-    } else {
-      $message = '<div class="alert alert-danger">Invalid credentials.</div>';
     }
+    $message = '<div class="alert alert-danger">Invalid credentials.</div>';
   }
 }
 ?>
@@ -31,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User Login</title>
+  <title>Login</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <style>
     body { background: #fff3f3; }
@@ -92,13 +103,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <div class="container d-flex align-items-center justify-content-center" style="min-height: 100vh; position: relative; z-index: 1;">
     <div class="col-md-6 col-lg-5 mx-auto">
       <div class="card login-card">
-        <div class="card-header">User Login</div>
+        <div class="card-header">Login</div>
         <div class="card-body">
           <?php echo $message; ?>
           <form method="post" autocomplete="off">
             <div class="form-group">
-              <label for="email">Email</label>
-              <input type="email" class="form-control" id="email" name="email" required>
+              <label for="user_or_email">Username or Email</label>
+              <input type="text" class="form-control" id="user_or_email" name="user_or_email" required>
             </div>
             <div class="form-group">
               <label for="password">Password</label>

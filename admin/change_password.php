@@ -127,7 +127,7 @@ if ($swal) {
 else {
     echo '<div class="alert alert-danger"><b> Please Login First To Access Admin Portal.</b></div>';
     ?>
-    <form method="post" name="" action="login.php" class="form-horizontal">
+    <form method="post" name="" action="../login.php" class="form-horizontal">
       <div class="form-group">
         <div class="col-sm-8 col-sm-offset-4" style="float:left">
 

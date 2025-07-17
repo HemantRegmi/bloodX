@@ -126,7 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <button type="submit" class="btn btn-danger btn-block">Sign Up</button>
             <div class="text-center mt-2">
-              <a href="user_login.php" class="themed-link-btn">Already have an account? Login</a>
+              <a href="login.php" class="themed-link-btn">Already have an account? Login</a>
             </div>
           </form>
         </div>
@@ -139,7 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   Swal.fire({
     icon: 'success',
     title: 'Signup successful!',
-    html: 'You can now <a href="user_login.php" style="display:inline-block;margin-top:10px;padding:0.5em 1.5em;background:linear-gradient(90deg,#dc3545 0%,#b71c1c 100%);color:#fff!important;border-radius:8px;font-weight:600;text-decoration:none;transition:background 0.2s;">Login here</a>.',
+    html: 'You can now <a href="login.php" style="display:inline-block;margin-top:10px;padding:0.5em 1.5em;background:linear-gradient(90deg,#dc3545 0%,#b71c1c 100%);color:#fff!important;border-radius:8px;font-weight:600;text-decoration:none;transition:background 0.2s;">Login here</a>.',
     confirmButtonText: 'OK',
     customClass: { popup: 'themed-popup' }
   });

@@ -46,14 +46,8 @@
           </div>
         </li>
         <?php else: ?>
-        <li class="nav-item dropdown <?php if($active=='login') echo 'active'; ?>">
-          <a class="nav-link dropdown-toggle" href="#" id="loginDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #fff; font-weight: 600;">
-            Login
-          </a>
-          <div class="dropdown-menu login-dropdown-menu dropdown-menu-right" aria-labelledby="loginDropdown" style="background: linear-gradient(120deg, #fff 80%, #ffe6ea 100%); border-radius: 14px; box-shadow: 0 4px 24px rgba(220,53,69,0.10); border: 1.5px solid #ff1744; min-width: 210px;">
-            <a class="dropdown-item" href="admin/login.php" style="color: #b1001a; font-weight: 600;">Admin Login</a>
-            <a class="dropdown-item" href="user_login.php" style="color: #b1001a; font-weight: 600;">User Login</a>
-          </div>
+        <li class="nav-item <?php if($active=='login') echo 'active'; ?>">
+          <a class="nav-link" href="login.php" style="color: #fff; font-weight: 600;">Login</a>
         </li>
         <?php endif; ?>
       </ul>

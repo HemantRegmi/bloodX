@@ -125,7 +125,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
 } else {
     echo '<div class="alert alert-danger"><b> Please Login First To Access Admin Portal.</b></div>';
 ?>
-    <form method="post" name="" action="login.php" class="form-horizontal">
+    <form method="post" name="" action="../login.php" class="form-horizontal">
       <div class="form-group">
         <div class="col-sm-8 col-sm-offset-4" style="float:left">
           <button class="btn btn-primary" name="submit" type="submit">Go to Login Page</button>

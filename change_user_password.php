@@ -2,7 +2,7 @@
 session_start();
 require_once 'conn.php';
 if (!isset($_SESSION['user_id'])) {
-  header('Location: user_login.php');
+  header('Location: login.php');
   exit;
 }
 $message = '';
