@@ -1,13 +1,23 @@
-<!-- Modern Bootstrap Footer -->
-<footer class="footer mt-auto py-3 bg-dark text-white" style="background: linear-gradient(90deg, #232526 0%, #414345 100%);">
-  <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
-    <div class="footer-left font-weight-bold" style="font-size:1.2em;">BloodX</div>
-    <div class="footer-center text-center my-2 my-md-0" style="font-size:0.95em;">
-      <span>COPYRIGHT © <?php echo date("Y"); ?> BloodX</span><br>
-      <span>ALL RIGHTS RESERVED.</span>
+<!-- Compact Footer: BloodX left, Get In Touch right, with external CSS -->
+<link rel="stylesheet" href="css/footer.css">
+<footer class="footer mt-auto py-3 bg-dark text-white">
+  <div class="footer-main-row">
+    <!-- BloodX and Description -->
+    <div class="footer-left">
+      <div class="footer-title">BloodX</div>
+      <div class="footer-desc">
+        BloodX is a web application that provides a complete set of reference materials and services for blood donation and management.
+      </div>
     </div>
-    <div class="footer-right text-md-right text-center" style="font-size:1em;">
-      <span>Contact: <a href="mailto:bloodbank@gmail.com" class="text-white" style="text-decoration:none;">bloodbank@gmail.com</a> | <a href="tel:9866717332" class="text-white" style="text-decoration:none;">9866717332</a></span>
+    <!-- Contact Info -->
+    <div class="footer-right">
+      <div class="footer-contact-title">Get In Touch</div>
+      <div class="footer-contact-item"><span class="footer-icon">✉️</span> <a href="mailto:bloodbank@gmail.com" class="footer-link">bloodbank@gmail.com</a></div>
+      <div class="footer-contact-item"><span class="footer-icon">📞</span> <a href="tel:9866717332" class="footer-link">9866717332</a></div>
     </div>
+  </div>
+  <hr class="footer-divider">
+  <div class="footer-bottom-row">
+    &copy; 2025 &middot; BloodX &middot; All Rights Reserved
   </div>
 </footer>

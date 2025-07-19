@@ -1,0 +1,82 @@
+/* Footer Styles */
+.footer {
+  background: linear-gradient(90deg, #b1001a 0%, #232526 100%);
+  font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+  font-size: 0.97em;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+}
+.footer-main-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 18px 5vw 0 5vw;
+  min-height: 70px;
+}
+.footer-left {
+  max-width: 340px;
+}
+.footer-title {
+  font-weight: bold;
+  font-size: 1.08em;
+  color: #ff5e5e;
+  letter-spacing: 1px;
+  margin-bottom: 2px;
+}
+.footer-desc {
+  color: #d1d5db;
+  font-size: 0.97em;
+  line-height: 1.5;
+}
+.footer-right {
+  text-align: right;
+}
+.footer-contact-title {
+  font-weight: bold;
+  font-size: 1em;
+  color: #fff;
+  margin-bottom: 2px;
+}
+.footer-contact-item {
+  font-size: 0.97em;
+  margin-bottom: 2px;
+}
+.footer-icon {
+  font-size: 1.1em;
+  margin-right: 4px;
+}
+.footer-link {
+  color: #fff;
+  text-decoration: none;
+}
+.footer-link:hover {
+  text-decoration: underline;
+  color: #ff5e5e;
+}
+.footer-divider {
+  border-top: 1px solid #3a4250;
+  margin: 0 5vw 6px 5vw;
+}
+.footer-bottom-row {
+  color: #d1d5db;
+  font-size: 0.97em;
+  letter-spacing: 1px;
+  text-align: center;
+  padding-bottom: 6px;
+}
+@media (max-width: 900px) {
+  .footer-main-row {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 14px 4vw 0 4vw;
+  }
+  .footer-right {
+    text-align: left;
+    margin-top: 10px;
+  }
+  .footer-divider {
+    margin: 0 4vw 6px 4vw;
+  }
+} 
