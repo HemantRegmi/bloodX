@@ -12,12 +12,13 @@
     <!-- Contact Info -->
     <div class="footer-right">
       <div class="footer-contact-title">Get In Touch</div>
+      <div class="footer-contact-item"><span class="footer-icon">📍</span> <span class="">Patandhoka, Lalitpur</span></div>
       <div class="footer-contact-item"><span class="footer-icon">✉️</span> <a href="mailto:bloodbank@gmail.com" class="footer-link">bloodbank@gmail.com</a></div>
       <div class="footer-contact-item"><span class="footer-icon">📞</span> <a href="tel:9866717332" class="footer-link">9866717332</a></div>
     </div>
   </div>
   <hr class="footer-divider">
   <div class="footer-bottom-row">
-    &copy; 2025 &middot; BloodX &middot; All Rights Reserved
+    &copy; 2025  &middot; BloodX &middot; All Rights Reserved
   </div>
 </footer>
