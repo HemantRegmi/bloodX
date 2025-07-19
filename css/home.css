@@ -1,6 +1,7 @@
 /* General page container and layout */
 html, body {
   height: 100%;
+  scroll-behavior: smooth;
 }
 body {
   background: linear-gradient(135deg, #fff6f6 0%, #ffe6e6 100%);
@@ -239,4 +240,14 @@ body.dark-mode .hospital-card {
   background: #23272b;
   color: #fff;
   border-color: #343a40;
+}
+
+.swal2-cancel.themed-cancel-btn-visible {
+  background: #232526 !important;
+  color: #fff !important;
+  font-weight: 700 !important;
+  box-shadow: 0 2px 8px rgba(44,62,80,0.10);
+  border: none !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
 } 

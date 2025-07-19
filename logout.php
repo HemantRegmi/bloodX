@@ -2,6 +2,7 @@
 session_start();
 session_unset();
 session_destroy();
-header("Location: home.php");
+usleep(500000);
+header("Location: home.php?logged_out=1");
 exit;
 ?> 

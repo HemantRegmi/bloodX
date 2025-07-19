@@ -230,6 +230,32 @@ document.querySelectorAll('.become-donor-btn').forEach(btn => {
     <?php endif; ?>
   });
 });
+
+// Show logout popup if redirected from logout
+if (window.location.search.includes('logged_out=1')) {
+  Swal.fire({
+    title: '<span style="font-weight:900;font-size:2rem;color:#b1001a;">Logged out</span>',
+    html: '<div style="color:#222;font-size:1.1em;margin-top:8px;">You have been successfully logged out.</div>',
+    icon: 'warning',
+    background: '#fff',
+    color: '#222',
+    showCloseButton: false,
+    confirmButtonText: 'Log in',
+    confirmButtonColor: '#b1001a',
+    showCancelButton: true,
+    cancelButtonText: 'Stay logged out',
+    cancelButtonColor: '#232526',
+    customClass: {
+      popup: 'themed-popup',
+      confirmButton: 'themed-confirm-btn',
+      cancelButton: 'themed-cancel-btn-visible'
+    }
+  }).then((result) => {
+    if (result.isConfirmed) {
+      window.location.href = 'login.php';
+    }
+  });
+}
 </script>
 
 <style>

@@ -93,5 +93,14 @@ $(document).ready(function(){
       });
     });
   });
+
+  // Add 0.5s delay to Login button in navbar
+  $("a.nav-link[href='login.php']").on('click', function(e) {
+    e.preventDefault();
+    var link = this.href;
+    setTimeout(function() {
+      window.location.href = link;
+    }, 500);
+  });
 });
 </script>

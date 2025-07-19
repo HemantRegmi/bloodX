@@ -17,6 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $admin_row = mysqli_fetch_assoc($admin_res);
       $_SESSION['loggedin'] = true;
       $_SESSION['username'] = $admin_row['admin_username'];
+      usleep(500000);
       header('Location: admin/dashboard.php');
       exit;
     }
@@ -29,6 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       if (password_verify($password, $user_row['password'])) {
         $_SESSION['user_id'] = $user_row['id'];
         $_SESSION['user_name'] = $user_row['name'];
+        usleep(500000);
         header('Location: home.php');
         exit;
       }
@@ -45,7 +47,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <title>Login</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <style>
-    body { background: #fff3f3; }
+    body { background: #fff3f3; opacity: 0; transition: opacity 0.5s; }
+    body.fade-in { opacity: 1; }
     .login-card { max-width: 400px; margin: 60px auto; border-radius: 18px; box-shadow: 0 4px 32px rgba(220,53,69,0.10); border: 1px solid #f8d7da; }
     .login-card .card-header { background: linear-gradient(90deg, #dc3545 0%, #b71c1c 100%); color: #fff; border-radius: 18px 18px 0 0; text-align: center; font-size: 1.5em; }
     .btn-danger { background: linear-gradient(90deg, #dc3545 0%, #b71c1c 100%); border: none; }
@@ -93,6 +96,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
   </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      document.body.classList.add('fade-in');
+    });
+  </script>
 </head>
 <body style="background: url('image/bloodX_2.jpg') no-repeat center center fixed; background-size: cover; min-height: 100vh; position: relative;">
   <div style="position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(255,255,255,0.4); z-index: 0;"></div>
