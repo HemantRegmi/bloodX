@@ -3,17 +3,126 @@
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/home.css">
-  <link rel="stylesheet" href="css/footer.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/home.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/footer.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        /* Reservation Form Styling */
+        .reservation-popup {
+            border-radius: 12px !important;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1) !important;
+        }
+        
+        .reservation-form {
+            text-align: left;
+            margin: 1rem 0;
+        }
+        
+        .reservation-form .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .reservation-form .swal2-input {
+            width: 100% !important;
+            border: 1px solid #e9ecef !important;
+            border-radius: 8px !important;
+            padding: 0.75rem 1rem !important;
+            font-size: 1rem !important;
+            transition: all 0.3s ease !important;
+            margin: 0 !important;
+            box-sizing: border-box !important;
+            height: auto !important;
+            min-height: 48px !important;
+            line-height: 1.5 !important;
+        }
+        
+        .reservation-form .swal2-input:focus {
+            border-color: #dc3545 !important;
+            box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25) !important;
+            outline: none !important;
+        }
+        
+        .reservation-form .swal2-input::placeholder {
+            color: #6c757d !important;
+            opacity: 1 !important;
+        }
+        
+        /* Specific styling for select dropdown */
+        .reservation-form select.swal2-input {
+            appearance: none !important;
+            -webkit-appearance: none !important;
+            -moz-appearance: none !important;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e") !important;
+            background-repeat: no-repeat !important;
+            background-position: right 1rem center !important;
+            background-size: 1em !important;
+            padding-right: 2.5rem !important;
+            overflow: visible !important;
+            text-overflow: unset !important;
+            white-space: normal !important;
+        }
+        
+        .reservation-form select.swal2-input option {
+            padding: 0.5rem 1rem !important;
+            font-size: 1rem !important;
+            line-height: 1.5 !important;
+            background: white !important;
+            color: #333 !important;
+        }
+        
+        .reservation-confirm-btn {
+            background: #dc3545 !important;
+            border: none !important;
+            border-radius: 8px !important;
+            padding: 0.75rem 2rem !important;
+            font-weight: 600 !important;
+            font-size: 1rem !important;
+            transition: all 0.3s ease !important;
+        }
+        
+        .reservation-confirm-btn:hover {
+            background: #c82333 !important;
+            transform: translateY(-1px) !important;
+            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3) !important;
+        }
+        
+        .reservation-cancel-btn {
+            border-radius: 8px !important;
+            padding: 0.75rem 2rem !important;
+            font-weight: 600 !important;
+            font-size: 1rem !important;
+            transition: all 0.3s ease !important;
+        }
+        
+        .reservation-cancel-btn:hover {
+            transform: translateY(-1px) !important;
+        }
+        
+        /* SweetAlert2 Title Styling */
+        .swal2-title {
+            color: #333 !important;
+            font-weight: 700 !important;
+            font-size: 1.5rem !important;
+        }
+        
+        /* SweetAlert2 Content Styling */
+        .swal2-html-container {
+            margin: 1rem 0 !important;
+        }
+
+        /* Add space between navbar and hero content */
+        .hero-section {
+            margin-top: 8rem;
+        }
+    </style>
 </head>
 
 <body>
@@ -21,271 +130,426 @@
 <?php
 $active="home";
 include('head.php'); ?>
-
 </div>
 
-
-  <div id="page-container" style="margin-top:50px; position: relative;min-height: 84vh;   ">
+<div id="page-container">
     <div class="container">
-    <div id="content-wrap"style="padding-bottom:75px;">
-  <!-- Banner Image -->
-  <div class="banner-img-wrapper mb-4">
-    <img src="image/bloodX_1.jpg" alt="Donate Blood Save Life" class="img-fluid w-100 rounded banner-img">
-  </div>
-<br>
-        <h1 class="main-title">Welcome to BloodX</h1>
-<br>
-        <div class="row">
-            <div class="col-lg-4 mb-4">
-                <div class="card">
-                    <h4 class="card-header card bg-info text-white">The need for blood</h4>
-                    <p class="card-body card-section-text">
-                      There are many reasons patients need blood. A common misunderstanding about blood usage is that accident victims are the patients who use the most blood. Actually, people needing the most blood include those:<br><br>
-                      1) Being treated for cancer<br>
-                      2) Undergoing orthopedic surgeries<br>
-                      3) Undergoing cardiovascular surgeries<br>
-                      4) Being treated for inherited blood disorders
-                     </p>
+        <div id="content-wrap">
+            
+            <!-- Hero Section -->
+            <section class="hero-section">
+                <div class="hero-content text-center">
+                    <h1 class="hero-title">
+                        <span class="text-danger">Every Drop,</span><br>
+                        <span class="text-dark">Saves Lives</span>
+                    </h1>
+                    <p class="hero-description">
+                        Join our community of life-savers. Every donation can save up to three lives. 
+                        Find donors, donation centers, or register to donate today.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="donate_blood.php" class="btn btn-danger btn-lg hero-btn">Donate Blood</a>
+                        <a href="need_blood.php" class="btn btn-outline-danger btn-lg hero-btn">Find Blood</a>
+                    </div>
                 </div>
-            </div>
-            <div class="col-lg-4 mb-4">
-                <div class="card">
-                    <h4 class="card-header card bg-info text-white">Blood Tips</h4>
-                    <p class="card-body card-section-text">
-                      1) You must be in good health.<br>
-                      2) Hydrate and eat a healthy meal before your donation.<br>
-                      3) You're never too old to donate blood.<br>
-                      4) Rest and relaxed.<br>
-                      5) Don't forget your FREE post-donation snack.
-                     </p>
+            </section>
 
+            <!-- Statistics Section -->
+            <section class="stats-section">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="stat-card">
+                            <div class="stat-number">10K+</div>
+                            <div class="stat-label">Blood Donors</div>
                         </div>
-            </div>
-            <div class="col-lg-4 mb-4">
-                <div class="card">
-                    <h4 class="card-header card bg-info text-white">Who you could Help</h4>
-                    <p class="card-body card-section-text">
-                      Every 2 seconds, someone in the World needs blood. Donating blood can help:<br><br>
-                      1) People who go through disasters or emergency situations.<br>
-                      2) People who lose blood during major surgeries.<br>
-                      3) People who have lost blood because of a gastrointestinal bleed.<br>
-                      4) Women who have serious complications during pregnancy or childbirth.<br>
-                      5) People with cancer or severe anemia sometimes caused by thalassemia or sickle cell disease.
-                     </p>
-
-
+                    </div>
+                    <div class="col-md-4">
+                        <div class="stat-card">
+                            <div class="stat-number">25K+</div>
+                            <div class="stat-label">Lives Saved</div>
                         </div>
-            </div>
-</div>
- <!-- Hospital Names Section -->
- <h2 class="section-title mt-5">Our Partner Hospitals</h2>
-        <div class="row">
-          <?php
-            include 'conn.php';
-            $sql = "SELECT * FROM hospitals ORDER BY name ASC";
-            $result = mysqli_query($conn, $sql);
-            if ($result && mysqli_num_rows($result) > 0) {
-              while ($row = mysqli_fetch_assoc($result)) {
-          ?>
-            <div class="col-md-4 col-sm-6 mb-3">
-              <div class="card shadow-sm hospital-card">
-                <div class="card-body text-center">
-                  <img src="image/bloodX_5.png" alt="Hospital" style="width:64px;height:64px;border-radius:50%;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,0.08);background:#e3f2fd;object-fit:cover;">
-                  <h5 class="card-title text-danger font-weight-bold mb-0">
-                    <?php echo htmlspecialchars($row['name']); ?>
-                  </h5>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="stat-card">
+                            <div class="stat-number">100+</div>
+                            <div class="stat-label">Partner Hospitals</div>
+                        </div>
+                    </div>
                 </div>
-                <a href="#" class="btn btn-danger btn-block mt-3 reserve-btn" data-hospital-id="<?php echo $row['id']; ?>" data-hospital-name="<?php echo htmlspecialchars($row['name']); ?>">Reserve Now</a>
-              </div>
-            </div>
-          <?php
-              }
-            } else {
-              echo '<div class="col-12"><div class="alert alert-info">No hospitals found.</div></div>';
-            }
-          ?>
+            </section>
+
+            <!-- Our Mission Section -->
+            <section class="mission-section">
+                <h2 class="section-title text-center">Our Mission</h2>
+                <p class="mission-text text-center">
+                    To create a world where no one dies due to lack of access to blood, 
+                    by building the largest community of voluntary blood donors and connecting 
+                    them seamlessly to those in need.
+                </p>
+            </section>
+
+            <!-- Features Section -->
+            <section class="features-section">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-check-circle text-danger"></i>
+                            </div>
+                            <h3 class="feature-title">Fast & Safe</h3>
+                            <p class="feature-description">
+                                Our donation process is quick, safe, and follows all health standards.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-heart text-danger"></i>
+                            </div>
+                            <h3 class="feature-title">Save Lives</h3>
+                            <p class="feature-description">
+                                Your single donation can save up to three lives in critical need.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-users text-danger"></i>
+                            </div>
+                            <h3 class="feature-title">Community</h3>
+                            <p class="feature-description">
+                                Join our community of donors making a difference every day.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- How It Works Section -->
+            <section class="how-it-works-section">
+                <h2 class="section-title text-center">How It Works</h2>
+                <p class="section-description text-center">
+                    Donating blood is a simple process that takes less than an hour of your time 
+                    but can save multiple lives.
+                </p>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="step-card">
+                            <div class="step-icon">
+                                <i class="fas fa-search text-danger"></i>
+                            </div>
+                            <h3 class="step-title">Find a Location</h3>
+                            <p class="step-description">
+                                Search for nearby donation centers or blood drives based on your location.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="step-card">
+                            <div class="step-icon">
+                                <i class="fas fa-calendar-alt text-danger"></i>
+                            </div>
+                            <h3 class="step-title">Schedule a Donation</h3>
+                            <p class="step-description">
+                                Pick a convenient date and time that works best for your schedule.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="step-card">
+                            <div class="step-icon">
+                                <i class="fas fa-clipboard-check text-danger"></i>
+                            </div>
+                            <h3 class="step-title">Complete Screening</h3>
+                            <p class="step-description">
+                                Answer a few health questions to ensure your eligibility to donate.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="step-card">
+                            <div class="step-icon">
+                                <i class="fas fa-map-marker-alt text-danger"></i>
+                            </div>
+                            <h3 class="step-title">Donate & Save Lives</h3>
+                            <p class="step-description">
+                                The donation process only takes about 10-15 minutes and can save multiple lives.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-5">
+                    <a href="donate_blood.php" class="btn btn-danger btn-lg">Schedule Your Donation</a>
+                </div>
+            </section>
+
+            
+
+            <!-- Testimonials Section -->
+            <section class="testimonials-section">
+                <h2 class="section-title text-center">What People Say</h2>
+                <p class="section-description text-center">
+                    Read how bloodX has made a difference in the lives of donors, recipients, and healthcare providers.
+                </p>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="testimonial-card">
+                            <div class="quote-icon">
+                                <i class="fas fa-quote-left text-danger"></i>
+                            </div>
+                            <p class="testimonial-text">
+                                I needed a rare blood type for my emergency surgery. bloodX connected me with a donor within hours, saving my life.
+                            </p>
+                            <div class="testimonial-author">
+                                <div class="author-avatar">
+                                    <i class="fas fa-user-circle text-danger"></i>
+                                </div>
+                                <div class="author-info">
+                                    <div class="author-name">Sarah Johnson</div>
+                                    <div class="author-role">Blood Recipient</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="testimonial-card">
+                            <div class="quote-icon">
+                                <i class="fas fa-quote-left text-danger"></i>
+                            </div>
+                            <p class="testimonial-text">
+                                As a regular donor, bloodX has made it so easy to schedule donations and track my impact. I've never felt more motivated to donate.
+                            </p>
+                            <div class="testimonial-author">
+                                <div class="author-avatar">
+                                    <i class="fas fa-user-circle text-danger"></i>
+                                </div>
+                                <div class="author-info">
+                                    <div class="author-name">Michael Chen</div>
+                                    <div class="author-role">Blood Donor</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="testimonial-card">
+                            <div class="quote-icon">
+                                <i class="fas fa-quote-left text-danger"></i>
+                            </div>
+                            <p class="testimonial-text">
+                                Our hospital has partnered with bloodX for a year now, and we've seen a 40% increase in timely blood supply for critical procedures.
+                            </p>
+                            <div class="testimonial-author">
+                                <div class="author-avatar">
+                                    <i class="fas fa-user-circle text-danger"></i>
+                                </div>
+                                <div class="author-info">
+                                    <div class="author-name">Dr. Amelia Patel</div>
+                                    <div class="author-role">Hospital Director</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Hospital Partners Section (Preserved from original) -->
+            <section class="hospitals-section">
+                <h2 class="section-title text-center">Our Partner Hospitals</h2>
+                <div class="row">
+                    <?php
+                    include 'conn.php';
+                    $sql = "SELECT * FROM hospitals ORDER BY name ASC";
+                    $result = mysqli_query($conn, $sql);
+                    if ($result && mysqli_num_rows($result) > 0) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                    ?>
+                        <div class="col-md-4 col-sm-6 mb-3">
+                            <div class="hospital-card">
+                                <div class="hospital-content">
+                                    <div class="hospital-icon">
+                                        <i class="fas fa-hospital text-danger"></i>
+                                    </div>
+                                    <h5 class="hospital-name">
+                                        <?php echo htmlspecialchars($row['name']); ?>
+                                    </h5>
+                                </div>
+                                <button class="btn btn-outline-danger btn-block reserve-btn" 
+                                        data-hospital-id="<?php echo $row['id']; ?>" 
+                                        data-hospital-name="<?php echo htmlspecialchars($row['name']); ?>">
+                                    Reserve Now
+                                </button>
+                            </div>
+                        </div>
+                    <?php
+                        }
+                    } else {
+                        echo '<div class="col-12"><div class="alert alert-info">No hospitals found.</div></div>';
+                    }
+                    ?>
+                </div>
+            </section>
+
         </div>
-        <!-- Features Section -->
-        <div class="row">
-            <div class="col-lg-6">
-                <h2 class="section-title" style="font-size:2.5rem;font-weight:900;color:#b1001a;letter-spacing:1px;">BLOOD GROUPS</h2>
-                <p class="lead" style="font-size:1.25rem;">Blood group of any human being will mainly fall in any one of the following groups.</p>
-                <ul style="font-size:1.15rem; margin-bottom:1.5rem;">
-                  <li>A positive or A negative</li>
-                  <li>B positive or B negative</li>
-                  <li>O positive or O negative</li>
-                  <li>AB positive or AB negative.</li>
-                </ul>
-                <p style="font-size:1.15rem;">Your blood group is determined by the genes you inherit from your parents.<br>
-                A healthy diet helps ensure a successful blood donation, and also makes you feel better!</p>
-
-            </div>
-            <div class="col-lg-6">
-                <img class="img-fluid rounded blood-cover-img" src="image\blood_donationcover.jpeg" alt="">
-            </div>
-        </div>
-        <!-- /.row -->
-
-        <hr>
-
-        <!-- Call to Action Section -->
-        <div class="row mb-4">
-            <div class="col-md-8">
-            <h4 style="font-size:2rem;font-weight:900;color:#b1001a;letter-spacing:1px;">UNIVERSAL DONORS AND RECIPIENTS</h4>
-            <p style="font-size:1.15rem;">
-              The most common blood type is O, followed by type A. Type O individuals are often called "universal donors" since their blood can be transfused into persons with any blood type. Those with type AB blood are called "universal recipients" because they can receive blood of any type.
-            </p>
-            <p style="font-size:1.15rem;">
-              For emergency transfusions, blood group type O negative blood is the variety of blood that has the lowest risk of causing serious reactions for most people who receive it. Because of this, it's sometimes called the universal blood donor type.
-            </p>
-              </div>
-            <div class="col-md-4">
-                <a class="btn btn-lg btn-secondary btn-block become-donor-btn" href="donate_blood.php">Become a Donor </a>
-            </div>
-        </div>
-
-     
     </div>
-  </div>
-  <?php include('footer.php');?>
 </div>
+
+<?php include('footer.php');?>
 
 <!-- SweetAlert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-document.querySelectorAll('.reserve-btn').forEach(btn => {
-  btn.addEventListener('click', function(e) {
-    e.preventDefault();
-    <?php if (!isset($_SESSION['user_id'])): ?>
-      Swal.fire({
-        icon: 'warning',
-        title: 'Login Required',
-        text: 'Please log in to reserve blood.',
-        confirmButtonText: 'OK',
-        customClass: { popup: 'themed-popup' }
-      });
-      return;
-    <?php endif; ?>
-    const hospitalId = this.getAttribute('data-hospital-id');
-    const hospitalName = this.getAttribute('data-hospital-name');
-    Swal.fire({
-      title: 'Reserve Blood at ' + hospitalName,
-      html:
-        `<input id="swal-input1" class="swal2-input themed-input" placeholder="Your Name">\n` +
-        `<input id="swal-input2" class="swal2-input themed-input" placeholder="Contact Number">\n` +
-        `<select id="swal-input4" class="swal2-input themed-input"><option value="">Select Blood Group</option><option value="A+">A+</option><option value="A-">A-</option><option value="B+">B+</option><option value="B-">B-</option><option value="AB+">AB+</option><option value="AB-">AB-</option><option value="O+">O+</option><option value="O-">O-</option></select>` +
-        `<input id="swal-input3" class="swal2-input themed-input" type="date" placeholder="Reservation Date">`,
-      focusConfirm: false,
-      customClass: {
-        confirmButton: 'themed-confirm-btn',
-        popup: 'themed-popup',
-      },
-      preConfirm: () => {
-        return [
-          document.getElementById('swal-input1').value,
-          document.getElementById('swal-input2').value,
-          document.getElementById('swal-input3').value,
-          document.getElementById('swal-input4').value
-        ]
-      }
-    }).then((result) => {
-      if (result.isConfirmed) {
-        const [name, contact, date, blood_group] = result.value;
-        if (!name || !contact || !date || !blood_group) {
-          Swal.fire('Error', 'All fields are required.', 'error');
-          return;
-        }
-        <?php $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : ''; ?>
-        fetch('save_reservation.php', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: `hospital_id=${encodeURIComponent(hospitalId)}&name=${encodeURIComponent(name)}&contact=${encodeURIComponent(contact)}&date=${encodeURIComponent(date)}&blood_group=${encodeURIComponent(blood_group)}<?php if ($user_id) { echo '&user_id=' . $user_id; } ?>`
-        })
-        .then(res => res.json())
-        .then(data => {
-          if (data.success) {
-            Swal.fire('Success', 'Reservation saved!', 'success');
-          } else {
-            Swal.fire('Error', data.message || 'Failed to save reservation.', 'error');
-          }
-        })
-        .catch(() => Swal.fire('Error', 'Failed to save reservation.', 'error'));
-      }
-    });
-  });
-});
+function searchDonors() {
+    const bloodType = document.getElementById('bloodTypeSelect').value;
+    if (!bloodType) {
+        Swal.fire({
+          title: 'Blood Type Required',
+          text: 'Please select a blood type to search for donors.',
+          icon: 'warning',
+          showConfirmButton: true,
+          confirmButtonColor: '#dc3545',
+          confirmButtonText: 'OK'
+        });
+        return;
+    }
+    window.location.href = `need_blood.php?blood_type=${bloodType}`;
+}
 
-document.querySelectorAll('.become-donor-btn').forEach(btn => {
-  btn.addEventListener('click', function(e) {
-    <?php if (!isset($_SESSION['user_id'])): ?>
-      e.preventDefault();
-      Swal.fire({
-        icon: 'warning',
-        title: 'Login Required',
-        text: 'Please log in to become a donor.',
-        confirmButtonText: 'OK',
-        customClass: { popup: 'themed-popup' }
-      });
-      return;
-    <?php endif; ?>
-  });
+document.querySelectorAll('.reserve-btn').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        <?php if (!isset($_SESSION['user_id'])): ?>
+            Swal.fire({
+                icon: 'warning',
+                title: 'Login Required',
+                text: 'Please log in to reserve blood.',
+                confirmButtonText: 'OK'
+            });
+            return;
+        <?php endif; ?>
+        
+        const hospitalId = this.getAttribute('data-hospital-id');
+        const hospitalName = this.getAttribute('data-hospital-name');
+        
+        Swal.fire({
+            title: 'Reserve Blood at ' + hospitalName,
+            html:
+                `<div class="reservation-form">
+                    <div class="form-group">
+                        <input id="swal-input1" class="swal2-input" placeholder="Your Name">
+                    </div>
+                    <div class="form-group">
+                        <input id="swal-input2" class="swal2-input" placeholder="Contact Number">
+                    </div>
+                    <div class="form-group">
+                        <select id="swal-input4" class="swal2-input">
+                            <option value="">Select Blood Group</option>
+                            <option value="A+">A+</option>
+                            <option value="A-">A-</option>
+                            <option value="B+">B+</option>
+                            <option value="B-">B-</option>
+                            <option value="AB+">AB+</option>
+                            <option value="AB-">AB-</option>
+                            <option value="O+">O+</option>
+                            <option value="O-">O-</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input id="swal-input3" class="swal2-input" type="date" placeholder="Reservation Date">
+                    </div>
+                </div>`,
+            showCancelButton: true,
+            confirmButtonText: 'Reserve Blood',
+            cancelButtonText: 'Cancel',
+            confirmButtonColor: '#dc3545',
+            cancelButtonColor: '#6c757d',
+            customClass: {
+                popup: 'reservation-popup',
+                confirmButton: 'reservation-confirm-btn',
+                cancelButton: 'reservation-cancel-btn'
+            },
+            focusConfirm: false,
+            preConfirm: () => {
+                return [
+                    document.getElementById('swal-input1').value,
+                    document.getElementById('swal-input2').value,
+                    document.getElementById('swal-input3').value,
+                    document.getElementById('swal-input4').value
+                ]
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const [name, contact, date, blood_group] = result.value;
+                if (!name || !contact || !date || !blood_group) {
+                    Swal.fire({
+          title: 'Required Fields Missing',
+          text: 'Please fill in all required fields before submitting.',
+          icon: 'error',
+          showConfirmButton: true,
+          confirmButtonColor: '#dc3545',
+          confirmButtonText: 'OK'
+        });
+                    return;
+                }
+                <?php $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : ''; ?>
+                fetch('save_reservation.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: `hospital_id=${encodeURIComponent(hospitalId)}&name=${encodeURIComponent(name)}&contact=${encodeURIComponent(contact)}&date=${encodeURIComponent(date)}&blood_group=${encodeURIComponent(blood_group)}<?php if ($user_id) { echo '&user_id=' . $user_id; } ?>`
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                                            Swal.fire({
+                      title: 'Reservation Saved Successfully!',
+                      text: 'Your blood reservation has been saved.',
+                      icon: 'success',
+                      showConfirmButton: true,
+                      confirmButtonColor: '#dc3545',
+                      confirmButtonText: 'OK'
+                    });
+                } else {
+                    Swal.fire({
+                      title: 'Error Saving Reservation',
+                      text: data.message || 'Failed to save reservation. Please try again.',
+                      icon: 'error',
+                      showConfirmButton: true,
+                      confirmButtonColor: '#dc3545',
+                      confirmButtonText: 'OK'
+                    });
+                }
+            })
+            .catch(() => Swal.fire({
+              title: 'Error',
+              text: 'Failed to save reservation. Please try again.',
+              icon: 'error',
+              showConfirmButton: true,
+              confirmButtonColor: '#dc3545',
+              confirmButtonText: 'OK'
+            }));
+            }
+        });
+    });
 });
 
 // Show logout popup if redirected from logout
 if (window.location.search.includes('logged_out=1')) {
-  Swal.fire({
-    title: '<span style="font-weight:900;font-size:2rem;color:#b1001a;">Logged out</span>',
-    html: '<div style="color:#222;font-size:1.1em;margin-top:8px;">You have been successfully logged out.</div>',
-    icon: 'warning',
-    background: '#fff',
-    color: '#222',
-    showCloseButton: false,
-    confirmButtonText: 'Log in',
-    confirmButtonColor: '#b1001a',
-    showCancelButton: true,
-    cancelButtonText: 'Stay logged out',
-    cancelButtonColor: '#232526',
-    customClass: {
-      popup: 'themed-popup',
-      confirmButton: 'themed-confirm-btn',
-      cancelButton: 'themed-cancel-btn-visible'
-    }
-  }).then((result) => {
-    if (result.isConfirmed) {
-      window.location.href = 'login.php';
-    }
-  });
+    Swal.fire({
+        title: 'Logged out',
+        text: 'You have been successfully logged out.',
+        icon: 'info',
+        confirmButtonText: 'Log in',
+        confirmButtonColor: '#dc3545',
+        showCancelButton: true,
+        cancelButtonText: 'Stay logged out'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = 'login.php';
+        }
+    });
 }
 </script>
 
-<style>
-/* Themed input styles for reservation popup */
-.swal2-popup.themed-popup {
-  border-radius: 18px !important;
-  box-shadow: 0 4px 32px rgba(220,53,69,0.15);
-}
-.swal2-input.themed-input, .swal2-select.themed-input {
-  border: 2px solid #dc3545 !important;
-  border-radius: 8px !important;
-  font-size: 1.1em;
-  margin-bottom: 10px;
-  box-shadow: none !important;
-  transition: border-color 0.2s;
-}
-.swal2-input.themed-input:focus, .swal2-select.themed-input:focus {
-  border-color: #b71c1c !important;
-  outline: none !important;
-}
-.swal2-confirm.themed-confirm-btn {
-  background: linear-gradient(90deg, #dc3545 0%, #b71c1c 100%) !important;
-  color: #fff !important;
-  border-radius: 6px !important;
-  font-size: 1.1em !important;
-  padding: 0.7em 2.5em !important;
-  box-shadow: 0 2px 8px rgba(220,53,69,0.12);
-}
-</style>
-
 </body>
-
 </html>
