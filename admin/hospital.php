@@ -347,8 +347,31 @@ include 'sidebar.php';
   // Handle status update
   if (isset($_POST['update_status']) && isset($_POST['reservation_id']) && isset($_POST['new_status'])) {
     $reservation_id = intval($_POST['reservation_id']);
-    $new_status = $_POST['new_status'] === 'completed' ? 'completed' : 'pending';
-    mysqli_query($conn, "UPDATE reservation SET status='$new_status' WHERE id=$reservation_id");
+    $target_status = $_POST['new_status'] === 'completed' ? 'completed' : 'pending';
+    // If this row is a donation schedule, use donation-specific statuses
+    $cur = mysqli_query($conn, "SELECT status FROM reservation WHERE id=$reservation_id");
+    $curStatus = $cur ? mysqli_fetch_assoc($cur)['status'] : '';
+    if ($curStatus === 'donation' && $target_status === 'completed') {
+      $target_status = 'donation_completed';
+    }
+    mysqli_query($conn, "UPDATE reservation SET status='$target_status' WHERE id=$reservation_id");
+
+    if ($new_status === 'completed') {
+      // Fetch user details to notify
+      $info = mysqli_query($conn, "SELECT user_id, user_name, blood_group FROM reservation WHERE id=$reservation_id");
+      if ($info && $rowInfo = mysqli_fetch_assoc($info)) {
+        $notifyUserId = intval($rowInfo['user_id'] ?? 0);
+        if ($notifyUserId > 0) {
+          $title = 'Donation Schedule Confirmed';
+          $msg = 'Hi ' . $rowInfo['user_name'] . ', your blood donation schedule has been confirmed.';
+          $stmt = $conn->prepare("INSERT INTO admin_notifications (user_id, title, message) VALUES (?, ?, ?)");
+          $stmt->bind_param('iss', $notifyUserId, $title, $msg);
+          $stmt->execute();
+          $stmt->close();
+        }
+      }
+    }
+
     echo "<script>location.href=location.href;</script>";
   }
 
@@ -375,12 +398,17 @@ include 'sidebar.php';
         </thead>
         <tbody>
           <?php $i=1; while($row = mysqli_fetch_assoc($result)) { 
-            // Fetch reservations for this hospital
+            // Fetch reservations and donation schedules for this hospital
             $reservations = [];
-            $res_q = mysqli_query($conn, "SELECT id, user_name, user_phone, blood_group, status FROM reservation WHERE hospital_id=" . intval($row['id']));
+            $schedules = [];
+            $res_q = mysqli_query($conn, "SELECT id, user_name, user_phone, blood_group, status FROM reservation WHERE hospital_id=" . intval($row['id']) . " ORDER BY id DESC");
             if ($res_q && mysqli_num_rows($res_q) > 0) {
               while ($res_row = mysqli_fetch_assoc($res_q)) {
-                $reservations[] = $res_row;
+                if ($res_row['status'] === 'donation' || $res_row['status'] === 'donation_completed') {
+                  $schedules[] = $res_row;
+                } else {
+                  $reservations[] = $res_row;
+                }
               }
             }
           ?>
@@ -389,10 +417,11 @@ include 'sidebar.php';
             <td>
               <div class="hospital-name"><?php echo htmlspecialchars($row['name']); ?></div>
               <div class="reservation-count">
-                <?php echo count($reservations); ?> reservation(s)
+                <?php echo count($reservations); ?> reservation(s) · <?php echo count($schedules); ?> schedule(s)
               </div>
               <?php if (!empty($reservations)) { ?>
                 <div class="mt-3">
+                  <div class="text-muted mb-2" style="font-weight:600;">Reservations</div>
                   <?php foreach($reservations as $res) { ?>
                     <div class="reservation-item">
                       <div class="reservation-header">
@@ -422,6 +451,37 @@ include 'sidebar.php';
                          </div>
                        </div>
                     </div>
+                  <?php } ?>
+                </div>
+              <?php } ?>
+              <?php if (!empty($schedules)) { ?>
+                <div class="mt-4">
+                  <div class="text-muted mb-2" style="font-weight:600;">Donation Schedules</div>
+                  <?php foreach($schedules as $res) { ?>
+                    <div class="reservation-item">
+                      <div class="reservation-header">
+                        <span class="reservation-name"><?php echo htmlspecialchars($res['user_name']); ?></span>
+                        <span class="reservation-status status-<?php echo ($res['status']==='donation_completed'?'completed':'pending'); ?>">Donation</span>
+                      </div>
+                      <div class="reservation-details">
+                        <span class="blood-group-badge"><?php echo $res['blood_group']; ?></span>
+                        <span class="ml-2"><?php echo htmlspecialchars($res['user_phone']); ?></span>
+                        <div class="reservation-actions mt-2">
+                          <form method="post" style="display: inline;" class="mr-2">
+                            <input type="hidden" name="reservation_id" value="<?php echo $res['id']; ?>">
+                            <input type="hidden" name="new_status" value="completed">
+                            <button type="submit" name="update_status" class="btn btn-sm btn-success">
+                              <i class="fas fa-check"></i> Mark Completed
+                            </button>
+                          </form>
+                          <a href="#" 
+                             class="btn btn-sm btn-danger"
+                             onclick="confirmDeleteReservation(<?php echo $res['id']; ?>)">
+                            <i class="fas fa-trash"></i> Delete
+                          </a>
+                        </div>
+                      </div>
+                   </div>
                   <?php } ?>
                 </div>
               <?php } ?>

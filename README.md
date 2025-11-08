@@ -62,13 +62,13 @@ Blood-Bank-And-Donation-Management-System-master/
 2. **Database Setup**
    - Import the SQL file:
      - Open `phpMyAdmin` or use the MySQL CLI.
-     - Create a new database (e.g., `blood_bank`).
-     - Import `sql/blood_bank_database.sql` into your database.
+     - The SQL file will automatically create a database named `blood_donation`.
+     - Import `sql/blood_bank_database.sql` into your MySQL server (it will create the database and all tables).
 
 3. **Configure Database Connection**
    - Edit `conn.php` and `admin/conn.php`:
      ```php
-     $conn = mysqli_connect("localhost", "root", "", "blood_bank");
+     $conn = mysqli_connect("localhost", "root", "", "blood_donation");
      ```
    - Update with your MySQL username, password, and database name as needed.
 

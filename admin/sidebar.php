@@ -233,5 +233,11 @@ if ($reservation_result) {
     <a href="notification.php" <?php if(basename($_SERVER['PHP_SELF'])=='notification.php') echo "class='act'"; ?>>
       <i class="fas fa-bell"></i>Send Notifications
     </a>
+    
+    <div class="nav-divider"></div>
+    
+    <a href="reservation_statistics.php" <?php if($active=='statistics') echo "class='act'"; ?>>
+      <i class="fas fa-chart-bar"></i>Statistics
+    </a>
   </div>
 </div>

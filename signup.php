@@ -15,20 +15,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   } elseif ($password !== $confirm) {
     $message = '<div class="alert alert-danger">Passwords do not match.</div>';
   } else {
+    $name = mysqli_real_escape_string($conn, $name);
     $email = mysqli_real_escape_string($conn, $email);
+    $phone = mysqli_real_escape_string($conn, $phone);
     $check = mysqli_query($conn, "SELECT id FROM users WHERE email='$email'");
-    if (mysqli_num_rows($check) > 0) {
+    if ($check === false) {
+      $message = '<div class="alert alert-danger">Error: Database query failed. ' . mysqli_error($conn) . '</div>';
+    } elseif (mysqli_num_rows($check) > 0) {
       $message = '<div class="alert alert-warning">Email already registered.</div>';
     } else {
       $hash = password_hash($password, PASSWORD_DEFAULT);
-      $stmt = $conn->prepare("INSERT INTO users (name, email, phone, password) VALUES (?, ?, ?, ?)");
-      $stmt->bind_param("ssss", $name, $email, $phone, $hash);
-      if ($stmt->execute()) {
-        $showSuccess = true;
+      if ($hash === false) {
+        $message = '<div class="alert alert-danger">Error: Could not hash password.</div>';
       } else {
-        $message = '<div class="alert alert-danger">Error: Could not register user.</div>';
+        $stmt = $conn->prepare("INSERT INTO users (name, email, phone, password) VALUES (?, ?, ?, ?)");
+        if ($stmt === false) {
+          $message = '<div class="alert alert-danger">Error: Could not prepare statement. ' . mysqli_error($conn) . '</div>';
+        } else {
+          $stmt->bind_param("ssss", $name, $email, $phone, $hash);
+          if ($stmt->execute()) {
+            $showSuccess = true;
+            $message = '<div class="alert alert-success">Signup successful! Redirecting to login...</div>';
+          } else {
+            $message = '<div class="alert alert-danger">Error: Could not register user. ' . $stmt->error . '</div>';
+          }
+          $stmt->close();
+        }
       }
-      $stmt->close();
     }
   }
 }
@@ -389,7 +402,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="terms-checkbox">
           <input type="checkbox" id="terms" name="terms" required>
           <label for="terms">
-            I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+            I agree to the <a href="terms_of_service.php">Terms of Service</a> and <a href="privacy_policy.php">Privacy Policy</a>
           </label>
         </div>
 
@@ -532,7 +545,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       .then(response => response.text())
       .then(html => {
         // Check if success message is in the response
-        if (html.includes('Signup successful')) {
+        if (html.includes('Signup successful') || html.includes('alert-success')) {
           Swal.fire({
             icon: 'success',
             title: 'Account Created Successfully!',

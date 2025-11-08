@@ -25,7 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user_input = mysqli_real_escape_string($conn, $input);
     $user_sql = "SELECT id, name, password FROM users WHERE email='$user_input'";
     $user_res = mysqli_query($conn, $user_sql);
-    if ($user_res && mysqli_num_rows($user_res) === 1) {
+    if ($user_res === false) {
+      $message = '<div class="alert alert-danger">Database error. Please try again later.</div>';
+    } elseif (mysqli_num_rows($user_res) === 1) {
       $user_row = mysqli_fetch_assoc($user_res);
       if (password_verify($password, $user_row['password'])) {
         $_SESSION['user_id'] = $user_row['id'];
@@ -33,9 +35,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         usleep(500000);
         header('Location: home.php');
         exit;
+      } else {
+        $message = '<div class="alert alert-danger">Invalid credentials.</div>';
       }
+    } else {
+      $message = '<div class="alert alert-danger">Invalid credentials.</div>';
     }
-    $message = '<div class="alert alert-danger">Invalid credentials.</div>';
   }
 }
 ?>

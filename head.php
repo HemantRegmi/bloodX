@@ -26,7 +26,10 @@
         <?php if(isset($_SESSION['user_id'])): ?>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #333; font-weight: 500; margin-right: 15px;">
-            <?php echo htmlspecialchars($_SESSION['user_name']); ?>
+            <?php 
+            $displayName = isset($_SESSION['user_name']) ? $_SESSION['user_name'] : 'Account';
+            echo htmlspecialchars($displayName);
+            ?>
           </a>
                       <div class="dropdown-menu user-dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown" style="background: #fff; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); border: 1px solid #eee; min-width: 200px;">
               <a class="dropdown-item" href="change_user_password.php" style="color: #333; font-weight: 500; padding: 10px 20px;">

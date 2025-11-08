@@ -5,6 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>BloodX - Your Online Blood Donation Destination</title>
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -14,114 +15,91 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <!-- Flatpickr (popup datepicker) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <style>
-        /* Reservation Form Styling */
-        .reservation-popup {
-            border-radius: 12px !important;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.1) !important;
-        }
-        
-        .reservation-form {
-            text-align: left;
-            margin: 1rem 0;
-        }
-        
-        .reservation-form .form-group {
-            margin-bottom: 1rem;
-        }
-        
-        .reservation-form .swal2-input {
-            width: 100% !important;
-            border: 1px solid #e9ecef !important;
-            border-radius: 8px !important;
-            padding: 0.75rem 1rem !important;
-            font-size: 1rem !important;
-            transition: all 0.3s ease !important;
-            margin: 0 !important;
-            box-sizing: border-box !important;
-            height: auto !important;
-            min-height: 48px !important;
-            line-height: 1.5 !important;
-        }
-        
-        .reservation-form .swal2-input:focus {
-            border-color: #dc3545 !important;
-            box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25) !important;
-            outline: none !important;
-        }
-        
-        .reservation-form .swal2-input::placeholder {
-            color: #6c757d !important;
-            opacity: 1 !important;
-        }
-        
-        /* Specific styling for select dropdown */
-        .reservation-form select.swal2-input {
-            appearance: none !important;
-            -webkit-appearance: none !important;
-            -moz-appearance: none !important;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e") !important;
-            background-repeat: no-repeat !important;
-            background-position: right 1rem center !important;
-            background-size: 1em !important;
-            padding-right: 2.5rem !important;
-            overflow: visible !important;
-            text-overflow: unset !important;
-            white-space: normal !important;
-        }
-        
-        .reservation-form select.swal2-input option {
-            padding: 0.5rem 1rem !important;
-            font-size: 1rem !important;
-            line-height: 1.5 !important;
-            background: white !important;
-            color: #333 !important;
-        }
-        
-        .reservation-confirm-btn {
-            background: #dc3545 !important;
-            border: none !important;
-            border-radius: 8px !important;
-            padding: 0.75rem 2rem !important;
-            font-weight: 600 !important;
-            font-size: 1rem !important;
-            transition: all 0.3s ease !important;
-        }
-        
-        .reservation-confirm-btn:hover {
-            background: #c82333 !important;
-            transform: translateY(-1px) !important;
-            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3) !important;
-        }
-        
-        .reservation-cancel-btn {
-            border-radius: 8px !important;
-            padding: 0.75rem 2rem !important;
-            font-weight: 600 !important;
-            font-size: 1rem !important;
-            transition: all 0.3s ease !important;
-        }
-        
-        .reservation-cancel-btn:hover {
-            transform: translateY(-1px) !important;
-        }
-        
-        /* SweetAlert2 Title Styling */
-        .swal2-title {
-            color: #333 !important;
-            font-weight: 700 !important;
-            font-size: 1.5rem !important;
-        }
-        
-        /* SweetAlert2 Content Styling */
-        .swal2-html-container {
-            margin: 1rem 0 !important;
-        }
+      /* Dark red theme to match BloodX */
+      .flatpickr-calendar {
+        border-radius: 16px !important;
+        box-shadow: 0 14px 34px rgba(0,0,0,0.18) !important;
+        border: 1px solid rgba(0,0,0,0.06) !important;
+        overflow: hidden !important;
+      }
+      .flatpickr-months,
+      .flatpickr-months .flatpickr-month {
+        background: #b21f2d !important; /* dark red */
+        color: #fff !important;
+        padding: 0 12px !important;
+        height: 48px !important;
+        min-height: 48px !important;
+        border-bottom: 1px solid rgba(255,255,255,.12) !important;
+      }
+      .flatpickr-current-month {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 12px !important;
+        width: 100% !important;
+        height: 48px !important;
+      }
+      .flatpickr-current-month .flatpickr-monthDropdown-months,
+      .flatpickr-current-month .numInputWrapper input.cur-year {
+        background: transparent !important;
+        color: #fff !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        padding: 0 !important;
+        font-weight: 700 !important;
+        font-size: 18px !important;
+        line-height: 1 !important;
+      }
+      /* Ensure full 4-digit year is visible */
+      .flatpickr-current-month .numInputWrapper { min-width: 64px !important; }
+      .flatpickr-current-month .numInputWrapper input.cur-year { width: 64px !important; text-align: center !important; }
+      .flatpickr-months .flatpickr-prev-month,
+      .flatpickr-months .flatpickr-next-month {
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+      }
+      .flatpickr-current-month .flatpickr-monthDropdown-months:focus,
+      .flatpickr-current-month .numInputWrapper input.cur-year:focus { outline: none !important; box-shadow: 0 0 0 2px rgba(255,255,255,.25) inset !important; }
+      .flatpickr-months .flatpickr-prev-month svg,
+      .flatpickr-months .flatpickr-next-month svg { fill: #fff !important; }
+      .flatpickr-day.selected,
+      .flatpickr-day.selected:hover,
+      .flatpickr-day.startRange,
+      .flatpickr-day.endRange { background: #b21f2d !important; border-color: #b21f2d !important; color: #fff !important; }
+      .flatpickr-day.today:not(.selected) { border-color: rgba(178,31,45,.35) !important; color: #b21f2d !important; }
 
-        /* Add space between navbar and hero content */
-        .hero-section {
-            margin-top: 8rem;
-        }
+      /* Softer, rounded day cells */
+      .flatpickr-day { border-radius: 12px !important; font-weight: 600 !important; }
+      .flatpickr-day:hover { background: rgba(178,31,45,.08) !important; }
+
+      /* Rounder controls for month/year selectors */
+      .flatpickr-current-month .flatpickr-monthDropdown-months,
+      .flatpickr-current-month .numInputWrapper input {
+        background: #ffffff !important;
+        border: 0 !important;
+        border-radius: 8px !important;
+        color: #b21f2d !important;
+        font-weight: 600 !important;
+        padding: 2px 8px !important;
+      }
+      .flatpickr-current-month .numInputWrapper span.arrowUp::after,
+      .flatpickr-current-month .numInputWrapper span.arrowDown::after { border-bottom-color: #fff !important; }
+      .flatpickr-current-month .numInputWrapper:hover { background: rgba(255,255,255,.15) !important; }
+
+      /* Prev/Next buttons as rounded icons */
+      .flatpickr-months .flatpickr-prev-month,
+      .flatpickr-months .flatpickr-next-month {
+        border-radius: 50% !important;
+        width: 28px !important; height: 28px !important;
+        display: flex !important; align-items: center !important; justify-content: center !important;
+      }
+      .flatpickr-months .flatpickr-prev-month:hover,
+      .flatpickr-months .flatpickr-next-month:hover { background: rgba(255,255,255,.15) !important; }
     </style>
 </head>
 
@@ -281,7 +259,7 @@ include('head.php'); ?>
                     </div>
                 </div>
                 <div class="text-center mt-5">
-                    <a href="donate_blood.php" class="btn btn-danger btn-lg">Schedule Your Donation</a>
+                    <a href="#" id="scheduleDonationBtn" class="btn btn-danger btn-lg">Schedule Your Donation</a>
                 </div>
             </section>
 
@@ -456,7 +434,7 @@ document.querySelectorAll('.reserve-btn').forEach(btn => {
                         </select>
                     </div>
                     <div class="form-group">
-                        <input id="swal-input3" class="swal2-input" type="date" placeholder="Reservation Date">
+                        <input id="swal-input3" class="swal2-input" type="text" placeholder="Reservation Date">
                     </div>
                 </div>`,
             showCancelButton: true,
@@ -468,6 +446,13 @@ document.querySelectorAll('.reserve-btn').forEach(btn => {
                 popup: 'reservation-popup',
                 confirmButton: 'reservation-confirm-btn',
                 cancelButton: 'reservation-cancel-btn'
+            },
+            didOpen: () => {
+                flatpickr('#swal-input3', {
+                    dateFormat: 'Y-m-d',
+                    minDate: 'today',
+                    disableMobile: true
+                });
             },
             focusConfirm: false,
             preConfirm: () => {
@@ -533,6 +518,198 @@ document.querySelectorAll('.reserve-btn').forEach(btn => {
     });
 });
 
+// Schedule Donation button -> popup for donation scheduling
+document.getElementById('scheduleDonationBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+    <?php if (!isset($_SESSION['user_id'])): ?>
+        Swal.fire({ icon: 'warning', title: 'Login Required', text: 'Please log in to schedule a donation.', confirmButtonText: 'OK' });
+        return;
+    <?php endif; ?>
+
+    Swal.fire({
+        title: 'Schedule a Blood Donation',
+        html: `
+          <div class="reservation-form" style="text-align: left; max-height: 70vh; overflow-y: auto;">
+            <h5 style="color: #dc3545; margin-bottom: 15px; font-weight: 600;">Personal Information</h5>
+            <div class="form-group">
+              <input id="sched-name" class="swal2-input" placeholder="Your Name">
+            </div>
+            <div class="form-group">
+              <input id="sched-contact" class="swal2-input" placeholder="Contact Number">
+            </div>
+            <div class="form-group">
+              <select id="sched-blood" class="swal2-input">
+                <option value="">Select Blood Group</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <select id="sched-hospital" class="swal2-input">
+                <option value="">Select Hospital</option>
+                <?php
+                  include 'conn.php';
+                  $hres = mysqli_query($conn, "SELECT id, name FROM hospitals ORDER BY name ASC");
+                  while ($hrow = mysqli_fetch_assoc($hres)) {
+                    echo '<option value="'. $hrow['id'] .'">'. htmlspecialchars($hrow['name']) .'</option>';
+                  }
+                ?>
+              </select>
+            </div>
+            <div class="form-group">
+              <input id="sched-date" class="swal2-input" type="text" placeholder="Preferred Donation Date">
+            </div>
+            
+            <hr style="margin: 20px 0; border-color: #e9ecef;">
+            
+            <h5 style="color: #dc3545; margin-bottom: 15px; font-weight: 600;">Health Screening Questions</h5>
+            <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">Please answer the following questions to ensure your eligibility to donate:</p>
+            
+            <div class="form-group" style="margin-bottom: 20px;">
+              <p style="font-weight: 600; color: #333; margin-bottom: 8px; font-size: 0.95rem;">1. Are you feeling healthy and well today?</p>
+              <div style="display: flex; gap: 20px; margin-left: 10px;">
+                <label style="display: flex; align-items: center; font-size: 0.95rem; color: #333; cursor: pointer;">
+                  <input type="radio" name="health_q1" value="yes" id="q1-yes" style="margin-right: 8px; accent-color: #dc3545;">
+                  <span>Yes</span>
+                </label>
+                <label style="display: flex; align-items: center; font-size: 0.95rem; color: #333; cursor: pointer;">
+                  <input type="radio" name="health_q1" value="no" id="q1-no" style="margin-right: 8px; accent-color: #dc3545;">
+                  <span>No</span>
+                </label>
+              </div>
+            </div>
+            
+            <div class="form-group" style="margin-bottom: 20px;">
+              <p style="font-weight: 600; color: #333; margin-bottom: 8px; font-size: 0.95rem;">2. Have you donated blood in the last 56 days (8 weeks)?</p>
+              <div style="display: flex; gap: 20px; margin-left: 10px;">
+                <label style="display: flex; align-items: center; font-size: 0.95rem; color: #333; cursor: pointer;">
+                  <input type="radio" name="health_q2" value="yes" id="q2-yes" style="margin-right: 8px; accent-color: #dc3545;">
+                  <span>Yes</span>
+                </label>
+                <label style="display: flex; align-items: center; font-size: 0.95rem; color: #333; cursor: pointer;">
+                  <input type="radio" name="health_q2" value="no" id="q2-no" style="margin-right: 8px; accent-color: #dc3545;">
+                  <span>No</span>
+                </label>
+              </div>
+            </div>
+            
+            <div class="form-group" style="margin-bottom: 20px;">
+              <p style="font-weight: 600; color: #333; margin-bottom: 8px; font-size: 0.95rem;">3. Do you have any cold, flu, or fever symptoms today?</p>
+              <div style="display: flex; gap: 20px; margin-left: 10px;">
+                <label style="display: flex; align-items: center; font-size: 0.95rem; color: #333; cursor: pointer;">
+                  <input type="radio" name="health_q3" value="yes" id="q3-yes" style="margin-right: 8px; accent-color: #dc3545;">
+                  <span>Yes</span>
+                </label>
+                <label style="display: flex; align-items: center; font-size: 0.95rem; color: #333; cursor: pointer;">
+                  <input type="radio" name="health_q3" value="no" id="q3-no" style="margin-right: 8px; accent-color: #dc3545;">
+                  <span>No</span>
+                </label>
+              </div>
+            </div>
+            
+            <div class="form-group" style="margin-bottom: 20px;">
+              <p style="font-weight: 600; color: #333; margin-bottom: 8px; font-size: 0.95rem;">4. Have you had any major surgery in the last 6 months?</p>
+              <div style="display: flex; gap: 20px; margin-left: 10px;">
+                <label style="display: flex; align-items: center; font-size: 0.95rem; color: #333; cursor: pointer;">
+                  <input type="radio" name="health_q4" value="yes" id="q4-yes" style="margin-right: 8px; accent-color: #dc3545;">
+                  <span>Yes</span>
+                </label>
+                <label style="display: flex; align-items: center; font-size: 0.95rem; color: #333; cursor: pointer;">
+                  <input type="radio" name="health_q4" value="no" id="q4-no" style="margin-right: 8px; accent-color: #dc3545;">
+                  <span>No</span>
+                </label>
+              </div>
+            </div>
+            
+            <div class="form-group" style="margin-bottom: 20px;">
+              <p style="font-weight: 600; color: #333; margin-bottom: 8px; font-size: 0.95rem;">5. Are you currently taking any medications?</p>
+              <div style="display: flex; gap: 20px; margin-left: 10px;">
+                <label style="display: flex; align-items: center; font-size: 0.95rem; color: #333; cursor: pointer;">
+                  <input type="radio" name="health_q5" value="yes" id="q5-yes" style="margin-right: 8px; accent-color: #dc3545;">
+                  <span>Yes</span>
+                </label>
+                <label style="display: flex; align-items: center; font-size: 0.95rem; color: #333; cursor: pointer;">
+                  <input type="radio" name="health_q5" value="no" id="q5-no" style="margin-right: 8px; accent-color: #dc3545;">
+                  <span>No</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        `,
+        width: '600px',
+        showCancelButton: true,
+        confirmButtonText: 'Schedule Donation',
+        cancelButtonText: 'Cancel',
+        confirmButtonColor: '#dc3545',
+        cancelButtonColor: '#6c757d',
+        didOpen: () => {
+          flatpickr('#sched-date', { dateFormat: 'Y-m-d', minDate: 'today', disableMobile: true });
+        },
+        preConfirm: () => {
+          const name = document.getElementById('sched-name').value;
+          const contact = document.getElementById('sched-contact').value;
+          const date = document.getElementById('sched-date').value;
+          const blood = document.getElementById('sched-blood').value;
+          const hospitalId = document.getElementById('sched-hospital').value;
+          
+          // Get health question answers
+          const q1 = document.querySelector('input[name="health_q1"]:checked')?.value || '';
+          const q2 = document.querySelector('input[name="health_q2"]:checked')?.value || '';
+          const q3 = document.querySelector('input[name="health_q3"]:checked')?.value || '';
+          const q4 = document.querySelector('input[name="health_q4"]:checked')?.value || '';
+          const q5 = document.querySelector('input[name="health_q5"]:checked')?.value || '';
+          
+          if (!name || !contact || !date || !blood || !hospitalId) {
+            Swal.showValidationMessage('Please fill in all personal information fields');
+            return false;
+          }
+          
+          if (!q1 || !q2 || !q3 || !q4 || !q5) {
+            Swal.showValidationMessage('Please answer all health screening questions');
+            return false;
+          }
+          
+          // Check eligibility - if any disqualifying answers
+          if (q1 === 'no' || q2 === 'yes' || q3 === 'yes') {
+            Swal.showValidationMessage('Based on your answers, you may not be eligible to donate at this time. Please consult with a healthcare provider.');
+            return false;
+          }
+          
+          const healthQuestions = {
+            q1: q1,
+            q2: q2,
+            q3: q3,
+            q4: q4,
+            q5: q5
+          };
+          
+          return { name, contact, date, blood, hospitalId, healthQuestions };
+        }
+    }).then(res => {
+        if (res.isConfirmed) {
+            const { name, contact, date, blood, hospitalId, healthQuestions } = res.value;
+            <?php $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : ''; ?>
+            const healthQuestionsJson = JSON.stringify(healthQuestions);
+            fetch('admin/save_donation_schedule.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `hospital_id=${encodeURIComponent(hospitalId)}&name=${encodeURIComponent(name)}&contact=${encodeURIComponent(contact)}&date=${encodeURIComponent(date)}&blood_group=${encodeURIComponent(blood)}&health_questions=${encodeURIComponent(healthQuestionsJson)}<?php if ($user_id) { echo '&user_id=' . $user_id; } ?>`
+            }).then(r => r.json()).then(data => {
+                if (data.success) {
+                    Swal.fire({ title: 'Donation Scheduled', icon: 'success', confirmButtonColor: '#dc3545' });
+                } else {
+                    Swal.fire({ title: 'Error', text: data.message || 'Failed to save.', icon: 'error', confirmButtonColor: '#dc3545' });
+                }
+            }).catch(() => Swal.fire({ title: 'Error', text: 'Failed to save donation.', icon: 'error', confirmButtonColor: '#dc3545' }));
+        }
+    });
+});
 // Show logout popup if redirected from logout
 if (window.location.search.includes('logged_out=1')) {
     Swal.fire({

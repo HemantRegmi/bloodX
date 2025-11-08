@@ -95,18 +95,20 @@ CREATE TABLE IF NOT EXISTS admin_notifications (
   seen TINYINT(1) NOT NULL DEFAULT 0
 );
 
-/*create table reservations in which all reservation information gets stored.*/
-CREATE TABLE reservations (
+/*create table reservation in which all reservation information gets stored.*/
+CREATE TABLE reservation (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
+    user_id INT NULL,
     hospital_id INT NOT NULL,
     user_name VARCHAR(100) NOT NULL,
-    user_email VARCHAR(100) NOT NULL,
+    user_email VARCHAR(100) NULL,
     user_phone VARCHAR(20) NOT NULL,
     blood_group VARCHAR(10) NOT NULL,
     reservation_date DATE NOT NULL,
-    reservation_time TIME NOT NULL,
+    reservation_time TIME NULL,
     status VARCHAR(50) DEFAULT NULL,
+    type VARCHAR(50) NULL,
+    health_questions TEXT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     seen TINYINT(1) DEFAULT 0
 );
@@ -121,8 +123,8 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-/*create table hospital in which all hospital information gets stored.*/
-CREATE TABLE hospital (
+/*create table hospitals in which all hospital information gets stored.*/
+CREATE TABLE hospitals (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL
 );
