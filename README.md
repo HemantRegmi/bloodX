@@ -109,20 +109,22 @@ Blood-Bank-And-Donation-Management-System-master/
 ---
 ## Screenshot
 User Interface:
-<img width="1919" height="922" alt="Screenshot 2025-07-16 135911" src="https://github.com/user-attachments/assets/fa4fd3a7-c161-488e-ad67-009f092d4ad6" />
-<img width="1919" height="917" alt="Screenshot 2025-07-16 135938" src="https://github.com/user-attachments/assets/2e3868b4-30e1-4eab-b626-b440dd7a8aca" />
-<img width="1919" height="917" alt="Screenshot 2025-07-16 135951" src="https://github.com/user-attachments/assets/bff472a5-1999-447c-94a7-c1ad9cc10624" />
-<img width="1919" height="912" alt="Screenshot 2025-07-16 140002" src="https://github.com/user-attachments/assets/bee37b53-051b-4464-92cb-79a465e5e4bc" />
-<img width="1919" height="917" alt="Screenshot 2025-07-16 140016" src="https://github.com/user-attachments/assets/ae8a9074-8e65-4fa2-9149-58b22870afde" />
-<img width="1919" height="922" alt="Screenshot 2025-07-16 140058" src="https://github.com/user-attachments/assets/16112d46-49e4-4a27-a469-3946c2701247" />
+<img width="1900" height="917" alt="image" src="https://github.com/user-attachments/assets/a2c3ff7f-2534-4aaa-a53f-6519a26dbd01" />
+<img width="1900" height="918" alt="image" src="https://github.com/user-attachments/assets/088bd6ba-fd53-4971-a558-20f57616256e" />
+<img width="1900" height="885" alt="image" src="https://github.com/user-attachments/assets/4fce0f86-4a10-4dd4-81da-1a9c823a612e" />
+<img width="1899" height="871" alt="image" src="https://github.com/user-attachments/assets/22996860-07a7-4915-9d57-1ac83b4d9345" />
+
+
 
 Admin Dashboard:
-<img width="1919" height="921" alt="Screenshot 2025-07-16 140119" src="https://github.com/user-attachments/assets/cb077b44-ef31-4e20-afbc-1f7e5f7db0e5" />
-<img width="1919" height="927" alt="Screenshot 2025-07-16 140130" src="https://github.com/user-attachments/assets/9417f541-314d-4792-9424-b267f9cafb8c" />
-<img width="1919" height="918" alt="Screenshot 2025-07-16 140143" src="https://github.com/user-attachments/assets/9eb152ce-5847-486f-b476-dd750a4f3d15" />
-<img width="1919" height="919" alt="Screenshot 2025-07-16 140153" src="https://github.com/user-attachments/assets/3873ac72-7c37-4f70-b8ca-24e0e9d70360" />
-<img width="1919" height="919" alt="Screenshot 2025-07-16 140320" src="https://github.com/user-attachments/assets/13db1987-e3c3-4515-b5e5-6477c0613cda" />
-<img width="1919" height="919" alt="Screenshot 2025-07-16 140333" src="https://github.com/user-attachments/assets/8e67a50b-dadf-4c7e-ba8e-a20ff9c0dbf1" />
+<img width="1898" height="895" alt="image" src="https://github.com/user-attachments/assets/8e91988e-a913-4ce7-89f3-6f88d21e10f6" />
+<img width="1900" height="919" alt="image" src="https://github.com/user-attachments/assets/9fe7420d-cd29-4413-a5a8-d63d31bbaaad" />
+<img width="1901" height="917" alt="image" src="https://github.com/user-attachments/assets/a3ab23fe-bdc6-4f26-873c-0560ba780482" />
+
+<img width="1901" height="915" alt="image" src="https://github.com/user-attachments/assets/a1636a37-4216-4590-850b-05038abe9f1b" />
+<img width="598" height="801" alt="image" src="https://github.com/user-attachments/assets/ff6550f1-b6c5-424b-b518-965c945388b7" />
+
+
 
 
 ## License
