@@ -219,6 +219,45 @@ include 'sidebar.php';
       </div>
 
       <div class="form-section">
+        <h3 class="form-section-title">
+          <i class="fas fa-globe text-danger"></i> Location & Donation History
+        </h3>
+        
+        <div class="row form-row">
+          <div class="col-lg-4 col-md-6 mb-3">
+            <label class="form-label">Latitude</label>
+            <input type="number" name="latitude" class="form-control" step="any" placeholder="e.g., 27.7172" id="latitudeInput">
+            <small class="form-text text-muted">Geographic latitude coordinate</small>
+          </div>
+          <div class="col-lg-4 col-md-6 mb-3">
+            <label class="form-label">Longitude</label>
+            <input type="number" name="longitude" class="form-control" step="any" placeholder="e.g., 85.3240" id="longitudeInput">
+            <small class="form-text text-muted">Geographic longitude coordinate</small>
+          </div>
+          <div class="col-lg-4 col-md-6 mb-3">
+            <label class="form-label">Use My Location</label>
+            <button type="button" class="btn btn-outline-secondary form-control" id="btnUseLocation" style="height: calc(1.5em + 1.5rem + 2px);">
+              <i class="fas fa-location-arrow"></i> Get Location
+            </button>
+            <div id="geoStatus" style="margin-top: 5px; font-size: 0.85rem; color: #666; display: none;"></div>
+          </div>
+        </div>
+        
+        <div class="row form-row">
+          <div class="col-lg-4 col-md-6 mb-3">
+            <label class="form-label">Last Donation Date</label>
+            <input type="date" name="last_donation_date" class="form-control" max="<?php echo date('Y-m-d'); ?>" id="lastDonationDate">
+            <small class="form-text text-muted">Date of donor's last blood donation</small>
+          </div>
+          <div class="col-lg-4 col-md-6 mb-3">
+            <label class="form-label">Availability Score</label>
+            <input type="number" name="availability_score" class="form-control" min="1" max="10" placeholder="1-10">
+            <small class="form-text text-muted">Donor availability rating (optional)</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
         <div class="row">
           <div class="col-12">
             <button type="submit" name="submit" class="btn btn-submit">
@@ -230,6 +269,51 @@ include 'sidebar.php';
     </form>
   </div>
 </div>
+
+<script>
+// Geolocation functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const btnUseLoc = document.getElementById('btnUseLocation');
+  const latInput = document.getElementById('latitudeInput');
+  const lngInput = document.getElementById('longitudeInput');
+  const geoStatus = document.getElementById('geoStatus');
+
+  function setGeoStatus(text, isError = false) {
+    if (!geoStatus) return;
+    geoStatus.style.display = 'block';
+    geoStatus.style.color = isError ? '#dc3545' : '#28a745';
+    geoStatus.textContent = text;
+  }
+
+  btnUseLoc?.addEventListener('click', function() {
+    if (!navigator.geolocation) {
+      setGeoStatus('Geolocation is not supported by your browser.', true);
+      return;
+    }
+    
+    setGeoStatus('Detecting location...');
+    btnUseLoc.disabled = true;
+    
+    navigator.geolocation.getCurrentPosition(
+      function(pos) {
+        const lat = pos.coords.latitude;
+        const lng = pos.coords.longitude;
+        
+        if (latInput) latInput.value = lat.toFixed(7);
+        if (lngInput) lngInput.value = lng.toFixed(7);
+        
+        setGeoStatus(`Location captured: ${lat.toFixed(5)}, ${lng.toFixed(5)}`);
+        btnUseLoc.disabled = false;
+      },
+      function(err) {
+        setGeoStatus('Could not get location. Please allow access and try again.', true);
+        btnUseLoc.disabled = false;
+      },
+      { enableHighAccuracy: true, timeout: 8000, maximumAge: 0 }
+    );
+  });
+});
+</script>
 
 <?php if(isset($_GET['success']) && $_GET['success'] == '1'): ?>
 <script>

@@ -250,7 +250,7 @@ include 'sidebar.php';
     }
     $offset = ($page - 1) * $limit;
     $count = $offset + 1;
-    $sql = "SELECT * FROM donor_details LIMIT {$offset},{$limit}";
+    $sql = "SELECT donor_id, donor_name, donor_number, donor_mail, donor_age, donor_gender, donor_blood, donor_address, latitude, longitude, last_donation_date FROM donor_details LIMIT {$offset},{$limit}";
     $result = mysqli_query($conn, $sql);
     if(mysqli_num_rows($result) > 0) {
     ?>
@@ -267,11 +267,18 @@ include 'sidebar.php';
             <th>Gender</th>
             <th>Blood Group</th>
             <th>Address</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+            <th>Last Donation</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          <?php while($row = mysqli_fetch_assoc($result)) { ?>
+          <?php while($row = mysqli_fetch_assoc($result)) { 
+            $latitude = isset($row['latitude']) && $row['latitude'] !== null && $row['latitude'] !== '' ? number_format((float)$row['latitude'], 7, '.', '') : '-';
+            $longitude = isset($row['longitude']) && $row['longitude'] !== null && $row['longitude'] !== '' ? number_format((float)$row['longitude'], 7, '.', '') : '-';
+            $last_donation = isset($row['last_donation_date']) && $row['last_donation_date'] !== null && $row['last_donation_date'] !== '' ? date('Y-m-d', strtotime($row['last_donation_date'])) : '-';
+          ?>
           <tr>
             <td><?php echo $count++; ?></td>
             <td><strong><?php echo $row['donor_name']; ?></strong></td>
@@ -281,6 +288,9 @@ include 'sidebar.php';
             <td><span class="gender-badge"><?php echo $row['donor_gender']; ?></span></td>
             <td><span class="blood-group-badge"><?php echo $row['donor_blood']; ?></span></td>
             <td><?php echo $row['donor_address']; ?></td>
+            <td><small style="color: #666; font-family: monospace;"><?php echo $latitude; ?></small></td>
+            <td><small style="color: #666; font-family: monospace;"><?php echo $longitude; ?></small></td>
+            <td><small style="color: #666;"><?php echo $last_donation; ?></small></td>
             <td>
               <a class="btn btn-delete" href="#" 
                  onclick="confirmDeleteDonor(<?php echo $row['donor_id']; ?>)">
