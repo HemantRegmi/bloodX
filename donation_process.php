@@ -176,8 +176,8 @@
               <p class="cta-description">
                 Join thousands of donors who are making a difference in their community.
               </p>
-              <a href="donate_blood.php" class="btn btn-danger btn-lg cta-btn">
-                <i class="fas fa-heart"></i> Donate Now
+              <a href="register_donor.php" class="btn btn-danger btn-lg cta-btn">
+                <i class="fas fa-heart"></i> Become a Donor
               </a>
             </div>
           </div>

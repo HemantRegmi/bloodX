@@ -33,7 +33,6 @@
               <li><a href="home.php">Home</a></li>
               <li><a href="about_us.php">About Us</a></li>
               <li><a href="need_blood.php">Find Blood</a></li>
-              <li><a href="donate_blood.php">Donate</a></li>
               <li><a href="contact_us.php">Contact</a></li>
             </ul>
           </div>
@@ -46,7 +45,7 @@
             <ul class="footer-links">
               <li><a href="donation_process.php">Donation Process</a></li>
               <li><a href="eligibility.php">Eligibility</a></li>
-              <li><a href="donate_blood.php">Register as Donor</a></li>
+              <li><a href="register_donor.php">Become a Donor</a></li>
               <li><a href="faqs.php">FAQs</a></li>
             </ul>
           </div>

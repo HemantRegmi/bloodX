@@ -126,7 +126,7 @@ include('head.php'); ?>
                         Find donors, donation centers, or register to donate today.
                     </p>
                     <div class="hero-buttons">
-                        <a href="donate_blood.php" class="btn btn-danger btn-lg hero-btn">Donate Blood</a>
+                        <a href="register_donor.php" class="btn btn-danger btn-lg hero-btn">Become a Donor</a>
                         <a href="need_blood.php" class="btn btn-outline-danger btn-lg hero-btn">Find Blood</a>
                     </div>
                 </div>

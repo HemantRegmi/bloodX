@@ -264,8 +264,8 @@
                 Your blood donation could be the difference between life and death for someone in need. Join our community of lifesavers today.
               </p>
               <div class="cta-buttons">
-                <a href="donate_blood.php" class="btn btn-danger btn-lg">
-                  <i class="fas fa-heart"></i> Donate Blood
+                <a href="register_donor.php" class="btn btn-danger btn-lg">
+                  <i class="fas fa-heart"></i> Become a Donor
                 </a>
                 <a href="need_blood.php" class="btn btn-outline-danger btn-lg">
                   <i class="fas fa-search"></i> Find Blood

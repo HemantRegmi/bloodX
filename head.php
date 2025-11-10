@@ -14,9 +14,6 @@
         <li class="nav-item <?php if($active=='about') echo 'active'; ?>">
           <a class="nav-link" href="about_us.php" style="color: #333; font-weight: 500; margin-right: 20px;">About</a>
         </li>
-        <li class="nav-item <?php if($active=='donate') echo 'active'; ?>">
-          <a class="nav-link" href="donate_blood.php" style="color: #333; font-weight: 500; margin-right: 20px;">Donate</a>
-        </li>
         <li class="nav-item <?php if($active=='need') echo 'active'; ?>">
           <a class="nav-link" href="need_blood.php" style="color: #333; font-weight: 500; margin-right: 20px;">Find Blood</a>
         </li>

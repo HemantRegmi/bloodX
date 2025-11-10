@@ -15,6 +15,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -61,11 +62,34 @@
                         <?php } ?>
                       </select>
                     </div>
-                    <button type="submit" name="search" class="btn search-btn">
-                      <i class="fas fa-search"></i> Search Donors
+                    <div class="form-group">
+                      <label class="form-label">Recipient Age <span class="required">*</span></label>
+                      <input type="number" min="0" max="120" class="form-control" id="recipientAgeInput" name="recipient_age" placeholder="e.g., 30" required>
+                    </div>
+                    <button type="submit" name="search" class="btn search-btn" id="btnSearch" disabled>
+                      <i class="fas fa-search"></i> Search Blood
+                    </button>
+                    <button type="button" id="btnUseLocation" class="btn search-btn" style="background:#495057;">
+                      <i class="fas fa-location-arrow"></i> Use my location
                     </button>
                   </div>
+                  <div id="geoStatus" style="margin-top:8px; font-size:0.9rem; color:#666; display:none;"></div>
+                  <div id="geoRequiredNote" style="margin-top:6px; font-size:0.85rem; color:#dc3545;">
+                    Please click “Use my location” to get the best matches.
+                  </div>
                 </form>
+
+                <!-- Unified Results -->
+                <div id="unified-results" style="margin-top:20px; display:none;">
+                  <h3 class="results-title" style="margin-top:0;">Best Donor Matches</h3>
+                  <div id="unified-grid" class="row"></div>
+                  <div id="unified-empty" class="no-results" style="display:none;">
+                    <i class="fas fa-search text-muted"></i>
+                    <h3>No Donors Found</h3>
+                    <p>We couldn't find any donors for the selected blood group. Please try different options.</p>
+                  </div>
+                </div>
+
               </div>
             </div>
           </div>
@@ -85,13 +109,60 @@
             <?php
               $bg = $_POST['blood'];
               $conn = mysqli_connect("localhost", "root", "", "blood_donation") or die("Connection error");
+
+              // Resolve selected blood id to group string
               $blood_group_name = "";
               $bg_query = mysqli_query($conn, "SELECT blood_group FROM blood WHERE blood_id = '{$bg}' LIMIT 1");
               if ($bg_row = mysqli_fetch_assoc($bg_query)) {
-                  $blood_group_name = $bg_row['blood_group'];
+                $blood_group_name = $bg_row['blood_group'];
               }
-              $sql = "SELECT * FROM donor_details WHERE donor_blood='{$blood_group_name}' ORDER BY rand() LIMIT 6";
-              $result = mysqli_query($conn, $sql) or die("query unsuccessful.");
+
+              // ABO/Rh compatibility map
+              // Recipient => array of compatible donor groups (best-first; exact match first)
+              $compatibility = [
+                'O-'  => ['O-'],
+                'O+'  => ['O+', 'O-'],
+                'A-'  => ['A-', 'O-'],
+                'A+'  => ['A+', 'A-', 'O+', 'O-'],
+                'B-'  => ['B-', 'O-'],
+                'B+'  => ['B+', 'B-', 'O+', 'O-'],
+                'AB-' => ['AB-', 'A-', 'B-', 'O-'],
+                'AB+' => ['AB+', 'AB-', 'A+', 'A-', 'B+', 'B-', 'O+', 'O-'],
+              ];
+
+              // Fallback to exact-only if unknown
+              $compatibleGroups = isset($compatibility[$blood_group_name])
+                ? $compatibility[$blood_group_name]
+                : [$blood_group_name];
+
+              // Build safe IN clause
+              $placeholders = implode(',', array_fill(0, count($compatibleGroups), '?'));
+
+              // Prepare statement to avoid injection and to rank exact matches first
+              $stmt = $conn->prepare(
+                "SELECT donor_id, donor_name, donor_number, donor_mail, donor_age, donor_gender, donor_blood, donor_address
+                 FROM donor_details
+                 WHERE donor_blood IN ($placeholders)
+                 ORDER BY (donor_blood = ?) DESC, RAND()
+                 LIMIT 12"
+              );
+
+              // Bind params dynamically
+              $types = str_repeat('s', count($compatibleGroups) + 1);
+              $params = $compatibleGroups;
+              $params[] = $blood_group_name; // for exact-match ordering
+
+              // Workaround for dynamic binding
+              $bind_names[] = $types;
+              for ($i = 0; $i < count($params); $i++) {
+                $bind_name = 'bind' . $i;
+                $$bind_name = $params[$i];
+                $bind_names[] = &$$bind_name;
+              }
+              call_user_func_array([$stmt, 'bind_param'], $bind_names);
+
+              $stmt->execute();
+              $result = $stmt->get_result();
               if(mysqli_num_rows($result)>0)   {
                 while($row = mysqli_fetch_assoc($result)) {
             ?>
@@ -465,6 +536,20 @@ select.form-control option::-webkit-select-placeholder {
   color: #fff;
 }
 
+.best-badge {
+  background: #198754;
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin-left: 8px;
+  display: inline-block;
+  vertical-align: middle;
+  white-space: nowrap;
+  line-height: 1;
+}
+
 .no-results {
   text-align: center;
   padding: 60px 20px;
@@ -530,6 +615,9 @@ function contactDonor(phoneNumber) {
         });
 }
 
+// Shared state for recipient coordinates
+let recipientCoords = { lat: null, lng: null };
+
 // Auto-scroll to results after search
 document.addEventListener('DOMContentLoaded', function() {
   // Check if there are search results (results section exists)
@@ -541,20 +629,142 @@ document.addEventListener('DOMContentLoaded', function() {
       block: 'start' 
     });
   }
+
+  // Store recipient coordinates when available
+  const geoStatusEl = document.getElementById('geoStatus');
+  const btnSearchEl = document.getElementById('btnSearch');
+  const geoRequiredNoteEl = document.getElementById('geoRequiredNote');
+
+  function setGeoStatus(text, isError = false) {
+    if (!geoStatusEl) return;
+    geoStatusEl.style.display = 'block';
+    geoStatusEl.style.color = isError ? '#dc3545' : '#666';
+    geoStatusEl.textContent = text;
+  }
+
+  // Use my location
+  const btnUseLoc = document.getElementById('btnUseLocation');
+  btnUseLoc?.addEventListener('click', function() {
+    if (!navigator.geolocation) {
+      setGeoStatus('Geolocation is not supported by your browser.', true);
+      return;
+    }
+    setGeoStatus('Detecting your location...');
+    navigator.geolocation.getCurrentPosition(
+      function(pos) {
+        recipientCoords.lat = pos.coords.latitude;
+        recipientCoords.lng = pos.coords.longitude;
+        setGeoStatus(`Location set: ${recipientCoords.lat.toFixed(5)}, ${recipientCoords.lng.toFixed(5)}`);
+        if (btnSearchEl) btnSearchEl.disabled = false;
+        if (geoRequiredNoteEl) geoRequiredNoteEl.style.display = 'none';
+      },
+      function(err) {
+        setGeoStatus('Could not get your location. Please allow access and try again.', true);
+      },
+      { enableHighAccuracy: true, timeout: 8000, maximumAge: 0 }
+    );
+  });
+
 });
 
-// Also handle form submission to ensure scroll happens
-document.querySelector('form[name="needblood"]').addEventListener('submit', function() {
-  // Small delay to ensure form processes first
-  setTimeout(function() {
-    const resultsSection = document.querySelector('.results-section');
-    if (resultsSection) {
-      resultsSection.scrollIntoView({ 
-        behavior: 'smooth', 
-        block: 'start' 
-      });
+// Intercept form submit and fetch unified results using the algorithm API
+document.querySelector('form[name="needblood"]').addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  if (recipientCoords.lat === null || recipientCoords.lng === null) {
+    Swal.fire({icon:'warning', title:'Location Required', text:'Click “Use my location” before searching.'});
+    return;
+  }
+
+  const select = document.querySelector('select[name="blood"]');
+  const selected = select?.options[select.selectedIndex];
+  const bloodGroup = selected && selected.text ? selected.text.trim() : '';
+  if (!bloodGroup) {
+    Swal.fire({icon:'warning', title:'Select Blood Group', text:'Please choose a blood group first.'});
+    return;
+  }
+  const ageVal = document.getElementById('recipientAgeInput')?.value || '';
+  if (!ageVal) {
+    Swal.fire({icon:'warning', title:'Age Required', text:'Please enter recipient age to continue.'});
+    return;
+  }
+
+  const container = document.getElementById('unified-results');
+  const grid = document.getElementById('unified-grid');
+  const empty = document.getElementById('unified-empty');
+  container.style.display = 'block';
+  grid.innerHTML = '';
+  empty.style.display = 'none';
+  grid.innerHTML = '<div class="col-12 text-center py-3"><span>Searching best donor matches...</span></div>';
+
+  try {
+    const params = new URLSearchParams({
+      blood_group: bloodGroup,
+      limit: '12'
+    });
+    if (ageVal) params.set('recipient_age', String(ageVal));
+    if (typeof recipientCoords !== 'undefined' && recipientCoords.lat !== null && recipientCoords.lng !== null) {
+      params.set('recipient_lat', String(recipientCoords.lat));
+      params.set('recipient_lng', String(recipientCoords.lng));
     }
-  }, 100);
+
+    const resp = await fetch('best_donors.php?' + params.toString());
+    const data = await resp.json();
+
+    grid.innerHTML = '';
+    if (!data.success || !data.donors || data.donors.length === 0) {
+      empty.style.display = 'block';
+      return;
+    }
+
+    data.donors.forEach(function(row, idx) {
+      const col = document.createElement('div');
+      col.className = 'col-lg-4 col-md-6 mb-4';
+      const bestBadge = idx === 0 ? '<span class="best-badge">Best match</span>' : '';
+      col.innerHTML = `
+        <div class="donor-card">
+          <div class="donor-header">
+            <div class="donor-avatar">
+              <i class="fas fa-user-circle"></i>
+            </div>
+            <div class="donor-info">
+              <h3 class="donor-name">${(row.donor_name||'').toString()} ${bestBadge}</h3>
+              <div class="blood-badge">${(row.donor_blood||'').toString()}</div>
+            </div>
+          </div>
+          <div class="donor-details">
+            <div class="detail-item">
+              <i class="fas fa-phone text-danger"></i>
+              <span>${(row.donor_number||'').toString()}</span>
+            </div>
+            <div class="detail-item">
+              <i class="fas fa-venus-mars text-danger"></i>
+              <span>${(row.donor_gender||'').toString()}</span>
+            </div>
+            <div class="detail-item">
+              <i class="fas fa-birthday-cake text-danger"></i>
+              <span>${(row.donor_age||'')} years old</span>
+            </div>
+            <div class="detail-item">
+              <i class="fas fa-map-marker-alt text-danger"></i>
+              <span>${(row.donor_address||'').toString()}</span>
+            </div>
+          </div>
+          <div class="donor-actions">
+            <button class="btn contact-btn" onclick="contactDonor('${(row.donor_number||'').toString()}')">
+              <i class="fas fa-phone"></i> Contact
+            </button>
+          </div>
+        </div>
+      `;
+      grid.appendChild(col);
+    });
+
+    container.scrollIntoView({behavior:'smooth', block:'start'});
+  } catch (err) {
+    grid.innerHTML = '';
+    empty.style.display = 'block';
+  }
 });
 </script>
 

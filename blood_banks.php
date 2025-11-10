@@ -442,8 +442,8 @@
                 <a href="contact_us.php" class="btn btn-danger btn-lg">
                   <i class="fas fa-handshake"></i> Become a Partner
                 </a>
-                <a href="donate_blood.php" class="btn btn-outline-danger btn-lg">
-                  <i class="fas fa-heart"></i> Donate Blood
+                <a href="register_donor.php" class="btn btn-outline-danger btn-lg">
+                  <i class="fas fa-heart"></i> Become a Donor
                 </a>
               </div>
             </div>
