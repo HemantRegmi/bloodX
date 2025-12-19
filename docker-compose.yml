@@ -1,0 +1,7 @@
+services:
+  bloodx:
+    container_name: bloodx
+    build: .
+    restart: unless-stopped
+    ports:
+      - "80:80"

@@ -1,0 +1,61 @@
+body {
+  background: linear-gradient(135deg, #fff6f6 0%, #ffe6e6 100%);
+}
+
+.update-contact-main-card {
+  border-radius: 22px;
+  box-shadow: 0 6px 32px rgba(200,0,0,0.10), 0 1.5px 4px rgba(44, 62, 80, 0.08);
+  background: #fff;
+  padding: 2.5rem 2rem 2rem 2rem;
+  margin-bottom: 2rem;
+  margin-left: 220px;
+  margin-top: 2rem;
+}
+
+.section-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #b1001a;
+  margin-bottom: 1.2rem;
+  letter-spacing: 1px;
+  text-shadow: 0 1px 4px #fff;
+}
+
+.update-contact-table {
+  width: 100%;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(200,0,0,0.10);
+  overflow: hidden;
+  margin-bottom: 2rem;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+.update-contact-table th {
+  background: linear-gradient(90deg, #b1001a 0%, #ff1744 100%);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 1rem 1.2rem;
+  border: none;
+}
+.update-contact-table td {
+  padding: 1rem 1.2rem;
+  font-size: 1.05rem;
+  color: #222;
+  border-top: 1px solid #f3c6c6;
+  background: #fff8f8;
+}
+.update-contact-table tr:last-child td {
+  border-bottom: none;
+}
+@media (max-width: 991px) {
+  .update-contact-main-card {
+    padding: 1.2rem 0.5rem 1.2rem 0.5rem;
+    margin-left: 0;
+    margin-top: 1rem;
+  }
+  .update-contact-table th, .update-contact-table td {
+    padding: 0.7rem 0.5rem;
+  }
+} 
