@@ -1,0 +1,266 @@
+/* Modern Footer Styles */
+.footer {
+  background: #1a1e26 !important;
+  color: #fff;
+  padding: 60px 0 20px 0;
+  margin-top: 0;
+}
+
+.footer-main {
+  margin-bottom: 40px;
+}
+
+/* Company Section */
+.footer-company {
+  margin-bottom: 20px;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.logo-icon {
+  width: 40px;
+  height: 40px;
+  background: #dc3545;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+}
+
+.logo-text {
+  color: #fff;
+  font-weight: 900;
+  font-size: 1.2rem;
+}
+
+.company-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.company-description {
+  color: #b0b0b0;
+  line-height: 1.6;
+  margin-bottom: 25px;
+  font-size: 0.95rem;
+}
+
+/* Social Links */
+.social-links {
+  display: flex;
+  gap: 15px;
+}
+
+.social-link {
+  width: 40px;
+  height: 40px;
+  background: #2a2f3a;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.social-link:hover {
+  background: #dc3545;
+  color: #fff;
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+
+/* Footer Sections */
+.footer-section {
+  margin-bottom: 20px;
+}
+
+.footer-title {
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.footer-title::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 30px;
+  height: 2px;
+  background: #dc3545;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 12px;
+}
+
+.footer-links a {
+  color: #b0b0b0;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  font-size: 0.95rem;
+}
+
+.footer-links a:hover {
+  color: #dc3545;
+  text-decoration: none;
+}
+
+/* Newsletter Section */
+.newsletter-desc {
+  color: #b0b0b0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.newsletter-form .form-control {
+  background: #2a2f3a;
+  border: 1px solid #3a3f4a;
+  color: #fff;
+  border-radius: 6px;
+  padding: 10px 15px;
+  font-size: 0.9rem;
+}
+
+.newsletter-form .form-control::placeholder {
+  color: #888;
+}
+
+.newsletter-form .form-control:focus {
+  background: #2a2f3a;
+  border-color: #dc3545;
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+  color: #fff;
+}
+
+.newsletter-form .btn {
+  background: #dc3545;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.newsletter-form .btn:hover {
+  background: #c82333;
+  transform: translateY(-1px);
+}
+
+/* Contact Information Section */
+.footer-contact {
+  margin-top: 10px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 15px;
+  color: #b0b0b0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.contact-item i {
+  font-size: 1rem;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.contact-item span {
+  color: #b0b0b0;
+  font-size: 0.9rem;
+}
+
+.contact-item:hover span {
+  color: #fff;
+  transition: color 0.3s ease;
+}
+
+/* Footer Bottom */
+.footer-bottom {
+  border-top: 1px solid #2a2f3a;
+  padding-top: 20px;
+}
+
+.copyright {
+  color: #b0b0b0;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.footer-policy-links {
+  display: flex;
+  gap: 20px;
+  justify-content: flex-end;
+}
+
+.footer-policy-links a {
+  color: #b0b0b0;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+.footer-policy-links a:hover {
+  color: #dc3545;
+  text-decoration: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .footer {
+    padding: 40px 0 20px 0;
+  }
+  
+  .footer-main {
+    margin-bottom: 30px;
+  }
+  
+  .footer-policy-links {
+    justify-content: flex-start;
+    margin-top: 15px;
+  }
+  
+  .social-links {
+    justify-content: center;
+  }
+  
+  .footer-logo {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .footer-policy-links {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .social-links {
+    gap: 10px;
+  }
+  
+  .social-link {
+    width: 35px;
+    height: 35px;
+  }
+} 

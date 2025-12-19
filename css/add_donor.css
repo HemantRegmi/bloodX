@@ -1,0 +1,63 @@
+body {
+  background: linear-gradient(135deg, #fff6f6 0%, #ffe6e6 100%);
+}
+
+.add-donor-main-card {
+  border-radius: 22px;
+  box-shadow: 0 6px 32px rgba(200,0,0,0.10), 0 1.5px 4px rgba(44, 62, 80, 0.08);
+  background: #fff;
+  padding: 2.5rem 2rem 2rem 2rem;
+  margin-bottom: 2rem;
+  margin-left: 220px;
+  margin-top: 2rem;
+}
+
+.section-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #b1001a;
+  margin-bottom: 1.2rem;
+  letter-spacing: 1px;
+  text-shadow: 0 1px 4px #fff;
+}
+
+.add-donor-form .form-group label,
+.add-donor-form .font-italic {
+  font-weight: 600;
+  color: #b1001a;
+  margin-bottom: 0.3rem;
+}
+.add-donor-form .form-control {
+  border-radius: 8px;
+  border: 1px solid #f3c6c6;
+  font-size: 1.05rem;
+  margin-bottom: 1rem;
+}
+.add-donor-form textarea.form-control {
+  min-height: 80px;
+}
+.add-donor-form .btn-submit {
+  background: #dc3545 !important;
+  color: #fff !important;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(220, 53, 69, 0.2);
+  font-size: 1rem;
+  padding: 0.75rem 2rem;
+  width: 100%;
+}
+.add-donor-form .btn-submit:hover {
+  background: #c82333 !important;
+  color: #fff !important;
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+  transform: translateY(-1px);
+}
+@media (max-width: 991px) {
+  .add-donor-main-card {
+    padding: 1.2rem 0.5rem 1.2rem 0.5rem;
+    margin-left: 0;
+    margin-top: 1rem;
+  }
+} 

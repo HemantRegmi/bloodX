@@ -1,0 +1,718 @@
+/* Modern Home Page Styles */
+   /* Reservation Form Styling */
+   .reservation-popup {
+    border-radius: 12px !important;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1) !important;
+}
+
+.reservation-form {
+    text-align: left;
+    margin: 1rem 0;
+}
+
+.reservation-form .form-group {
+    margin-bottom: 1rem;
+}
+
+.reservation-form .swal2-input {
+    width: 100% !important;
+    border: 1px solid #e9ecef !important;
+    border-radius: 8px !important;
+    padding: 0.75rem 1rem !important;
+    font-size: 1rem !important;
+    transition: all 0.3s ease !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    height: auto !important;
+    min-height: 48px !important;
+    line-height: 1.5 !important;
+}
+
+.reservation-form .swal2-input:focus {
+    border-color: #dc3545 !important;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25) !important;
+    outline: none !important;
+}
+
+.reservation-form .swal2-input::placeholder {
+    color: #6c757d !important;
+    opacity: 1 !important;
+}
+
+/* Specific styling for select dropdown */
+.reservation-form select.swal2-input {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 1rem center !important;
+    background-size: 1em !important;
+    padding-right: 2.5rem !important;
+    overflow: visible !important;
+    text-overflow: unset !important;
+    white-space: normal !important;
+}
+
+.reservation-form select.swal2-input option {
+    padding: 0.5rem 1rem !important;
+    font-size: 1rem !important;
+    line-height: 1.5 !important;
+    background: white !important;
+    color: #333 !important;
+}
+
+.reservation-confirm-btn {
+    background: #dc3545 !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 0.75rem 2rem !important;
+    font-weight: 600 !important;
+    font-size: 1rem !important;
+    transition: all 0.3s ease !important;
+}
+
+.reservation-confirm-btn:hover {
+    background: #c82333 !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3) !important;
+}
+
+.reservation-cancel-btn {
+    border-radius: 8px !important;
+    padding: 0.75rem 2rem !important;
+    font-weight: 600 !important;
+    font-size: 1rem !important;
+    transition: all 0.3s ease !important;
+}
+
+.reservation-cancel-btn:hover {
+    transform: translateY(-1px) !important;
+}
+
+/* SweetAlert2 Title Styling */
+.swal2-title {
+    color: #333 !important;
+    font-weight: 700 !important;
+    font-size: 1.5rem !important;
+}
+
+/* SweetAlert2 Content Styling */
+.swal2-html-container {
+    margin: 1rem 0 !important;
+}
+
+/* Add space between navbar and hero content */
+.hero-section {
+    margin-top: 8rem;
+}
+/* Reset and Override Styles */
+* {
+  box-sizing: border-box;
+}
+
+/* General Styles */
+html, body {
+  height: 100% !important;
+  scroll-behavior: smooth !important;
+}
+
+body {
+  background: #fff !important;
+  font-family: 'Segoe UI', 'Roboto', Arial, sans-serif !important;
+  color: #333 !important;
+  line-height: 1.6 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+#page-container {
+  margin-top: 0 !important;
+  position: relative !important;
+  min-height: 100vh !important;
+  background: #fff !important;
+}
+
+#content-wrap {
+  padding-bottom: 0 !important;
+  background: #fff !important;
+}
+
+/* Hero Section */
+.hero-section {
+  background: linear-gradient(135deg, #e8eaed 0%, #ffffff 50%, #e8eaed 100%) !important;
+  padding: 80px 0 60px 0 !important;
+  position: relative !important;
+  text-align: center !important;
+  margin: 0 !important;
+  margin-top: 4rem !important;
+}
+
+.hero-content {
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+.hero-title {
+  font-size: 3.5rem !important;
+  font-weight: 900 !important;
+  margin-bottom: 1.5rem !important;
+  line-height: 1.2 !important;
+  color: #333 !important;
+}
+
+.hero-title .text-danger {
+  color: #dc3545 !important;
+}
+
+.hero-title .text-dark {
+  color: #333 !important;
+}
+
+.hero-description {
+  font-size: 1.2rem !important;
+  color: #666 !important;
+  margin-bottom: 2.5rem !important;
+  max-width: 700px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  line-height: 1.6 !important;
+}
+
+.hero-buttons {
+  display: flex !important;
+  gap: 20px !important;
+  justify-content: center !important;
+  flex-wrap: wrap !important;
+}
+
+.hero-btn {
+  padding: 12px 30px !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  transition: all 0.3s ease !important;
+  text-decoration: none !important;
+  position: relative !important;
+  z-index: 10 !important;
+}
+
+.hero-btn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 25px rgba(220, 53, 69, 0.3) !important;
+  text-decoration: none !important;
+}
+
+/* Specific styling for Find Blood button */
+.btn-outline-danger.hero-btn {
+  color: #dc3545 !important;
+  border: 2px solid #dc3545 !important;
+  background: transparent !important;
+}
+
+.btn-outline-danger.hero-btn:hover {
+  color: #fff !important;
+  background: #dc3545 !important;
+  border-color: #dc3545 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 25px rgba(220, 53, 69, 0.3) !important;
+}
+
+/* Specific styling for Donate Blood button */
+.btn-danger.hero-btn {
+  color: #fff !important;
+  background: #dc3545 !important;
+  border: 2px solid #dc3545 !important;
+}
+
+.btn-danger.hero-btn:hover {
+  color: #fff !important;
+  background: #c82333 !important;
+  border-color: #c82333 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 25px rgba(220, 53, 69, 0.3) !important;
+}
+
+/* Ensure button text is always visible */
+.hero-btn,
+.hero-btn:hover,
+.hero-btn:focus,
+.hero-btn:active {
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+/* Statistics Section */
+.stats-section {
+  padding: 60px 0 !important;
+  background: #fff !important;
+}
+
+.stat-card {
+  text-align: center !important;
+  padding: 40px 20px !important;
+  background: #fff5f5 !important;
+  border-radius: 12px !important;
+  margin-bottom: 20px !important;
+  transition: transform 0.3s ease !important;
+  border: 1px solid #f0f0f0 !important;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px) !important;
+}
+
+.stat-number {
+  font-size: 2.5rem !important;
+  font-weight: 900 !important;
+  color: #dc3545 !important;
+  margin-bottom: 10px !important;
+}
+
+.stat-label {
+  font-size: 1.1rem !important;
+  color: #666 !important;
+  font-weight: 500 !important;
+}
+
+/* Mission Section */
+.mission-section {
+  padding: 80px 0 !important;
+  background: #f8f9fa !important;
+  text-align: center !important;
+}
+
+.mission-text {
+  font-size: 1.2rem !important;
+  color: #666 !important;
+  max-width: 800px !important;
+  margin: 0 auto !important;
+  line-height: 1.8 !important;
+}
+
+/* Features Section */
+.features-section {
+  padding: 80px 0 !important;
+  background: #fff !important;
+}
+
+.feature-card {
+  text-align: center !important;
+  padding: 40px 20px !important;
+  background: #fff !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08) !important;
+  margin-bottom: 30px !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+  border: 1px solid #f0f0f0 !important;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px) !important;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12) !important;
+}
+
+.feature-icon {
+  font-size: 3rem !important;
+  margin-bottom: 20px !important;
+}
+
+.feature-title {
+  font-size: 1.5rem !important;
+  font-weight: 700 !important;
+  color: #333 !important;
+  margin-bottom: 15px !important;
+}
+
+.feature-description {
+  color: #666 !important;
+  line-height: 1.6 !important;
+}
+
+/* How It Works Section */
+.how-it-works-section {
+  padding: 80px 0 !important;
+  background: #f8f9fa !important;
+}
+
+.section-title {
+  font-size: 2.5rem !important;
+  font-weight: 800 !important;
+  color: #333 !important;
+  margin-bottom: 1rem !important;
+}
+
+.section-description {
+  font-size: 1.1rem !important;
+  color: #666 !important;
+  margin-bottom: 3rem !important;
+  max-width: 600px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.step-card {
+  text-align: center !important;
+  padding: 30px 20px !important;
+  background: #fff !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08) !important;
+  margin-bottom: 30px !important;
+  transition: transform 0.3s ease !important;
+  border: 1px solid #f0f0f0 !important;
+}
+
+.step-card:hover {
+  transform: translateY(-5px) !important;
+}
+
+.step-icon {
+  font-size: 2.5rem !important;
+  margin-bottom: 20px !important;
+}
+
+.step-title {
+  font-size: 1.3rem !important;
+  font-weight: 700 !important;
+  color: #333 !important;
+  margin-bottom: 15px !important;
+}
+
+.step-description {
+  color: #666 !important;
+  line-height: 1.6 !important;
+}
+
+/* Find Blood Section */
+.find-blood-section {
+  padding: 80px 0 !important;
+  background: #fff !important;
+}
+
+.find-blood-card {
+  background: #fff !important;
+  border-radius: 16px !important;
+  padding: 50px 30px !important;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.1) !important;
+  border: 1px solid #f0f0f0 !important;
+}
+
+.search-form {
+  margin-top: 30px !important;
+}
+
+.search-form .form-control {
+  border: 2px solid #e9ecef !important;
+  border-radius: 8px !important;
+  padding: 12px 15px !important;
+  font-size: 1rem !important;
+  line-height: 1.5 !important;
+  height: 48px !important;
+}
+
+/* Fix for dropdown in search form */
+.search-form select.form-control {
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e") !important;
+  background-position: right 12px center !important;
+  background-repeat: no-repeat !important;
+  background-size: 16px 12px !important;
+  padding-right: 40px !important;
+  cursor: pointer !important;
+  background-color: #fff !important;
+}
+
+.search-form select.form-control option {
+  color: #333 !important;
+  background: #fff !important;
+  padding: 8px 12px !important;
+  font-size: 1rem !important;
+  line-height: 1.5 !important;
+  border: none !important;
+  display: block !important;
+}
+
+.search-form select.form-control option:hover {
+  background: #f8f9fa !important;
+  color: #333 !important;
+}
+
+.search-form select.form-control option:checked {
+  background: #dc3545 !important;
+  color: #fff !important;
+}
+
+/* Remove blue highlighting from placeholder */
+.search-form select.form-control option[value=""] {
+  background: #fff !important;
+  color: #adb5bd !important;
+}
+
+.search-form select.form-control option[value=""]:hover {
+  background: #f8f9fa !important;
+  color: #adb5bd !important;
+}
+
+.search-form select.form-control option[value=""]:checked {
+  background: #fff !important;
+  color: #adb5bd !important;
+}
+
+/* Remove browser default highlighting */
+.search-form select.form-control option:focus {
+  background: #f8f9fa !important;
+  color: #333 !important;
+}
+
+.search-form select.form-control option:-moz-focusring {
+  color: transparent !important;
+  text-shadow: 0 0 0 #333 !important;
+}
+
+.search-form select.form-control option:active,
+.search-form select.form-control option:focus,
+.search-form select.form-control option:target {
+  background: #f8f9fa !important;
+  color: #333 !important;
+}
+
+.search-form select.form-control option::-ms-expand {
+  display: none !important;
+}
+
+.search-form select.form-control option::-webkit-select-placeholder {
+  color: #adb5bd !important;
+}
+
+.search-form .form-control:focus {
+  border-color: #dc3545 !important;
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25) !important;
+  outline: none !important;
+}
+
+.search-form .btn {
+  border-radius: 8px !important;
+  padding: 12px 25px !important;
+  font-weight: 600 !important;
+}
+
+/* Testimonials Section */
+.testimonials-section {
+  padding: 80px 0 !important;
+  background: #f8f9fa !important;
+}
+
+.testimonial-card {
+  background: #fff !important;
+  border-radius: 12px !important;
+  padding: 30px !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08) !important;
+  margin-bottom: 30px !important;
+  transition: transform 0.3s ease !important;
+  border: 1px solid #f0f0f0 !important;
+  position: relative !important;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-5px) !important;
+}
+
+.quote-icon {
+  font-size: 2rem !important;
+  margin-bottom: 20px !important;
+  opacity: 0.7 !important;
+}
+
+.testimonial-text {
+  font-size: 1rem !important;
+  color: #666 !important;
+  line-height: 1.6 !important;
+  margin-bottom: 20px !important;
+  font-style: italic !important;
+}
+
+.testimonial-author {
+  display: flex !important;
+  align-items: center !important;
+  gap: 15px !important;
+}
+
+.author-avatar {
+  font-size: 2.5rem !important;
+}
+
+.author-info {
+  flex: 1 !important;
+}
+
+.author-name {
+  font-weight: 700 !important;
+  color: #dc3545 !important;
+  margin-bottom: 5px !important;
+}
+
+.author-role {
+  color: #666 !important;
+  font-size: 0.9rem !important;
+}
+
+/* Hospitals Section */
+.hospitals-section {
+  padding: 80px 0 !important;
+  background: #fff !important;
+}
+
+.hospital-card {
+  background: #fff !important;
+  border-radius: 12px !important;
+  padding: 30px 20px !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08) !important;
+  margin-bottom: 30px !important;
+  transition: transform 0.3s ease !important;
+  border: 1px solid #f0f0f0 !important;
+  text-align: center !important;
+}
+
+.hospital-card:hover {
+  transform: translateY(-5px) !important;
+}
+
+.hospital-content {
+  margin-bottom: 20px !important;
+}
+
+.hospital-icon {
+  font-size: 2.5rem !important;
+  margin-bottom: 15px !important;
+}
+
+.hospital-name {
+  font-size: 1.2rem !important;
+  font-weight: 700 !important;
+  color: #333 !important;
+  margin-bottom: 0 !important;
+}
+
+/* Buttons */
+.btn-danger {
+  background: #dc3545 !important;
+  border-color: #dc3545 !important;
+  font-weight: 600 !important;
+}
+
+.btn-danger:hover {
+  background: #c82333 !important;
+  border-color: #c82333 !important;
+  transform: translateY(-1px) !important;
+}
+
+.btn-outline-danger {
+  color: #dc3545 !important;
+  border-color: #dc3545 !important;
+  font-weight: 600 !important;
+}
+
+.btn-outline-danger:hover {
+  background: #dc3545 !important;
+  border-color: #dc3545 !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Reserve button specific styling */
+.reserve-btn {
+  color: #dc3545 !important;
+  border: 2px solid #dc3545 !important;
+  background: transparent !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+  border-radius: 8px !important;
+  padding: 10px 20px !important;
+}
+
+.reserve-btn:hover {
+  color: #fff !important;
+  background: #dc3545 !important;
+  border-color: #dc3545 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3) !important;
+}
+
+.reserve-btn:focus {
+  color: #fff !important;
+  background: #dc3545 !important;
+  border-color: #dc3545 !important;
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25) !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.5rem !important;
+  }
+  
+  .hero-description {
+    font-size: 1.1rem !important;
+  }
+  
+  .hero-buttons {
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+  
+  .section-title {
+    font-size: 2rem !important;
+  }
+  
+  .stat-number {
+    font-size: 2rem !important;
+  }
+  
+  .feature-card,
+  .step-card,
+  .testimonial-card,
+  .hospital-card {
+    margin-bottom: 20px !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-section {
+    padding: 60px 0 !important;
+  }
+  
+  .hero-title {
+    font-size: 2rem !important;
+  }
+  
+  .section-title {
+    font-size: 1.8rem !important;
+  }
+  
+  .find-blood-card {
+    padding: 30px 20px !important;
+  }
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-section,
+.stats-section,
+.mission-section,
+.features-section,
+.how-it-works-section,
+.find-blood-section,
+.testimonials-section,
+.hospitals-section {
+  animation: fadeInUp 0.8s ease-out;
+} 

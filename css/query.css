@@ -1,0 +1,103 @@
+body {
+  background: linear-gradient(135deg, #fff6f6 0%, #ffe6e6 100%);
+}
+.donor-list-main-card {
+  border-radius: 22px;
+  box-shadow: 0 6px 32px rgba(200,0,0,0.10), 0 1.5px 4px rgba(44, 62, 80, 0.08);
+  background: #fff;
+  padding: 2.5rem 1.5rem 2rem 1.5rem;
+  margin-bottom: 2rem;
+  max-width: 1400px;
+  margin-left: 220px;
+  margin-right: auto;
+  margin-top: 2.5rem;
+}
+.section-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #b1001a;
+  margin-bottom: 1.2rem;
+  letter-spacing: 1px;
+  text-shadow: 0 1px 4px #fff;
+}
+.donor-list-table-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+}
+.donor-list-table {
+  width: 100%;
+  margin: 0;
+  margin-top: 0;
+  background: transparent;
+  box-shadow: none;
+  border-radius: 16px;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+}
+.donor-list-table th {
+  background: none;
+  color: #b1001a;
+  font-weight: 700;
+  font-size: 1.6rem;
+  padding: 1.2rem 1.5rem;
+  border: none;
+  text-align: left;
+  border-bottom: 2px solid #f3c6c6;
+}
+.donor-list-table td {
+  padding: 1.2rem 1.5rem;
+  font-size: 1.2rem;
+  color: #222;
+  border-top: 1px solid #f3c6c6;
+  background: #fff;
+  text-align: left;
+}
+.donor-list-table tr:last-child td {
+  border-bottom: none;
+}
+.donor-list-table tbody tr {
+  transition: background 0.18s;
+}
+.donor-list-table tbody tr:hover {
+  background: #fff6f6;
+}
+.donor-action-btn {
+  background: linear-gradient(90deg, #8B0000 0%, #b1001a 100%) !important;
+  color: #fff !important;
+  font-weight: 900;
+  border: none;
+  border-radius: 10px;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(139,0,0,0.13);
+  letter-spacing: 1px;
+  font-size: 1.1rem;
+  padding: 0.6rem 1.5rem;
+  text-shadow: 0 1px 4px #b1001a;
+  margin: 0 auto;
+  display: inline-block;
+}
+.donor-action-btn:hover {
+  background: linear-gradient(90deg, #b1001a 0%, #8B0000 100%) !important;
+  color: #fff !important;
+  box-shadow: 0 6px 18px rgba(139,0,0,0.22);
+  transform: translateY(-2px) scale(1.03);
+}
+.donor-list-pagination-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+@media (max-width: 991px) {
+  .donor-list-main-card {
+    padding: 1.2rem 0.5rem 1.2rem 0.5rem;
+    margin-top: 1rem;
+    margin-left: 0;
+  }
+  .donor-list-table th, .donor-list-table td {
+    padding: 0.7rem 0.5rem;
+  }
+} 
