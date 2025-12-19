@@ -1,7 +1,7 @@
 -- Dummy Donor Data for Blood Bank System
 -- Insert 10 sample donors with complete details including location and donation history
 
-USE blood_donation;
+-- USE blood_donation;
 
 -- Donor 1: A+ Male, Kathmandu
 INSERT INTO donor_details (donor_name, donor_number, donor_mail, donor_age, donor_gender, donor_blood, donor_address, latitude, longitude, last_donation_date, availability_score)

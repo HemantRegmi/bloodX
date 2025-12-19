@@ -160,6 +160,14 @@ resource "aws_security_group" "monitoring" {
     security_groups = [aws_security_group.bastion_sg.id]
   }
 
+  ingress {
+    description     = "SSH from Bastion"
+    from_port       = 22
+    to_port         = 22
+    protocol        = "tcp"
+    security_groups = [aws_security_group.bastion_sg.id]
+  }
+
   egress {
     description = "Allow all outbound traffic"
     from_port   = 0

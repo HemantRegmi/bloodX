@@ -7,6 +7,8 @@ resource "aws_ecr_repository" "bloodx" {
     scan_on_push = true
   }
 
+  force_delete = true
+
   tags = {
     Name = "bloodx-ecr"
   }
