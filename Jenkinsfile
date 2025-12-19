@@ -10,7 +10,7 @@ pipeline {
 
     stage('Checkout') {
       steps {
-        git 'https://github.com/HemantRegmi/bloodX.git'
+        git branch: 'main', url: 'https://github.com/HemantRegmi/bloodX.git'
       }
     }
 
@@ -22,13 +22,11 @@ pipeline {
 
     stage('Login to ECR') {
       steps {
-        withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-creds']]) {
-          sh '''
-            REGISTRY=$(echo $ECR_REPO | cut -d'/' -f1)
-            aws ecr get-login-password --region $AWS_REGION \
-            | docker login --username AWS --password-stdin $REGISTRY
-          '''
-        }
+        sh '''
+          REGISTRY=$(echo $ECR_REPO | cut -d'/' -f1)
+          aws ecr get-login-password --region $AWS_REGION \
+          | docker login --username AWS --password-stdin $REGISTRY
+        '''
       }
     }
 
