@@ -61,10 +61,4 @@ Real-time observability of CPU, RAM, and Network trafffic using Grafana.
    After deployment, Terraform outputs the Load Balancer URL.
    Visit: `http://<your-alb-dns>`
 
-### Developers
-- **Hemant Regmi**
-- **Diroj Khanal**
-- **Janak Pokharel**
 
----
-*Built for the Advanced Cloud Computing Interview Demo.*
