@@ -1,0 +1,11 @@
+.git
+.gitignore
+.vscode
+terraform/
+monitoring/
+Jenkinsfile
+DEPLOYMENT_GUIDE.md
+*.pem
+*.md
+docker-compose.yml
+Dockerfile
