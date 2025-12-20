@@ -27,11 +27,17 @@ A responsive, user-friendly interface for donors and seekers.
 Fully automated infrastructure provisioning using Terraform.
 ![AWS Instances](docs/images/aws-infrastructure.png)
 
-### 3. CI/CD Pipeline
+### 3. Database
+<img width="1900" height="867" alt="Screenshot 2025-12-20 112608" src="https://github.com/user-attachments/assets/dbd64c93-9209-4fd9-bc04-c3697e612a21" />
+
+### 4. AWS ECR
+<img width="1907" height="867" alt="Screenshot 2025-12-20 112649" src="https://github.com/user-attachments/assets/79f26647-d9c5-4f32-bad2-1a05928f11cb" />
+
+### 5. CI/CD Pipeline
 Automated build, test, and deploy via Jenkins.
 ![Jenkins Pipeline](docs/images/jenkins-pipeline.png)
 
-### 4. System Monitoring
+### 6. System Monitoring
 Real-time observability of CPU, RAM, and Network trafffic using Grafana.
 ![Grafana Dashboard](docs/images/grafana-monitoring.png)
 
