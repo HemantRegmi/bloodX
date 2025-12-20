@@ -7,13 +7,14 @@ echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
   https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
   /etc/apt/sources.list.d/jenkins.list > /dev/null
 sudo apt-get update -y
-sudo apt-get install -y jenkins
+sudo apt-get install -y jenkins prometheus-node-exporter
 
 # Install Docker
 sudo apt-get install -y docker.io
 sudo usermod -aG docker jenkins
 sudo usermod -aG docker ubuntu
 sudo systemctl restart docker
+sudo systemctl enable jenkins
 sudo systemctl restart jenkins
 
 # Install AWS CLI

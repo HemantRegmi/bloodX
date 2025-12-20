@@ -1,6 +1,6 @@
 #!/bin/bash
 sudo apt update -y
-sudo apt install -y docker.io docker-compose-v2
+sudo apt install -y docker.io docker-compose-v2 prometheus-node-exporter
 
 # Create directory structure
 mkdir -p /home/ubuntu/monitoring
@@ -25,11 +25,13 @@ services:
     image: prom/prometheus
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
-    ports:
-      - "9090:9090"
+    network_mode: "host"
+    restart: always
 
   grafana:
     image: grafana/grafana
+    network_mode: "host"
+    restart: always
     ports:
       - "3000:3000"
 EOF

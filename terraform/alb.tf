@@ -76,17 +76,14 @@ resource "aws_lb_listener" "https" {
 }
 
 # Route 53 Zone
-resource "aws_route53_zone" "main" {
+# Route 53 Zone (Lookup existing instead of creating new)
+data "aws_route53_zone" "main" {
   name = var.domain_name
-
-  tags = {
-    Name = "bloodx-zone"
-  }
 }
 
 # Route 53 A record for domain apex
 resource "aws_route53_record" "app" {
-  zone_id = aws_route53_zone.main.zone_id
+  zone_id = data.aws_route53_zone.main.zone_id
   name    = var.domain_name
   type    = "A"
 
@@ -99,7 +96,7 @@ resource "aws_route53_record" "app" {
 
 # Route 53 A record for www subdomain
 resource "aws_route53_record" "www" {
-  zone_id = aws_route53_zone.main.zone_id
+  zone_id = data.aws_route53_zone.main.zone_id
   name    = "www.${var.domain_name}"
   type    = "A"
 

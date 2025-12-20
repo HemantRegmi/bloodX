@@ -35,7 +35,21 @@ Automated build, test, and deploy via Jenkins.
 Real-time observability of CPU, RAM, and Network trafffic using Grafana.
 ![Grafana Dashboard](docs/images/grafana-monitoring.png)
 
----
+
+## 🛡️ Service Reliability & Persistence
+
+To ensure high availability for mission-critical DevOps tools, we implement strict persistence strategies:
+
+### 1. Jenkins Server (Systemd)
+- **Mechanism:** Managed via `systemd` (Linux Service Manager).
+- **Configuration:** Service is explicitly enabled (`sudo systemctl enable jenkins`) during provisioning.
+- **Behavior:** Automatically starts on boot and restarts in case of process crashes.
+
+### 2. Monitoring Stack (Docker Restart Policies)
+- **Mechanism:** Docker Compose `restart` policies.
+- **Configuration:** Prometheus and Grafana containers are configured with `restart: always`.
+- **Behavior:** The Docker daemon ensures these containers are always running, even after a host reboot or daemon crash.
+
 
 
 

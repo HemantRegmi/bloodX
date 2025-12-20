@@ -52,7 +52,7 @@ output "green_target_group_arn" {
 
 output "route53_nameservers" {
   description = "Route 53 nameservers for the domain"
-  value       = aws_route53_zone.main.name_servers
+  value       = data.aws_route53_zone.main.name_servers
 }
 
 output "app_url" {

@@ -35,8 +35,7 @@ resource "aws_db_instance" "bloodx" {
 # Output RDS Endpoint
 output "rds_endpoint" {
   description = "RDS instance endpoint"
-  value       = aws_db_instance.bloodx.endpoint
-  sensitive   = true
+  value       = aws_db_instance.bloodx.address
 }
 
 output "rds_database_name" {

@@ -46,7 +46,7 @@ variable "project_name" {
 variable "ssh_key_name" {
   description = "SSH key pair name for EC2 instances"
   type        = string
-  default     = "bloodx-deploy-key"
+  default     = "bloodx-auto-key"
 }
 
 variable "allowed_ssh_cidr" {
