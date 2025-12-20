@@ -46,8 +46,10 @@ pipeline {
     stage('Deploy to Production') {
       steps {
         sh '''
-          echo "Triggering Auto Scaling Instance Refresh..."
           echo "Deploying to Production Environment..."
+          # Forcefully cancel any previous refresh to prioritize THIS build
+          aws autoscaling cancel-instance-refresh --auto-scaling-group-name bloodx-asg --region $AWS_REGION || true
+          sleep 10
           aws autoscaling start-instance-refresh --auto-scaling-group-name bloodx-asg --region $AWS_REGION
         '''
       }
