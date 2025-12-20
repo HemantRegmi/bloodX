@@ -74,34 +74,7 @@ Real-time observability of CPU, RAM, and Network trafffic using Grafana.
 
 ---
 
-## 🚀 Setup & Deployment
 
-### Prerequisites
-- AWS Account
-- Terraform installed
-- Git
 
-### Quick Start
-1. **Clone the Repo:**
-   ```bash
-   git clone https://github.com/HemantRegmi/bloodX.git
-   cd bloodX/terraform
-   ```
 
-2. **Deploy Infrastructure:**
-   ```bash
-   terraform init
-   terraform apply -var="ssh_key_name=bloodx-deploy-key" -auto-approve
-   ```
 
-3. **Access Application:**
-   After deployment, Terraform outputs the Load Balancer URL.
-   Visit: `http://<your-alb-dns>`
-
-### Developers
-- **Hemant Regmi**
-- **Diroj Khanal**
-- **Janak Pokharel**
-
----
-*Built for the Advanced Cloud Computing Interview Demo.*
