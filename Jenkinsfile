@@ -47,6 +47,7 @@ pipeline {
       steps {
         sh '''
           echo "Triggering Auto Scaling Instance Refresh..."
+          echo "Deploying to Production Environment..."
           aws autoscaling start-instance-refresh --auto-scaling-group-name bloodx-asg --region $AWS_REGION
         '''
       }
