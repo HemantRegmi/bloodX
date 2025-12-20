@@ -38,5 +38,14 @@ pipeline {
         '''
       }
     }
+
+    stage('Deploy to Production') {
+      steps {
+        sh '''
+          echo "Triggering Auto Scaling Instance Refresh..."
+          aws autoscaling start-instance-refresh --auto-scaling-group-name bloodx-asg
+        '''
+      }
+    }
   }
 }
