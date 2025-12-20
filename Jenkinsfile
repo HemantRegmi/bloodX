@@ -50,7 +50,7 @@ pipeline {
           # Forcefully cancel any previous refresh to prioritize THIS build
           aws autoscaling cancel-instance-refresh --auto-scaling-group-name bloodx-asg --region $AWS_REGION || true
           sleep 10
-          aws autoscaling start-instance-refresh --auto-scaling-group-name bloodx-asg --region $AWS_REGION
+          aws autoscaling start-instance-refresh --auto-scaling-group-name bloodx-asg --region $AWS_REGION --preferences '{"MinHealthyPercentage": 100, "InstanceWarmup": 300}'
         '''
       }
     }
