@@ -13,7 +13,44 @@ This project demonstrates a complete real-world **DevOps** lifecycle:
 - **Monitoring:** Prometheus & Grafana for real-time system metrics.
 - **Security:** Strict Security Groups, Bastion Host for SSH access.
 
-![Architecture Diagram](docs/images/architecture.png)
+```mermaid
+graph TD
+    user((User))
+    dev((Developer))
+    
+    subgraph "CI/CD Pipeline"
+        github[GitHub Repo]
+        jenkins[Jenkins Server]
+        ecr[Amazon ECR]
+    end
+
+    subgraph "AWS Cloud (VPC)"
+        igw[Internet Gateway]
+        
+        subgraph "Public Subnets"
+            alb[Application Load Balancer]
+            nat[NAT Gateway]
+            bastion[Bastion Host]
+        end
+        
+        subgraph "Private Subnets"
+            asg[Auto Scaling Group<br/>(EC2 Instances)]
+            rds[Amazon RDS<br/>(MySQL)]
+        end
+    end
+
+    dev -->|Push Code| github
+    github -->|Webhook| jenkins
+    jenkins -->|Build & Push| ecr
+    
+    user -->|HTTP/HTTPS| alb
+    alb -->|Traffic Dist| asg
+    asg -->|SQL Queries| rds
+    asg -->|Pull Image| ecr
+    asg -->|Outbound Traffic| nat
+    nat -->|Internet Access| igw
+    bastion -.->|SSH| asg
+```
 
 ---
 
