@@ -78,7 +78,7 @@ resource "aws_lb_listener" "https" {
 # Route 53 Zone
 # Route 53 Zone (Lookup existing instead of creating new)
 data "aws_route53_zone" "main" {
-  name = var.domain_name
+  zone_id = "Z06399983BVU7IAYMNIYY"
 }
 
 # Route 53 A record for domain apex
