@@ -164,8 +164,8 @@
                 <section class="hero-section">
                     <div class="hero-content text-center">
                         <h1 class="hero-title">
-                            <span class="text-danger">Donate Blood,</span><br>
-                            <span class="text-dark">Save Lives</span>
+                            <span class="text-danger">Every Drop,</span><br>
+                            <span class="text-dark">Saves Lives</span>
                         </h1>
                         <p class="hero-description">
                             Join our community of life-savers. Every donation can save up to three lives.
