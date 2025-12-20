@@ -35,7 +35,8 @@ Fully automated infrastructure provisioning using Terraform.
 
 ### 5. CI/CD Pipeline
 Automated build, test, and deploy via Jenkins.
-![Jenkins Pipeline](docs/images/jenkins-pipeline.png)
+<img width="1899" height="913" alt="Screenshot 2025-12-20 154336" src="https://github.com/user-attachments/assets/9dffd036-9bb4-4a42-b936-b7cea49e929b" />
+
 
 ### 6. System Monitoring
 Real-time observability of CPU, RAM, and Network trafffic using Grafana.
