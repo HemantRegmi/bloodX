@@ -1,6 +1,10 @@
 pipeline {
   agent any
 
+  triggers {
+    pollSCM '* * * * *'
+  }
+
   environment {
     AWS_REGION = "ap-south-1"
     ECR_REPO = "821214029068.dkr.ecr.ap-south-1.amazonaws.com/bloodx"
