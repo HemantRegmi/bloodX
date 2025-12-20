@@ -61,7 +61,8 @@ resource "aws_iam_role_policy" "asg_policy" {
         Action = [
           "autoscaling:StartInstanceRefresh",
           "autoscaling:DescribeInstanceRefreshes",
-          "autoscaling:CancelInstanceRefresh"
+          "autoscaling:CancelInstanceRefresh",
+          "autoscaling:CompleteLifecycleAction"
         ]
         Resource = "*"
       }
@@ -115,6 +116,14 @@ resource "aws_launch_template" "app" {
               docker pull ${aws_ecr_repository.bloodx.repository_url}:latest || true
               docker rm -f bloodx || true
               docker run -d --name bloodx --restart unless-stopped -p 80:80 --env-file /etc/bloodx.env ${aws_ecr_repository.bloodx.repository_url}:latest || true
+
+              # Signal ASG that we are ready
+              aws autoscaling complete-lifecycle-action \
+                --lifecycle-hook-name bloodx-launch-hook \
+                --auto-scaling-group-name bloodx-asg \
+                --lifecycle-action-result CONTINUE \
+                --instance-id $(wget -q -O - http://169.254.169.254/latest/meta-data/instance-id) \
+                --region ${data.aws_region.current.name}
               EOF
   )
 
@@ -142,6 +151,13 @@ resource "aws_autoscaling_group" "app" {
 
   health_check_type         = "ELB"
   health_check_grace_period = 300
+
+  initial_lifecycle_hook {
+    name                 = "bloodx-launch-hook"
+    default_result       = "ABANDON"
+    heartbeat_timeout    = 300
+    lifecycle_transition = "autoscaling:EC2_INSTANCE_LAUNCHING"
+  }
 
   tag {
     key                 = "Name"
