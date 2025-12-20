@@ -3,7 +3,8 @@ require_once 'conn.php';
 header('Content-Type: application/json');
 
 // Ensure new donor columns exist (latitude, longitude, last_donation_date, availability_score)
-function ensureDonorColumns($conn) {
+function ensureDonorColumns($conn)
+{
   // Check existing columns
   $columns = [];
   $res = $conn->query("SHOW COLUMNS FROM donor_details");
@@ -36,15 +37,18 @@ function ensureDonorColumns($conn) {
 ensureDonorColumns($conn);
 
 // Accept both GET and POST
-$getParam = function($key, $default = null) {
-  if (isset($_POST[$key])) return $_POST[$key];
-  if (isset($_GET[$key])) return $_GET[$key];
+$getParam = function ($key, $default = null) {
+  if (isset($_POST[$key]))
+    return $_POST[$key];
+  if (isset($_GET[$key]))
+    return $_GET[$key];
   return $default;
 };
 
 $blood_group = $getParam('blood_group', '');
-$limit = (int)$getParam('limit', 12);
-if ($limit <= 0 || $limit > 50) $limit = 12;
+$limit = (int) $getParam('limit', 12);
+if ($limit <= 0 || $limit > 50)
+  $limit = 12;
 
 $age_min = $getParam('age_min', null);
 $age_max = $getParam('age_max', null);
@@ -56,11 +60,12 @@ $recipient_age = $getParam('recipient_age', null);
 $recipient_lat = $getParam('recipient_lat', null);
 $recipient_lng = $getParam('recipient_lng', null);
 // Weights (defaults)
-$w_age = (float)$getParam('weight_age', 0.3);
-$w_distance = (float)$getParam('weight_distance', 0.5);
-$w_recency = (float)$getParam('weight_recency', 0.2);
-$k = (int)$getParam('k', $limit);
-if ($k <= 0) $k = $limit;
+$w_age = (float) $getParam('weight_age', 0.3);
+$w_distance = (float) $getParam('weight_distance', 0.5);
+$w_recency = (float) $getParam('weight_recency', 0.2);
+$k = (int) $getParam('k', $limit);
+if ($k <= 0)
+  $k = $limit;
 
 if (!$blood_group) {
   echo json_encode(['success' => false, 'message' => 'blood_group is required']);
@@ -69,12 +74,12 @@ if (!$blood_group) {
 
 // Compatibility map
 $compatibility = [
-  'O-'  => ['O-'],
-  'O+'  => ['O+', 'O-'],
-  'A-'  => ['A-', 'O-'],
-  'A+'  => ['A+', 'A-', 'O+', 'O-'],
-  'B-'  => ['B-', 'O-'],
-  'B+'  => ['B+', 'B-', 'O+', 'O-'],
+  'O-' => ['O-'],
+  'O+' => ['O+', 'O-'],
+  'A-' => ['A-', 'O-'],
+  'A+' => ['A+', 'A-', 'O+', 'O-'],
+  'B-' => ['B-', 'O-'],
+  'B+' => ['B+', 'B-', 'O+', 'O-'],
   'AB-' => ['AB-', 'A-', 'B-', 'O-'],
   'AB+' => ['AB+', 'AB-', 'A+', 'A-', 'B+', 'B-', 'O+', 'O-'],
 ];
@@ -95,12 +100,12 @@ $params = array_merge($params, $compatibleGroups);
 if ($age_min !== null && $age_min !== '') {
   $where[] = "donor_age >= ?";
   $types .= 'i';
-  $params[] = (int)$age_min;
+  $params[] = (int) $age_min;
 }
 if ($age_max !== null && $age_max !== '') {
   $where[] = "donor_age <= ?";
   $types .= 'i';
-  $params[] = (int)$age_max;
+  $params[] = (int) $age_max;
 }
 if ($gender !== null && $gender !== '') {
   $where[] = "donor_gender = ?";
@@ -155,37 +160,46 @@ if (!$stmt->execute()) {
 
 $res = $stmt->get_result();
 $donors = [];
+$seenNumbers = [];
 while ($row = $res->fetch_assoc()) {
-  $donors[] = $row;
+  // Deduplicate based on donor_number
+  if (!in_array($row['donor_number'], $seenNumbers)) {
+    $donors[] = $row;
+    $seenNumbers[] = $row['donor_number'];
+  }
 }
 
 // If recipient features provided, compute kNN-style ranking
-if (($recipient_age !== null && $recipient_age !== '') ||
-    ($recipient_lat !== null && $recipient_lng !== null && $recipient_lat !== '' && $recipient_lng !== '')) {
+if (
+  ($recipient_age !== null && $recipient_age !== '') ||
+  ($recipient_lat !== null && $recipient_lng !== null && $recipient_lat !== '' && $recipient_lng !== '')
+) {
 
-  $recipient_age = $recipient_age !== null && $recipient_age !== '' ? (int)$recipient_age : null;
-  $recipient_lat = $recipient_lat !== null && $recipient_lat !== '' ? (float)$recipient_lat : null;
-  $recipient_lng = $recipient_lng !== null && $recipient_lng !== '' ? (float)$recipient_lng : null;
+  $recipient_age = $recipient_age !== null && $recipient_age !== '' ? (int) $recipient_age : null;
+  $recipient_lat = $recipient_lat !== null && $recipient_lat !== '' ? (float) $recipient_lat : null;
+  $recipient_lng = $recipient_lng !== null && $recipient_lng !== '' ? (float) $recipient_lng : null;
 
   $ranked = [];
   foreach ($donors as $d) {
     // Age feature (normalized 0..1 roughly by 60-year range)
     $ageDist = 0.0;
     if ($recipient_age !== null && isset($d['donor_age']) && $d['donor_age'] !== null) {
-      $ageDist = min(1.0, abs(((int)$d['donor_age']) - $recipient_age) / 60.0);
+      $ageDist = min(1.0, abs(((int) $d['donor_age']) - $recipient_age) / 60.0);
     }
 
     // Distance feature using haversine (km), normalized by 50km window
     $distNorm = 0.0;
-    if ($recipient_lat !== null && $recipient_lng !== null &&
-        isset($d['latitude']) && isset($d['longitude']) &&
-        $d['latitude'] !== null && $d['longitude'] !== null &&
-        $d['latitude'] !== '' && $d['longitude'] !== '') {
-      $lat1 = deg2rad((float)$recipient_lat);
-      $lon1 = deg2rad((float)$recipient_lng);
-      $lat2 = deg2rad((float)$d['latitude']);
-      $lon2 = deg2rad((float)$d['longitude']);
-      $a = sin(($lat2 - $lat1)/2) ** 2 + cos($lat1) * cos($lat2) * sin(($lon2 - $lon1)/2) ** 2;
+    if (
+      $recipient_lat !== null && $recipient_lng !== null &&
+      isset($d['latitude']) && isset($d['longitude']) &&
+      $d['latitude'] !== null && $d['longitude'] !== null &&
+      $d['latitude'] !== '' && $d['longitude'] !== ''
+    ) {
+      $lat1 = deg2rad((float) $recipient_lat);
+      $lon1 = deg2rad((float) $recipient_lng);
+      $lat2 = deg2rad((float) $d['latitude']);
+      $lon2 = deg2rad((float) $d['longitude']);
+      $a = sin(($lat2 - $lat1) / 2) ** 2 + cos($lat1) * cos($lat2) * sin(($lon2 - $lon1) / 2) ** 2;
       $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
       $earthKm = 6371.0;
       $km = $earthKm * $c;
@@ -212,17 +226,18 @@ if (($recipient_age !== null && $recipient_age !== '') ||
   }
 
   // Sort: exact blood match first, then by kNN score
-  usort($ranked, function($a, $b) use ($blood_group) {
+  usort($ranked, function ($a, $b) use ($blood_group) {
     $aExact = ($a['donor_blood'] === $blood_group) ? 1 : 0;
     $bExact = ($b['donor_blood'] === $blood_group) ? 1 : 0;
-    
+
     // If one is exact match and other isn't, exact match wins
     if ($aExact != $bExact) {
       return $bExact - $aExact; // 1 (exact) comes before 0 (compatible)
     }
-    
+
     // Both same type (both exact or both compatible), sort by score
-    if ($a['_score'] == $b['_score']) return 0;
+    if ($a['_score'] == $b['_score'])
+      return 0;
     return ($a['_score'] < $b['_score']) ? -1 : 1;
   });
 
@@ -249,5 +264,3 @@ if (($recipient_age !== null && $recipient_age !== '') ||
 $stmt->close();
 $conn->close();
 ?>
-
-
