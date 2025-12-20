@@ -1,5 +1,8 @@
 #!/bin/bash
 sudo apt update -y
+# Wait for any existing apt locks to release
+while sudo fuser /var/lib/dpkg/lock >/dev/null 2>&1; do sleep 5; done
+while sudo fuser /var/lib/apt/lists/lock >/dev/null 2>&1; do sleep 5; done
 sudo apt install -y docker.io docker-compose-v2 prometheus-node-exporter
 
 # Create directory structure

@@ -60,7 +60,8 @@ resource "aws_iam_role_policy" "asg_policy" {
         Effect = "Allow"
         Action = [
           "autoscaling:StartInstanceRefresh",
-          "autoscaling:DescribeInstanceRefreshes"
+          "autoscaling:DescribeInstanceRefreshes",
+          "autoscaling:CancelInstanceRefresh"
         ]
         Resource = "*"
       }
