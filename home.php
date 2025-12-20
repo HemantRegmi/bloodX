@@ -373,7 +373,7 @@
                                         <i class="fas fa-user-circle text-danger"></i>
                                     </div>
                                     <div class="author-info">
-                                        <div class="author-name">Dr. Amelia Patel</div>
+                                        <div class="author-name">Dr. Hemant Regmi</div>
                                         <div class="author-role">Hospital Director</div>
                                     </div>
                                 </div>
