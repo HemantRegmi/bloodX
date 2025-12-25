@@ -35,8 +35,7 @@ services:
     image: grafana/grafana
     network_mode: "host"
     restart: always
-    ports:
-      - "3000:3000"
+    restart: always
 EOF
 
 # Start services
