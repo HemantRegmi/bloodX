@@ -36,33 +36,7 @@ resource "aws_iam_role_policy" "ecr_policy" {
           "ecr:GetAuthorizationToken",
           "ecr:BatchCheckLayerAvailability",
           "ecr:GetDownloadUrlForLayer",
-          "ecr:BatchGetImage",
-          "ecr:PutImage",
-          "ecr:InitiateLayerUpload",
-          "ecr:UploadLayerPart",
-          "ecr:CompleteLayerUpload"
-        ]
-        Resource = "*"
-      }
-    ]
-  })
-}
-
-# IAM Policy for ASG Control (Jenkins Deployment)
-resource "aws_iam_role_policy" "asg_policy" {
-  name = "bloodx-asg-policy"
-  role = aws_iam_role.ec2_role.id
-
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Effect = "Allow"
-        Action = [
-          "autoscaling:StartInstanceRefresh",
-          "autoscaling:CancelInstanceRefresh",
-          "autoscaling:DescribeInstanceRefreshes",
-          "autoscaling:CompleteLifecycleAction"
+          "ecr:BatchGetImage"
         ]
         Resource = "*"
       }
