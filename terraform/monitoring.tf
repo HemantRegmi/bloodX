@@ -1,6 +1,7 @@
 resource "aws_instance" "monitoring" {
   ami                    = "ami-0f5ee92e2d63afc18"
   instance_type          = "t3.micro"
+  private_ip             = "10.0.11.20"
   subnet_id              = aws_subnet.private[0].id
   vpc_security_group_ids = [aws_security_group.monitoring.id]
   key_name               = var.ssh_key_name
