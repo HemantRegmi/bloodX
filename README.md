@@ -41,7 +41,7 @@ Automated build, test, and deploy via Jenkins.
 
 ### 6. System Monitoring
 Real-time observability of CPU, RAM, and Network trafffic using Grafana.
-![Grafana Dashboard](docs/images/grafana-monitoring.png)
+<img width="1905" height="915" alt="image" src="https://github.com/user-attachments/assets/f529ba10-7582-4872-b2b4-768e831144c7" />
 
 
 ## 🛡️ Service Reliability & Persistence
