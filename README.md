@@ -13,7 +13,8 @@ This project demonstrates a complete real-world **DevOps** lifecycle:
 - **Monitoring:** Prometheus & Grafana for real-time system metrics.
 - **Security:** Strict Security Groups, Bastion Host for SSH access.
 
-![Architecture Diagram](docs/images/architecture_v13.png)
+![architecture](https://github.com/user-attachments/assets/82cde4e4-75e8-43a7-911a-0600b8332ad1)
+
 
 ---
 
