@@ -27,6 +27,11 @@ while sudo fuser /var/lib/apt/lists/lock >/dev/null 2>&1; do sleep 5; done
 
 retry_command sudo apt install -y docker.io docker-compose-v2 prometheus-node-exporter
 
+# Add ubuntu user to docker group
+sudo usermod -aG docker ubuntu
+sudo systemctl enable docker
+sudo systemctl restart docker
+
 # Create directory structure
 mkdir -p /home/ubuntu/monitoring
 cd /home/ubuntu/monitoring
