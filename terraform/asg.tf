@@ -64,7 +64,8 @@ resource "aws_iam_role_policy" "asg_policy" {
           "autoscaling:DescribeInstanceRefreshes",
           "autoscaling:CompleteLifecycleAction",
           "autoscaling:UpdateAutoScalingGroup",
-          "elasticloadbalancing:DescribeTargetHealth"
+          "elasticloadbalancing:DescribeTargetHealth",
+          "elasticloadbalancing:DescribeTargetGroups"
         ]
         Resource = "*"
       }
