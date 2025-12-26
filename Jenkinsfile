@@ -47,34 +47,9 @@ pipeline {
       steps {
         sh '''
           echo "Deploying to Production Environment..."
-           
-          # 1. Scale Out to 2 Instances
-          aws autoscaling update-auto-scaling-group --auto-scaling-group-name bloodx-asg --desired-capacity 2 --region $AWS_REGION
           
-          echo "Waiting for 2nd instance to START and pass HEALTH CHECKS..."
-          
-          # 2. Wait for ALB to report 2 Healthy Hosts
-          # Fetch ARN using AWS CLI since Terraform is not installed on the agent
-          TG_ARN=$(aws elbv2 describe-target-groups --names bloodx-blue --region $AWS_REGION --query "TargetGroups[0].TargetGroupArn" --output text)
-          
-          while true; do
-            HEALTHY_COUNT=$(aws elbv2 describe-target-health --target-group-arn $TG_ARN --region $AWS_REGION --query "TargetHealthDescriptions[?TargetHealth.State=='healthy'].length(@)" --output text)
-            echo "Current Healthy Hosts: $HEALTHY_COUNT"
-            
-            if [ "$HEALTHY_COUNT" -ge 2 ]; then
-              echo "Success! Both instances are healthy. Traffic is safe."
-              echo "Waiting 45s for connections to stabilize..."
-              sleep 45
-              break
-            fi
-            
-            echo "Waiting for new instance to be healthy..."
-            sleep 10
-          done
-
-          # 3. Scale In (Remove Old Instance)
-          echo "Scaling down to 1 instance..."
-          aws autoscaling update-auto-scaling-group --auto-scaling-group-name bloodx-asg --desired-capacity 1 --region $AWS_REGION
+          # Standard Instance Refresh (Fire and Forget)
+          aws autoscaling start-instance-refresh --auto-scaling-group-name bloodx-asg --region $AWS_REGION
         '''
       }
     }

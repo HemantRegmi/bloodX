@@ -138,7 +138,7 @@ resource "aws_autoscaling_group" "app" {
   min_size            = 1
   vpc_zone_identifier = aws_subnet.private[*].id
   target_group_arns   = [aws_lb_target_group.blue.arn]
-  termination_policies = ["OldestInstance"]
+  termination_policies = ["Default"]
 
   launch_template {
     id      = aws_launch_template.app.id
@@ -146,7 +146,7 @@ resource "aws_autoscaling_group" "app" {
   }
 
   health_check_type         = "ELB"
-  health_check_grace_period = 60 # Check ELB status quickly, don't assume healthy
+  health_check_grace_period = 300
 
   tag {
     key                 = "Name"
@@ -156,10 +156,6 @@ resource "aws_autoscaling_group" "app" {
 
   instance_refresh {
     strategy = "Rolling"
-    preferences {
-      min_healthy_percentage = 100
-      instance_warmup        = 300
-    }
   }
 }
 
