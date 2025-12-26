@@ -54,7 +54,8 @@ pipeline {
           echo "Waiting for 2nd instance to START and pass HEALTH CHECKS..."
           
           # 2. Wait for ALB to report 2 Healthy Hosts
-          TG_ARN=$(terraform -chdir=terraform output -raw blue_target_group_arn)
+          # Fetch ARN using AWS CLI since Terraform is not installed on the agent
+          TG_ARN=$(aws elbv2 describe-target-groups --names bloodx-blue --region $AWS_REGION --query "TargetGroups[0].TargetGroupArn" --output text)
           
           while true; do
             HEALTHY_COUNT=$(aws elbv2 describe-target-health --target-group-arn $TG_ARN --region $AWS_REGION --query "TargetHealthDescriptions[?TargetHealth.State=='healthy'].length(@)" --output text)
