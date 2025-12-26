@@ -1,9 +1,31 @@
 #!/bin/bash
-sudo apt update -y
+# Function to retry commands
+retry_command() {
+  local -i max_attempts=5
+  local -i attempt=1
+  local -i sleep_time=10
+
+  until "$@"; do
+    if (( attempt == max_attempts )); then
+      echo "Command '$@' failed after $max_attempts attempts. Exiting."
+      exit 1
+    fi
+    echo "Command '$@' failed. Retrying in $sleep_time seconds... (Attempt $attempt/$max_attempts)"
+    sleep $sleep_time
+    ((attempt++))
+  done
+}
+
+# Wait for network to be fully establishing
+sleep 10
+
+retry_command sudo apt update -y
+
 # Wait for any existing apt locks to release
 while sudo fuser /var/lib/dpkg/lock >/dev/null 2>&1; do sleep 5; done
 while sudo fuser /var/lib/apt/lists/lock >/dev/null 2>&1; do sleep 5; done
-sudo apt install -y docker.io docker-compose-v2 prometheus-node-exporter
+
+retry_command sudo apt install -y docker.io docker-compose-v2 prometheus-node-exporter
 
 # Create directory structure
 mkdir -p /home/ubuntu/monitoring

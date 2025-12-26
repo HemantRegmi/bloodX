@@ -12,4 +12,6 @@ resource "aws_instance" "jenkins" {
   tags = {
     Name = "bloodx-jenkins-server"
   }
+
+  depends_on = [aws_key_pair.kp]
 }

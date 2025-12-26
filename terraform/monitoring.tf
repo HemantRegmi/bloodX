@@ -11,6 +11,8 @@ resource "aws_instance" "monitoring" {
   tags = {
     Name = "bloodx-monitoring-server"
   }
+
+  depends_on = [aws_key_pair.kp]
 }
 
 output "monitoring_instance_id" {
