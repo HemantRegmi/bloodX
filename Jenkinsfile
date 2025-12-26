@@ -60,7 +60,8 @@ pipeline {
           done
 
           echo "ASG is ready. Starting new refresh..."
-          aws autoscaling start-instance-refresh --auto-scaling-group-name bloodx-asg --region $AWS_REGION --preferences '{"MinHealthyPercentage": 100, "InstanceWarmup": 300}'
+          # No preferences needed - they are now enforced by Terraform asg.tf!
+          aws autoscaling start-instance-refresh --auto-scaling-group-name bloodx-asg --region $AWS_REGION
         '''
       }
     }

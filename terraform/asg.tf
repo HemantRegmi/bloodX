@@ -149,6 +149,14 @@ resource "aws_autoscaling_group" "app" {
     value               = "bloodx-asg-instance"
     propagate_at_launch = true
   }
+
+  instance_refresh {
+    strategy = "Rolling"
+    preferences {
+      min_healthy_percentage = 100
+      instance_warmup        = 300
+    }
+  }
 }
 
 # Auto Scaling Policy - Scale Up
