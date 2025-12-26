@@ -48,7 +48,21 @@ pipeline {
         sh '''
           echo "Deploying to Production Environment..."
           
-          # Standard Instance Refresh (Fire and Forget)
+          # 1. Cancel any existing refresh (Cleanup)
+          aws autoscaling cancel-instance-refresh --auto-scaling-group-name bloodx-asg --region $AWS_REGION || true
+          
+          # 2. Wait for it to clear
+          while true; do
+            STATUS=$(aws autoscaling describe-instance-refreshes --auto-scaling-group-name bloodx-asg --region $AWS_REGION --query "InstanceRefreshes[0].Status" --output text)
+            if [[ "$STATUS" == "InProgress" ]] || [[ "$STATUS" == "Cancelling" ]]; then
+              echo "ASG is busy ($STATUS). Waiting 10s..."
+              sleep 10
+            else
+              break
+            fi
+          done
+
+          # 3. Start New Refresh
           aws autoscaling start-instance-refresh --auto-scaling-group-name bloodx-asg --preferences '{"MinHealthyPercentage": 100, "InstanceWarmup": 300}' --region $AWS_REGION
         '''
       }
