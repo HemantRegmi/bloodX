@@ -47,21 +47,31 @@ pipeline {
       steps {
         sh '''
           echo "Deploying to Production Environment..."
+           
+          # 1. Scale Out to 2 Instances
+          aws autoscaling update-auto-scaling-group --auto-scaling-group-name bloodx-asg --desired-capacity 2 --region $AWS_REGION
           
-          # Forcefully cancel any previous refresh to prioritize THIS build
-          aws autoscaling cancel-instance-refresh --auto-scaling-group-name bloodx-asg --region $AWS_REGION || true
+          echo "Waiting for 2nd instance to START and pass HEALTH CHECKS..."
           
-          # Wait until the ASG is actually ready (Status must NOT be InProgress or Cancelling)
-          echo "Waiting for previous refresh to cancel..."
-          while aws autoscaling describe-instance-refreshes --auto-scaling-group-name bloodx-asg --region $AWS_REGION \
-            --query 'InstanceRefreshes[0].Status' --output text | grep -E "InProgress|Cancelling"; do
-            echo "ASG is busy. Waiting 10s..."
+          # 2. Wait for ALB to report 2 Healthy Hosts
+          TG_ARN=$(terraform -chdir=terraform output -raw blue_target_group_arn)
+          
+          while true; do
+            HEALTHY_COUNT=$(aws elbv2 describe-target-health --target-group-arn $TG_ARN --region $AWS_REGION --query "TargetHealthDescriptions[?TargetHealth.State=='healthy'].length(@)" --output text)
+            echo "Current Healthy Hosts: $HEALTHY_COUNT"
+            
+            if [ "$HEALTHY_COUNT" -ge 2 ]; then
+              echo "Success! Both instances are healthy. Traffic is safe."
+              break
+            fi
+            
+            echo "Waiting for new instance to be healthy..."
             sleep 10
           done
 
-          echo "ASG is ready. Starting new refresh..."
-          # No preferences needed - they are now enforced by Terraform asg.tf!
-          aws autoscaling start-instance-refresh --auto-scaling-group-name bloodx-asg --region $AWS_REGION
+          # 3. Scale In (Remove Old Instance)
+          echo "Scaling down to 1 instance..."
+          aws autoscaling update-auto-scaling-group --auto-scaling-group-name bloodx-asg --desired-capacity 1 --region $AWS_REGION
         '''
       }
     }
