@@ -63,6 +63,8 @@ pipeline {
             
             if [ "$HEALTHY_COUNT" -ge 2 ]; then
               echo "Success! Both instances are healthy. Traffic is safe."
+              echo "Waiting 45s for connections to stabilize..."
+              sleep 45
               break
             fi
             
