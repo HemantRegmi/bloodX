@@ -62,10 +62,7 @@ resource "aws_iam_role_policy" "asg_policy" {
           "autoscaling:StartInstanceRefresh",
           "autoscaling:CancelInstanceRefresh",
           "autoscaling:DescribeInstanceRefreshes",
-          "autoscaling:CompleteLifecycleAction",
-          "autoscaling:UpdateAutoScalingGroup",
-          "elasticloadbalancing:DescribeTargetHealth",
-          "elasticloadbalancing:DescribeTargetGroups"
+          "autoscaling:CompleteLifecycleAction"
         ]
         Resource = "*"
       }
@@ -138,7 +135,6 @@ resource "aws_autoscaling_group" "app" {
   min_size            = 1
   vpc_zone_identifier = aws_subnet.private[*].id
   target_group_arns   = [aws_lb_target_group.blue.arn]
-  termination_policies = ["Default"]
 
   launch_template {
     id      = aws_launch_template.app.id
@@ -152,10 +148,6 @@ resource "aws_autoscaling_group" "app" {
     key                 = "Name"
     value               = "bloodx-asg-instance"
     propagate_at_launch = true
-  }
-
-  instance_refresh {
-    strategy = "Rolling"
   }
 }
 

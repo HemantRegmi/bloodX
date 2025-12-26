@@ -49,7 +49,7 @@ pipeline {
           echo "Deploying to Production Environment..."
           
           # Standard Instance Refresh (Fire and Forget)
-          aws autoscaling start-instance-refresh --auto-scaling-group-name bloodx-asg --region $AWS_REGION
+          aws autoscaling start-instance-refresh --auto-scaling-group-name bloodx-asg --preferences '{"MinHealthyPercentage": 100, "InstanceWarmup": 300}' --region $AWS_REGION
         '''
       }
     }
