@@ -47,9 +47,19 @@ pipeline {
       steps {
         sh '''
           echo "Deploying to Production Environment..."
+          
           # Forcefully cancel any previous refresh to prioritize THIS build
           aws autoscaling cancel-instance-refresh --auto-scaling-group-name bloodx-asg --region $AWS_REGION || true
-          sleep 10
+          
+          # Wait until the ASG is actually ready (Status must NOT be InProgress or Cancelling)
+          echo "Waiting for previous refresh to cancel..."
+          while aws autoscaling describe-instance-refreshes --auto-scaling-group-name bloodx-asg --region $AWS_REGION \
+            --query 'InstanceRefreshes[0].Status' --output text | grep -E "InProgress|Cancelling"; do
+            echo "ASG is busy. Waiting 10s..."
+            sleep 10
+          done
+
+          echo "ASG is ready. Starting new refresh..."
           aws autoscaling start-instance-refresh --auto-scaling-group-name bloodx-asg --region $AWS_REGION --preferences '{"MinHealthyPercentage": 100, "InstanceWarmup": 300}'
         '''
       }
