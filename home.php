@@ -164,7 +164,7 @@
                 <section class="hero-section">
                     <div class="hero-content text-center">
                         <h1 class="hero-title">
-                            <span class="text-danger">Every Droppppp,</span><br>
+                            <span class="text-danger">Every Drop,</span><br>
                             <span class="text-dark">Saves Lives</span>
                         </h1>
                         <p class="hero-description">
