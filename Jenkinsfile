@@ -59,8 +59,8 @@ pipeline {
           MAX_RETRIES=40 # 40 * 10s = 400s Timeout
           COUNT=0
           while [ $COUNT -lt $MAX_RETRIES ]; do
-            # Count healthy targets
-            HEALTHY_COUNT=$(aws elbv2 describe-target-health --target-group-arn $TG_ARN --region $AWS_REGION --query "TargetHealthDescriptions[?TargetHealth.State=='healthy']" --output json | grep -c "Target")
+            # Count healthy targets using JMESPath length()
+            HEALTHY_COUNT=$(aws elbv2 describe-target-health --target-group-arn $TG_ARN --region $AWS_REGION --query "length(TargetHealthDescriptions[?TargetHealth.State=='healthy'])" --output text)
             
             echo "Healthy Targets: $HEALTHY_COUNT / 2"
             
