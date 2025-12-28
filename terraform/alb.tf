@@ -6,7 +6,7 @@ resource "aws_lb_target_group" "blue" {
   vpc_id   = aws_vpc.this.id
 
  health_check {
-    path                = "/about_us.php" 
+    path                = "/health.php" 
     interval            = 20              
     timeout             = 5
     healthy_threshold   = 3               
