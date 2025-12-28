@@ -17,7 +17,7 @@ retry_command() {
 }
 
 # Wait for network to be fully establishing
-sleep 10
+sleep 30
 
 retry_command sudo apt update -y
 
