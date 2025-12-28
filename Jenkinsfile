@@ -54,7 +54,7 @@ pipeline {
           # 2. Wait for it to clear
           while true; do
             STATUS=$(aws autoscaling describe-instance-refreshes --auto-scaling-group-name bloodx-asg --region $AWS_REGION --query "InstanceRefreshes[0].Status" --output text)
-            if [[ "$STATUS" == "InProgress" ]] || [[ "$STATUS" == "Cancelling" ]]; then
+            if [ "$STATUS" = "InProgress" ] || [ "$STATUS" = "Cancelling" ]; then
               echo "ASG is busy ($STATUS). Waiting 10s..."
               sleep 10
             else
