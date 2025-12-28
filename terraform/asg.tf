@@ -62,7 +62,8 @@ resource "aws_iam_role_policy" "asg_policy" {
           "autoscaling:StartInstanceRefresh",
           "autoscaling:CancelInstanceRefresh",
           "autoscaling:DescribeInstanceRefreshes",
-          "autoscaling:CompleteLifecycleAction"
+          "autoscaling:CompleteLifecycleAction",
+          "autoscaling:UpdateAutoScalingGroup"
         ]
         Resource = "*"
       }
