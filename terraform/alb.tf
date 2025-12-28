@@ -5,12 +5,12 @@ resource "aws_lb_target_group" "blue" {
   protocol = "HTTP"
   vpc_id   = aws_vpc.this.id
 
-  health_check {
-    path                = "/about_us.php"
-    healthy_threshold   = 2
-    unhealthy_threshold = 2
+ health_check {
+    path                = "/about_us.php" 
+    interval            = 20              
     timeout             = 5
-    interval            = 10
+    healthy_threshold   = 3               
+    unhealthy_threshold = 3
     matcher             = "200"
   }
 }
@@ -21,12 +21,12 @@ resource "aws_lb_target_group" "green" {
   protocol = "HTTP"
   vpc_id   = aws_vpc.this.id
 
-  health_check {
-    path                = "/about_us.php"
-    healthy_threshold   = 2
-    unhealthy_threshold = 2
+ health_check {
+    path                = "/about_us.php" 
+    interval            = 20             
     timeout             = 5
-    interval            = 10
+    healthy_threshold   = 3              
+    unhealthy_threshold = 3
     matcher             = "200"
   }
 }
