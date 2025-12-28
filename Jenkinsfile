@@ -46,24 +46,43 @@ pipeline {
     stage('Deploy to Production') {
       steps {
         sh '''
-          echo "Deploying to Production Environment..."
+          echo "Starting Zero-Downtime Deployment..."
           
-          # 1. Cancel any existing refresh (Cleanup)
-          aws autoscaling cancel-instance-refresh --auto-scaling-group-name bloodx-asg --region $AWS_REGION || true
+          # 1. Scale Up to 2 Instances
+          echo "[1/3] Scaling Up to 2 Instances..."
+          aws autoscaling update-auto-scaling-group --auto-scaling-group-name bloodx-asg --desired-capacity 2 --region $AWS_REGION
+
+          # 2. Wait for BOTH instances to be Healthy in ALB
+          echo "[2/3] Waiting for New Instance to handle traffic..."
+          TG_ARN=$(aws elbv2 describe-target-groups --names bloodx-blue --query "TargetGroups[0].TargetGroupArn" --output text --region $AWS_REGION)
           
-          # 2. Wait for it to clear
-          while true; do
-            STATUS=$(aws autoscaling describe-instance-refreshes --auto-scaling-group-name bloodx-asg --region $AWS_REGION --query "InstanceRefreshes[0].Status" --output text)
-            if [ "$STATUS" = "InProgress" ] || [ "$STATUS" = "Cancelling" ]; then
-              echo "ASG is busy ($STATUS). Waiting 10s..."
-              sleep 10
-            else
+          MAX_RETRIES=40 # 40 * 10s = 400s Timeout
+          COUNT=0
+          while [ $COUNT -lt $MAX_RETRIES ]; do
+            # Count healthy targets
+            HEALTHY_COUNT=$(aws elbv2 describe-target-health --target-group-arn $TG_ARN --region $AWS_REGION --query "TargetHealthDescriptions[?TargetHealth.State=='healthy']" --output json | grep -c "Target")
+            
+            echo "Healthy Targets: $HEALTHY_COUNT / 2"
+            
+            if [ "$HEALTHY_COUNT" -ge 2 ]; then
+              echo "SUCCESS: Both instances are healthy!"
               break
             fi
+            
+            sleep 10
+            COUNT=$((COUNT+1))
           done
 
-          # 3. Start New Refresh
-          aws autoscaling start-instance-refresh --auto-scaling-group-name bloodx-asg --preferences '{"MinHealthyPercentage": 100, "InstanceWarmup": 300}' --region $AWS_REGION
+          if [ $COUNT -ge $MAX_RETRIES ]; then
+             echo "TIMEOUT: New instance failed to become healthy. Rolling back..."
+             aws autoscaling update-auto-scaling-group --auto-scaling-group-name bloodx-asg --desired-capacity 1 --region $AWS_REGION
+             exit 1
+          fi
+
+          # 3. Scale Down to 1 (Oldest will be terminated)
+          echo "[3/3] Scaling Down to 1 (Terminating Old Instance)..."
+          aws autoscaling update-auto-scaling-group --auto-scaling-group-name bloodx-asg --desired-capacity 1 --region $AWS_REGION
+          echo "Deployment Complete. Zero Downtime Achieved."
         '''
       }
     }
