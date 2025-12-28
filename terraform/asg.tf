@@ -91,8 +91,31 @@ resource "aws_launch_template" "app" {
 
   user_data = base64encode(<<-EOF
               #!/bin/bash
-              apt update -y
-              apt install -y docker.io awscli
+              
+              # Helper function for retrying commands
+              retry_command() {
+                  local n=1
+                  local max=5
+                  local delay=10
+                  while true; do
+                    "$@" && break || {
+                      if [[ $n -lt $max ]]; then
+                        ((n++))
+                        echo "Command failed. Attempt $n/$max:"
+                        sleep $delay;
+                      else
+                        echo "The command has failed after $max attempts."
+                        return 1
+                      fi
+                    }
+                  done
+              }
+
+              # Wait for internet
+              sleep 30
+
+              retry_command apt update -y
+              retry_command apt install -y docker.io awscli
               systemctl start docker
               systemctl enable docker
               usermod -aG docker ubuntu
