@@ -26,7 +26,7 @@ sleep 10
 retry_command sudo apt update -y
 
 # Install Java
-retry_command sudo apt install -y openjdk-17-jre fontconfig java-common
+retry_command sudo apt install -y openjdk-17-jre-headless fontconfig java-common
 curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo tee \
   /usr/share/keyrings/jenkins-keyring.asc > /dev/null
 echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
