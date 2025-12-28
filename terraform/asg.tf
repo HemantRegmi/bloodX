@@ -135,6 +135,7 @@ resource "aws_autoscaling_group" "app" {
   min_size            = 1
   vpc_zone_identifier = aws_subnet.private[*].id
   target_group_arns   = [aws_lb_target_group.blue.arn]
+  termination_policies = ["OldestInstance"]
 
   launch_template {
     id      = aws_launch_template.app.id
