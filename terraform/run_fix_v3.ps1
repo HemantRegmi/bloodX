@@ -2,7 +2,7 @@ $ErrorActionPreference = "Stop"
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 Set-Location $ScriptDir
 
-$BastionIP = "13.235.34.184"
+$BastionIP = "65.1.48.32"
 $PrivateIP = "10.0.11.20"
 
 Write-Host "Auto-Fixer V3 (Line-Ending Fix)"
